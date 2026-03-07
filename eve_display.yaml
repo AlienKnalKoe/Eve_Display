@@ -9,8 +9,8 @@ esphome:
   min_version: 2026.2.0
 
 packages:
-  - !include packages/hardware_core.yaml
-  - !include packages/sensors.yaml
-  - !include common/colors.yaml
-  - !include common/fonts.yaml
-  - !include eve_display_theme_starter.yaml
+  hardware: !include packages/hardware_core.yaml
+  sensors:  !include packages/sensors.yaml
+  colors:   !include common/colors.yaml
+  fonts:    !include common/fonts.yaml
+  theme:    !include eve_display_theme_starter.yaml
