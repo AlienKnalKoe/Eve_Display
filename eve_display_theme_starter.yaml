@@ -2,100 +2,30 @@
 # Eve Display — Dark Theme Starter
 # Based on alaltitov/Guition-ESP32-S3-4848S040 (MIT licence)
 #
-# Usage: add to your main ESPHome config as a package:
+# Usage — include all three packages in your main ESPHome config:
 #   packages:
-#     theme: !include eve_display_theme_starter.yaml
+#     colors: !include common/colors.yaml
+#     fonts:  !include common/fonts.yaml
+#     theme:  !include eve_display_theme_starter.yaml
 #
 # Requires:
-#   - assets/fonts/Nunito-SemiBold.ttf   (from the repo)
-#   - assets/fonts/icons_v2.ttf          (from the repo)
-#   - images/eve_placeholder.png         (300x300 ARGB PNG)
+#   - assets/fonts/Nunito-SemiBold.ttf               (in repo)
+#   - assets/fonts/icons_v2.ttf                      (in repo)
+#   - assets/fonts/materialdesignicons-webfont.ttf   (in repo)
+#   - images/eve_placeholder.png                     (300x300 RGBA PNG)
 #
-# Download fonts from:
-#   https://github.com/alaltitov/Guition-ESP32-S3-4848S040/tree/2026.1.4/src/assets/fonts
+# Your main config must also declare:
+#   time:
+#     - platform: sntp
+#       id: sntp_time   ← must match this id
+#       timezone: "Europe/Amsterdam"
 # ============================================================
-
-
-# ── Colour palette ───────────────────────────────────────────
-color:
-  - id: color_black
-    hex: "0d0d0d"
-  - id: color_slate_blue_gray     # card / panel background
-    hex: "343645"
-  - id: color_steel_blue          # secondary icon / border
-    hex: "606682"
-  - id: color_misty_blue          # primary text / icons
-    hex: "9BA2BC"
-  - id: color_sky_blue            # accent blue
-    hex: "3FA7F3"
-  - id: color_red
-    hex: "ff0000"
-  - id: color_blue
-    hex: "4C9FFF"
-
-
-# ── Fonts ────────────────────────────────────────────────────
-font:
-  # Main text — Nunito SemiBold
-  - file: "assets/fonts/Nunito-SemiBold.ttf"
-    id: nunito_16
-    size: 16
-    bpp: 4
-    glyphsets: [GF_Latin_Core]
-
-  - file: "assets/fonts/Nunito-SemiBold.ttf"
-    id: nunito_20
-    size: 20
-    bpp: 4
-    glyphsets: [GF_Latin_Core]
-
-  - file: "assets/fonts/Nunito-SemiBold.ttf"
-    id: nunito_30
-    size: 30
-    bpp: 4
-    glyphsets: [GF_Latin_Core]
-
-  - file: "assets/fonts/Nunito-SemiBold.ttf"
-    id: nunito_64
-    size: 64
-    bpp: 4
-    glyphsets: [GF_Latin_Core]
-
-  # Custom icon font (wifi, lock, humidity, temp icons)
-  - file: "assets/fonts/icons_v2.ttf"
-    id: icons_24
-    size: 24
-    bpp: 4
-    glyphs:
-      - "\U0000e92e"   # lock
-      - "\U0000e934"   # wifi 100%
-      - "\U0000e931"   # wifi 25%
-      - "\U0000e932"   # wifi 50%
-      - "\U0000e933"   # wifi 75%
-      - "\U0000e938"   # humidity
-      - "\U0000e939"   # temperature
-
-  # MDI icons — standard ESPHome declaration
-  - file: "https://esphome.io/_static/materialdesignicons-webfont.ttf"
-    id: mdi_icons_28
-    size: 28
-    bpp: 4
-    glyphs:
-      - "\U000F07D0"   # home-assistant
-      - "\U000F056E"   # view-dashboard (devices)
-      - "\U000F06A1"   # home
-      - "\U000F18F6"   # weather-cloudy
-      - "\U000F1C70"   # information-outline
-      - "\U000F08BB"   # cog (settings)
-      - "\U000F04B2"   # sleep
-      - "\U000F0341"   # lock-outline
-
 
 # ── Eve character image ──────────────────────────────────────
 image:
   - file: "images/eve_placeholder.png"
     id: eve_sprite
-    type: ARGB8888
+    type: ARGB8888        # PNG must be RGBA (not RGB)
     use_transparency: true
 
 
@@ -440,6 +370,7 @@ script:
   - id: update_clock
     then:
       - lambda: |-
+          // sntp_time must be the id of your time: platform in main config
           auto time = id(sntp_time).now();
           char buf[6];
           snprintf(buf, sizeof(buf), "%02d:%02d", time.hour, time.minute);
