@@ -1,0 +1,16 @@
+# ============================================================
+# Eve Display — main config
+# Run with: esphome run eve_display.yaml --device COM5
+# ============================================================
+
+esphome:
+  name: eve-display
+  friendly_name: Eve Display
+  min_version: 2026.2.0
+
+packages:
+  hardware: !include packages/hardware_core.yaml
+  sensors:  !include packages/sensors.yaml
+  colors:   !include common/colors.yaml
+  fonts:    !include common/fonts.yaml
+  theme:    !include eve_display_theme_starter.yaml
