@@ -7,3 +7,13 @@ ota:
   - platform: esphome
 logger:
   level: INFO
+
+time:
+  - platform: sntp
+    id: sntp_time
+    timezone: "Europe/Amsterdam"
+    on_time:
+      - minutes: '*'
+        seconds: 0
+        then:
+          - script.execute: update_clock
