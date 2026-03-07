@@ -11,6 +11,4 @@ esphome:
 packages:
   hardware: !include packages/hardware_core.yaml
   sensors:  !include packages/sensors.yaml
-  colors:   !include common/colors.yaml
-  fonts:    !include common/fonts.yaml
   theme:    !include eve_display_theme_starter.yaml
