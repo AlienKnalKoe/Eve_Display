@@ -5,10 +5,9 @@
 # ============================================================
 
 lvgl:
-  displays:
-    - my_display
+  displays: my_display
   touchscreens:
-    - gt911_touch
+    - touchscreen_id: gt911_touch
   pages:
     - id: home_page
       bg_color: color_black
