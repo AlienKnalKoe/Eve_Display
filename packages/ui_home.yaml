@@ -1,0 +1,678 @@
+# ============================================================
+# Eve Display — Home / Eve Page (Page 1)
+# 480×480 display — dark theme
+# ============================================================
+
+# ── Colour palette ───────────────────────────────────────────
+color:
+  - id: color_sky_blue
+    hex: 3FA7F3
+  - id: color_slate_blue_gray
+    hex: 343645
+  - id: color_steel_blue
+    hex: 606682
+  - id: color_misty_blue
+    hex: 9BA2BC
+  - id: color_black
+    hex: 0d0d0d
+  - id: color_dark_gray
+    hex: 333333
+  - id: color_gray
+    hex: 666666
+  - id: color_light_gray
+    hex: 999999
+  - id: color_white
+    hex: f2f0eb
+  - id: color_red
+    hex: ff0000
+  - id: color_crimson
+    hex: f5075c
+  - id: color_light_blue
+    hex: 2fc0ff
+  - id: color_blue
+    hex: 4C9FFF
+  - id: color_yellow
+    hex: e7c12c
+  - id: color_light_yellow
+    hex: f0d45c
+  - id: color_amber
+    hex: f4a900
+  - id: color_mint
+    hex: 39d19c
+  - id: color_light_mint
+    hex: 66dcb3
+  - id: color_light_green
+    hex: 00ff00
+  - id: color_green
+    hex: 5CA848
+  - id: color_orange
+    hex: f07c40
+  - id: color_deep_orange
+    hex: ff6600
+  - id: color_violet
+    hex: 926BC7
+  - id: color_dark_blue
+    hex: 4867aa
+  - id: color_deep_purple
+    hex: 543D72
+
+# ── Fonts ────────────────────────────────────────────────────
+font:
+  - file: "assets/fonts/Nunito-SemiBold.ttf"
+    id: nunito_16
+    size: 16
+    bpp: 4
+    glyphsets:
+      - GF_Latin_Core
+      - GF_Cyrillic_Core
+    glyphs: "²°"
+
+  - file: "assets/fonts/Nunito-SemiBold.ttf"
+    id: nunito_18
+    size: 18
+    bpp: 4
+    glyphsets:
+      - GF_Latin_Core
+      - GF_Cyrillic_Core
+    glyphs: "²°"
+
+  - file: "assets/fonts/Nunito-SemiBold.ttf"
+    id: nunito_20
+    size: 20
+    bpp: 4
+    glyphsets:
+      - GF_Latin_Core
+      - GF_Cyrillic_Core
+    glyphs: "°"
+
+  - file: "assets/fonts/Nunito-SemiBold.ttf"
+    id: nunito_24
+    size: 24
+    bpp: 4
+    glyphsets:
+      - GF_Latin_Core
+      - GF_Cyrillic_Core
+    glyphs: "°"
+
+  - file: "assets/fonts/Nunito-SemiBold.ttf"
+    id: nunito_30
+    size: 30
+    bpp: 4
+    glyphsets:
+      - GF_Latin_Core
+      - GF_Cyrillic_Core
+    glyphs: "°"
+
+  - file: "assets/fonts/Nunito-SemiBold.ttf"
+    id: nunito_36
+    size: 36
+    bpp: 4
+    glyphsets:
+      - GF_Latin_Core
+      - GF_Cyrillic_Core
+    glyphs: "°"
+
+  - file: "assets/fonts/Nunito-SemiBold.ttf"
+    id: nunito_48
+    size: 48
+    bpp: 4
+    glyphsets:
+      - GF_Latin_Core
+      - GF_Cyrillic_Core
+    glyphs: "°"
+
+  - file: "assets/fonts/Nunito-SemiBold.ttf"
+    id: nunito_56
+    size: 56
+    bpp: 4
+    glyphsets:
+      - GF_Latin_Core
+      - GF_Cyrillic_Core
+
+  - file: "assets/fonts/Nunito-SemiBold.ttf"
+    id: nunito_64
+    size: 64
+    bpp: 4
+    glyphsets:
+      - GF_Latin_Core
+      - GF_Cyrillic_Core
+
+  - file: "assets/fonts/Nunito-SemiBold.ttf"
+    id: nunito_84
+    size: 84
+    bpp: 4
+    glyphsets:
+      - GF_Latin_Core
+      - GF_Cyrillic_Core
+
+  # CUSTOM ICONS FONT
+  - file: "assets/fonts/icons_v2.ttf"
+    id: icons_24
+    size: 24
+    bpp: 4
+    glyphs: [
+      "\U0000e900", # brightness
+      "\U0000e901", # saturation
+      "\U0000e925", # thermostat
+      "\U0000e93b", # air_conditioner
+      "\U0000e936", # heating
+      "\U0000e92e", # lock
+      "\U0000e935", # home assistant
+      "\U0000e931", # wifi 25%
+      "\U0000e932", # wifi 50%
+      "\U0000e933", # wifi 75%
+      "\U0000e934", # wifi 100%
+      "\U0000e938", # humidity
+    ]
+
+  - file: "assets/fonts/icons_v2.ttf"
+    id: icons_28
+    size: 28
+    bpp: 4
+    glyphs: [
+      "\U0000e902", # exit
+      "\U0000e926", # fan
+      "\U0000e927", # room_plan
+      "\U0000e938", # humidity
+      "\U0000e937", # co2
+      "\U0000e93a", # air quality
+      "\U0000e939", # temperature
+      "\U0000e92f", # illumination
+      "\U0000e92e", # lock
+      "\U0000e915", # desk lamp
+      "\U0000e916", # spotlight group
+      "\U0000e917", # pendant lamp
+      "\U0000e921", # ceiling lamp
+    ]
+
+  - file: "assets/fonts/icons_v2.ttf"
+    id: icons_36
+    size: 36
+    bpp: 4
+    glyphs: [
+      "\U0000e903", # settings
+      "\U0000e904", # info
+      "\U0000e905", # devices
+      "\U0000e906", # home
+      "\U0000e907", # ceiling
+      "\U0000e908", # lightbulb
+      "\U0000e92e", # lock
+    ]
+
+  - file: "assets/fonts/icons_v2.ttf"
+    id: icons_48
+    size: 48
+    bpp: 4
+    glyphs: [
+      "\U0000e938", # humidity
+      "\U0000e939", # temperature
+    ]
+
+  - file: "assets/fonts/icons_v2.ttf"
+    id: icons_72
+    size: 72
+    bpp: 4
+    glyphs: [
+      "\U0000e925", # thermostat
+    ]
+
+  # MDI icons
+  - file: "assets/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_icons_24
+    size: 24
+    bpp: 4
+    glyphs: [
+      "\U000F07D0", # home assistant
+      "\U000F068A", # shield home
+      "\U000F1828", # shield moon
+      "\U000F0493", # settings
+    ]
+
+  - file: "assets/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_icons_28
+    size: 28
+    bpp: 4
+    glyphs: [
+      "\U000F07D0", # home assistant
+      "\U000F0341", # display lock
+      "\U000F1A4D", # display brightness
+      "\U000F1C70", # display info
+      "\U000F08BB", # display settings
+      "\U000F06A1", # home
+      "\U000F0906", # power
+      "\U000F04B2", # sleep
+      "\U000F056E", # devices / view-dashboard
+      "\U000F18DD", # ceiling lights
+      "\U000F03D8", # palette
+      "\U000F0415", # plus
+      "\U000F0241", # flash (energy)
+      "\U000F0F9B", # weather cloud
+      "\U000F1107", # solar panel
+    ]
+
+  - file: "assets/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_icons_40
+    size: 40
+    bpp: 4
+    glyphs: [
+      "\U000F0241", # flash/power
+      "\U000F1107", # solar panel
+      "\U000F0826", # home
+      "\U000F0F9B", # weather cloud
+      "\U000F0597", # thermometer
+      "\U000F058E", # water-percent
+      "\U000F015B", # fire/sun (morning)
+      "\U000F1828", # shield moon (night)
+      "\U000F040A", # play (movie)
+      "\U000F0906", # power (all off)
+      "\U000F08DD", # floor lamp
+      "\U000F18DD", # ceiling light multiple
+      "\U000F0F14", # ceiling fan light (woonkamer)
+      "\U000F04B2", # sleep (bedroom)
+    ]
+
+  - file: "assets/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_icons_52
+    size: 52
+    bpp: 4
+    glyphs: [
+      "\U000F068A", # shield home
+      "\U000F1828", # shield moon
+      "\U000F099D", # shield lock
+      "\U000F0826", # home
+      "\U000F040A", # play
+      "\U000F0906", # power
+      "\U000F0F9B", # weather cloud (outdoor hero)
+      "\U000F0597", # thermometer
+    ]
+
+# ── Eve character image ──────────────────────────────────────
+image:
+  - file: "images/eve_placeholder.png"
+    id: eve_sprite
+    type: RGB
+    transparency: alpha_channel
+
+# ── LVGL home page ───────────────────────────────────────────
+lvgl:
+  pages:
+    - id: home_page
+      bg_color: color_black
+      scrollable: false
+      widgets:
+
+        # ── TOP STATUS BAR ──────────────────────────────────
+        - obj:
+            id: status_bar
+            y: 8
+            width: 460
+            height: 40
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+
+              - label:
+                  id: wifi_status
+                  align: left_mid
+                  x: 16
+                  text: "\ue934"
+                  text_font: icons_24
+                  text_color: color_steel_blue
+
+              - label:
+                  id: ha_status
+                  align: left_mid
+                  x: 52
+                  text: "\uF07D0"
+                  text_font: mdi_icons_28
+                  text_color: color_steel_blue
+
+              # Page title
+              - label:
+                  id: page_title_home
+                  align: center
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "Eve"
+
+              # Time mini in status bar (right side)
+              - label:
+                  id: status_time
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "00:00"
+
+        # ── MAIN CLOCK CARD ──────────────────────────────────
+        - obj:
+            id: main_card
+            y: 56
+            width: 440
+            height: 160
+            align: top_mid
+            radius: 20
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            scrollable: false
+            widgets:
+
+              - label:
+                  id: time_value
+                  y: 10
+                  align: top_mid
+                  text_font: nunito_64
+                  text_color: color_misty_blue
+                  text: "00:00"
+
+              - obj:
+                  y: 82
+                  align: top_mid
+                  width: 380
+                  height: 2
+                  bg_color: color_steel_blue
+                  border_opa: transp
+                  shadow_opa: transp
+                  clickable: false
+
+              - label:
+                  id: day_of_week_value
+                  x: 24
+                  y: -14
+                  align: bottom_left
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Sunday"
+
+              - label:
+                  id: date_value
+                  x: -24
+                  y: -14
+                  align: bottom_right
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "8, March"
+
+        # ── EVE CIRCLE + SIDE BUTTONS ────────────────────────
+        - obj:
+            id: eve_row
+            y: 228
+            width: 440
+            height: 164
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+
+              # LEFT button — navigate to energy page
+              - button:
+                  id: eve_btn_left
+                  x: 10
+                  align: left_mid
+                  width: 70
+                  height: 70
+                  radius: 35
+                  pad_all: 0
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_width: 6
+                  shadow_color: color_black
+                  shadow_opa: cover
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: energy_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_40
+                        text_color: color_amber
+                        text: "\uF0241"   # flash/power = energy
+
+              # CENTER: Eve sprite
+              - obj:
+                  id: eve_circle
+                  align: center
+                  width: 156
+                  height: 156
+                  radius: 78
+                  pad_all: 0
+                  bg_color: color_black
+                  border_opa: transp
+                  shadow_opa: transp
+                  clickable: false
+                  widgets:
+                    - image:
+                        id: eve_image
+                        align: center
+                        src: eve_sprite
+
+              # RIGHT button — navigate to scenes page
+              - button:
+                  id: eve_btn_right
+                  x: -10
+                  align: right_mid
+                  width: 70
+                  height: 70
+                  radius: 35
+                  pad_all: 0
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_width: 6
+                  shadow_color: color_black
+                  shadow_opa: cover
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\uF056E"   # devices
+
+        # ── TICKER BAR ───────────────────────────────────────
+        - obj:
+            id: ticker_bar
+            y: 402
+            width: 440
+            height: 32
+            align: top_mid
+            radius: 8
+            pad_left: 12
+            pad_right: 12
+            pad_top: 4
+            pad_bottom: 4
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              - label:
+                  id: ticker_label
+                  align: left_mid
+                  width: 416
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  long_mode: SCROLL_CIRCULAR
+                  text: "Eve Display ready  ·  Touch to wake  ·  Home Assistant connected  ·  "
+
+        # ── BOTTOM NAV BAR ───────────────────────────────────
+        - obj:
+            id: bottom_nav
+            y: 444
+            width: 460
+            height: 30
+            align: top_mid
+            radius: 0
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+
+              # Home (active)
+              - button:
+                  id: nav_home_btn
+                  align: left_mid
+                  x: 20
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: home_page
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\uF06A1"
+
+              # Energy
+              - button:
+                  id: nav_energy_btn
+                  align: left_mid
+                  x: 90
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: energy_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF0241"   # flash
+
+              # Weather
+              - button:
+                  id: nav_weather_btn
+                  align: center
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: weather_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF0F9B"   # cloud
+
+              # Scenes
+              - button:
+                  id: nav_scenes_nav_btn
+                  align: right_mid
+                  x: -90
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF056E"
+
+              # Settings/sleep
+              - button:
+                  id: nav_settings_btn
+                  align: right_mid
+                  x: -20
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - script.execute: trigger_night_mode
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF04B2"   # sleep
+
+# ── Clock / date update script ───────────────────────────────
+script:
+  - id: idle_dimmer_script
+    mode: restart
+    then:
+      - delay: 60s
+      - script.execute: apply_idle_dim
+
+  - id: update_clock
+    then:
+      - lambda: |-
+          auto time = id(sntp_time).now();
+          if (!time.is_valid()) return;
+
+          // Main clock label
+          char buf[6];
+          snprintf(buf, sizeof(buf), "%02d:%02d", time.hour, time.minute);
+          lv_label_set_text(id(time_value), buf);
+          lv_label_set_text(id(status_time), buf);
+
+          // Day of week
+          const char* days[] = {
+            "Sunday","Monday","Tuesday","Wednesday",
+            "Thursday","Friday","Saturday"
+          };
+          lv_label_set_text(id(day_of_week_value), days[time.day_of_week]);
+
+          // Date  "8, March"
+          const char* months[] = {
+            "","January","February","March","April","May","June",
+            "July","August","September","October","November","December"
+          };
+          char dbuf[20];
+          snprintf(dbuf, sizeof(dbuf), "%d, %s", time.day_of_month, months[time.month]);
+          lv_label_set_text(id(date_value), dbuf);
+
+          // Update ticker with time
+          char ticker[128];
+          snprintf(ticker, sizeof(ticker),
+            "%02d:%02d  ·  Eve Display  ·  Have a great day!  ·  ",
+            time.hour, time.minute);
+          lv_label_set_text(id(ticker_label), ticker);
