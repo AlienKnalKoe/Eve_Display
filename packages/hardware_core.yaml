@@ -53,6 +53,8 @@ touchscreen:
         - script.execute: idle_dimmer_script
 
 # Backlight — fixed: 100Hz + min_power 0.01 for smooth dimming across full range
+# default_transition_length: 0ms — prevents blink artifact when brightness changes
+# gamma_correct: 0 — linear brightness (avoids LEDC gamma-step blink at low values)
 output:
   - platform: ledc
     id: backlight_pwm
@@ -66,4 +68,6 @@ light:
     name: "Brightness"
     id: display_backlight
     output: backlight_pwm
+    default_transition_length: 0ms
+    gamma_correct: 0
     restore_mode: ALWAYS_ON
