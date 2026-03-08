@@ -1,0 +1,1563 @@
+# ============================================================
+# Eve Display — LVGL pages (all 4 pages in one block)
+# Single lvgl: block to ensure reliable ESPHome compilation.
+# displays/touchscreens link LVGL to the hardware.
+# ============================================================
+
+lvgl:
+  displays:
+    - my_display
+  touchscreens:
+    - gt911_touch
+  pages:
+    - id: home_page
+      bg_color: color_black
+      scrollable: false
+      widgets:
+
+        # ── TOP STATUS BAR ──────────────────────────────────
+        - obj:
+            id: status_bar
+            y: 8
+            width: 460
+            height: 40
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+
+              - label:
+                  id: wifi_status
+                  align: left_mid
+                  x: 16
+                  text: "\ue934"
+                  text_font: icons_24
+                  text_color: color_steel_blue
+
+              - label:
+                  id: ha_status
+                  align: left_mid
+                  x: 52
+                  text: "\uF07D0"
+                  text_font: mdi_icons_28
+                  text_color: color_steel_blue
+
+              # Page title
+              - label:
+                  id: page_title_home
+                  align: center
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "Eve"
+
+              # Time mini in status bar (right side)
+              - label:
+                  id: status_time
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "00:00"
+
+        # ── MAIN CLOCK CARD ──────────────────────────────────
+        - obj:
+            id: main_card
+            y: 56
+            width: 440
+            height: 160
+            align: top_mid
+            radius: 20
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            scrollable: false
+            widgets:
+
+              - label:
+                  id: time_value
+                  y: 10
+                  align: top_mid
+                  text_font: nunito_64
+                  text_color: color_misty_blue
+                  text: "00:00"
+
+              - obj:
+                  y: 82
+                  align: top_mid
+                  width: 380
+                  height: 2
+                  bg_color: color_steel_blue
+                  border_opa: transp
+                  shadow_opa: transp
+                  clickable: false
+
+              - label:
+                  id: day_of_week_value
+                  x: 24
+                  y: -14
+                  align: bottom_left
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Sunday"
+
+              - label:
+                  id: date_value
+                  x: -24
+                  y: -14
+                  align: bottom_right
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "8, March"
+
+        # ── EVE CIRCLE + SIDE BUTTONS ────────────────────────
+        - obj:
+            id: eve_row
+            y: 228
+            width: 440
+            height: 164
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+
+              # LEFT button — navigate to energy page
+              - button:
+                  id: eve_btn_left
+                  x: 10
+                  align: left_mid
+                  width: 70
+                  height: 70
+                  radius: 35
+                  pad_all: 0
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_width: 6
+                  shadow_color: color_black
+                  shadow_opa: cover
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: energy_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_40
+                        text_color: color_amber
+                        text: "\uF0241"   # flash/power = energy
+
+              # CENTER: Eve sprite
+              - obj:
+                  id: eve_circle
+                  align: center
+                  width: 156
+                  height: 156
+                  radius: 78
+                  pad_all: 0
+                  bg_color: color_black
+                  border_opa: transp
+                  shadow_opa: transp
+                  clickable: false
+                  widgets:
+                    - image:
+                        id: eve_image
+                        align: center
+                        src: eve_sprite
+
+              # RIGHT button — navigate to scenes page
+              - button:
+                  id: eve_btn_right
+                  x: -10
+                  align: right_mid
+                  width: 70
+                  height: 70
+                  radius: 35
+                  pad_all: 0
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_width: 6
+                  shadow_color: color_black
+                  shadow_opa: cover
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\uF056E"   # devices
+
+        # ── TICKER BAR ───────────────────────────────────────
+        - obj:
+            id: ticker_bar
+            y: 402
+            width: 440
+            height: 32
+            align: top_mid
+            radius: 8
+            pad_left: 12
+            pad_right: 12
+            pad_top: 4
+            pad_bottom: 4
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              - label:
+                  id: ticker_label
+                  align: left_mid
+                  width: 416
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  long_mode: SCROLL_CIRCULAR
+                  text: "Eve Display ready  ·  Touch to wake  ·  Home Assistant connected  ·  "
+
+        # ── BOTTOM NAV BAR ───────────────────────────────────
+        - obj:
+            id: bottom_nav
+            y: 444
+            width: 460
+            height: 30
+            align: top_mid
+            radius: 0
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+
+              # Home (active)
+              - button:
+                  id: nav_home_btn
+                  align: left_mid
+                  x: 20
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: home_page
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\uF06A1"
+
+              # Energy
+              - button:
+                  id: nav_energy_btn
+                  align: left_mid
+                  x: 90
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: energy_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF0241"   # flash
+
+              # Weather
+              - button:
+                  id: nav_weather_btn
+                  align: center
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: weather_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF0F9B"   # cloud
+
+              # Scenes
+              - button:
+                  id: nav_scenes_nav_btn
+                  align: right_mid
+                  x: -90
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF056E"
+
+              # Settings/sleep
+              - button:
+                  id: nav_settings_btn
+                  align: right_mid
+                  x: -20
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - script.execute: trigger_night_mode
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF04B2"   # sleep
+
+# ── Clock / date update script ───────────────────────────────
+    - id: energy_page
+      bg_color: color_black
+      scrollable: false
+      widgets:
+
+        # ── TOP STATUS BAR ───────────────────────────────────
+        - obj:
+            id: energy_status_bar
+            y: 8
+            width: 460
+            height: 40
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+
+              - label:
+                  id: wifi_status_energy
+                  align: left_mid
+                  x: 16
+                  text: "\ue934"
+                  text_font: icons_24
+                  text_color: color_steel_blue
+
+              - label:
+                  id: ha_status_energy
+                  align: left_mid
+                  x: 52
+                  text: "\uF07D0"
+                  text_font: mdi_icons_28
+                  text_color: color_steel_blue
+
+              - label:
+                  align: center
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "Energy"
+
+              - label:
+                  id: energy_time
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "00:00"
+
+        # ── GRID USAGE ARC ───────────────────────────────────
+        - obj:
+            id: grid_arc_container
+            y: 60
+            width: 200
+            height: 200
+            align: top_left
+            x: 16
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+
+              - arc:
+                  id: grid_arc
+                  align: center
+                  width: 180
+                  height: 180
+                  arc_color: color_deep_orange
+                  arc_width: 12
+                  indicator:
+                    arc_color: color_orange
+                    arc_width: 12
+                  bg_color: color_slate_blue_gray
+                  value: 0
+                  min_value: 0
+                  max_value: 6000
+                  start_angle: 135
+                  end_angle: 45
+                  adjustable: false
+
+              # Center: usage watts
+              - label:
+                  id: grid_power_value
+                  align: center
+                  y: -10
+                  text_font: nunito_36
+                  text_color: color_orange
+                  text: "-- W"
+
+              - label:
+                  align: center
+                  y: 30
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Grid"
+
+              # Icon top-center of arc
+              - label:
+                  align: top_mid
+                  y: 10
+                  text_font: mdi_icons_28
+                  text_color: color_orange
+                  text: "\uF0241"   # flash
+
+        # ── SOLAR ARC ────────────────────────────────────────
+        - obj:
+            id: solar_arc_container
+            y: 60
+            width: 200
+            height: 200
+            align: top_right
+            x: -16
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+
+              - arc:
+                  id: solar_arc
+                  align: center
+                  width: 180
+                  height: 180
+                  arc_color: color_dark_gray
+                  arc_width: 12
+                  indicator:
+                    arc_color: color_yellow
+                    arc_width: 12
+                  bg_color: color_slate_blue_gray
+                  value: 0
+                  min_value: 0
+                  max_value: 6000
+                  start_angle: 135
+                  end_angle: 45
+                  adjustable: false
+
+              - label:
+                  id: solar_power_value
+                  align: center
+                  y: -10
+                  text_font: nunito_36
+                  text_color: color_yellow
+                  text: "-- W"
+
+              - label:
+                  align: center
+                  y: 30
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Solar"
+
+              - label:
+                  align: top_mid
+                  y: 10
+                  text_font: mdi_icons_28
+                  text_color: color_yellow
+                  text: "\uF1107"   # solar panel icon
+
+        # ── NET USAGE CARD ───────────────────────────────────
+        - obj:
+            id: net_card
+            y: 272
+            width: 440
+            height: 80
+            align: top_mid
+            radius: 16
+            pad_left: 20
+            pad_right: 20
+            pad_top: 8
+            pad_bottom: 8
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              - label:
+                  align: left_mid
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Net"
+              - label:
+                  id: net_power_value
+                  align: center
+                  text_font: nunito_36
+                  text_color: color_mint
+                  text: "-- W"
+              - label:
+                  id: net_power_direction
+                  align: right_mid
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "balanced"
+
+        # ── QUICK STATS ROW ──────────────────────────────────
+        - obj:
+            id: energy_stats_row
+            y: 366
+            width: 440
+            height: 64
+            align: top_mid
+            radius: 16
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              # Grid cost today (placeholder)
+              - obj:
+                  align: left_mid
+                  x: 16
+                  width: 120
+                  height: 52
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: top_mid
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Today Grid"
+                    - label:
+                        id: grid_today_value
+                        align: bottom_mid
+                        text_font: nunito_20
+                        text_color: color_orange
+                        text: "-- kWh"
+
+              # Separator
+              - obj:
+                  align: center
+                  x: 0
+                  width: 2
+                  height: 40
+                  bg_color: color_steel_blue
+                  border_opa: transp
+                  shadow_opa: transp
+                  clickable: false
+
+              # Solar today (placeholder)
+              - obj:
+                  align: right_mid
+                  x: -16
+                  width: 120
+                  height: 52
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: top_mid
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Today Solar"
+                    - label:
+                        id: solar_today_value
+                        align: bottom_mid
+                        text_font: nunito_20
+                        text_color: color_yellow
+                        text: "-- kWh"
+
+        # ── BOTTOM NAV ───────────────────────────────────────
+        - obj:
+            id: energy_bottom_nav
+            y: 444
+            width: 460
+            height: 30
+            align: top_mid
+            radius: 0
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - button:
+                  align: left_mid
+                  x: 20
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: home_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF06A1"
+
+              - button:
+                  align: left_mid
+                  x: 90
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\uF0241"
+
+              - button:
+                  align: center
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: weather_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF0F9B"
+
+              - button:
+                  align: right_mid
+                  x: -90
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF056E"
+
+              - button:
+                  align: right_mid
+                  x: -20
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - script.execute: trigger_night_mode
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF04B2"
+
+# ── Energy page update script ────────────────────────────────
+    - id: weather_page
+      bg_color: color_black
+      scrollable: false
+      widgets:
+
+        # ── TOP STATUS BAR ───────────────────────────────────
+        - obj:
+            id: weather_status_bar
+            y: 8
+            width: 460
+            height: 40
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  id: wifi_status_weather
+                  align: left_mid
+                  x: 16
+                  text: "\ue934"
+                  text_font: icons_24
+                  text_color: color_steel_blue
+              - label:
+                  align: center
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "Climate"
+              - label:
+                  id: weather_time
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "00:00"
+
+        # ── OUTDOOR TEMPERATURE — BIG HERO ───────────────────
+        - obj:
+            id: outdoor_hero_card
+            y: 60
+            width: 440
+            height: 160
+            align: top_mid
+            radius: 20
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+
+              # Weather condition icon (left)
+              - label:
+                  id: weather_icon_label
+                  align: left_mid
+                  x: 24
+                  text_font: mdi_icons_52
+                  text_color: color_sky_blue
+                  text: "\uF0F9B"   # default: cloud
+
+              # Outdoor temperature (center)
+              - label:
+                  id: outdoor_temp_value
+                  align: center
+                  text_font: nunito_64
+                  text_color: color_white
+                  text: "--°"
+
+              # Condition description (bottom)
+              - label:
+                  id: weather_condition_text
+                  align: bottom_mid
+                  y: -12
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Unknown"
+
+              # Outdoor label (top left)
+              - label:
+                  align: top_left
+                  x: 16
+                  y: 10
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "Outdoor"
+
+        # ── INDOOR CLIMATE CARD ──────────────────────────────
+        - obj:
+            id: indoor_card
+            y: 232
+            width: 440
+            height: 110
+            align: top_mid
+            radius: 20
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+
+              - label:
+                  align: top_left
+                  x: 16
+                  y: 10
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "Indoor"
+
+              # Temperature
+              - obj:
+                  align: left_mid
+                  x: 30
+                  y: 10
+                  width: 140
+                  height: 64
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: top_mid
+                        text_font: icons_48
+                        text_color: color_orange
+                        text: "\ue939"   # temperature icon
+                    - label:
+                        id: indoor_temp_value
+                        align: bottom_mid
+                        text_font: nunito_30
+                        text_color: color_white
+                        text: "--°C"
+
+              # Separator
+              - obj:
+                  align: center
+                  width: 2
+                  height: 70
+                  bg_color: color_steel_blue
+                  border_opa: transp
+                  shadow_opa: transp
+                  clickable: false
+
+              # Humidity
+              - obj:
+                  align: right_mid
+                  x: -30
+                  y: 10
+                  width: 140
+                  height: 64
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: top_mid
+                        text_font: icons_48
+                        text_color: color_sky_blue
+                        text: "\ue938"   # humidity icon
+                    - label:
+                        id: indoor_humidity_value
+                        align: bottom_mid
+                        text_font: nunito_30
+                        text_color: color_white
+                        text: "--%"
+
+        # ── COMFORT INDEX ────────────────────────────────────
+        - obj:
+            id: comfort_card
+            y: 354
+            width: 440
+            height: 72
+            align: top_mid
+            radius: 16
+            pad_left: 20
+            pad_right: 20
+            pad_top: 8
+            pad_bottom: 8
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              - label:
+                  align: left_mid
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Feels like"
+              - label:
+                  id: feels_like_value
+                  align: center
+                  text_font: nunito_30
+                  text_color: color_mint
+                  text: "--°C"
+              - label:
+                  id: comfort_label
+                  align: right_mid
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Comfortable"
+
+        # ── BOTTOM NAV ───────────────────────────────────────
+        - obj:
+            id: weather_bottom_nav
+            y: 444
+            width: 460
+            height: 30
+            align: top_mid
+            radius: 0
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - button:
+                  align: left_mid
+                  x: 20
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: home_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF06A1"
+              - button:
+                  align: left_mid
+                  x: 90
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: energy_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF0241"
+              - button:
+                  align: center
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\uF0F9B"
+              - button:
+                  align: right_mid
+                  x: -90
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF056E"
+              - button:
+                  align: right_mid
+                  x: -20
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - script.execute: trigger_night_mode
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF04B2"
+
+# ── Weather page update script ───────────────────────────────
+    - id: scenes_page
+      bg_color: color_black
+      scrollable: false
+      widgets:
+
+        # ── TOP STATUS BAR ───────────────────────────────────
+        - obj:
+            id: scenes_status_bar
+            y: 8
+            width: 460
+            height: 40
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: center
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "Scenes"
+              - label:
+                  id: scenes_time
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "00:00"
+
+        # ── SECTION: SCENES ──────────────────────────────────
+        - label:
+            id: scenes_section_label
+            y: 58
+            x: 24
+            align: top_left
+            text_font: nunito_16
+            text_color: color_steel_blue
+            text: "SCENES"
+
+        # ── SCENE BUTTON GRID (2 × 3 = 6 buttons) ───────────
+
+        # Row 1 — 3 scene buttons
+        - obj:
+            id: scenes_row1
+            y: 78
+            width: 440
+            height: 100
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+
+              # Button 1: Evening
+              - button:
+                  id: scene_evening_btn
+                  align: left_mid
+                  x: 8
+                  width: 130
+                  height: 90
+                  radius: 16
+                  pad_all: 8
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: scene.turn_on
+                          data:
+                            entity_id: scene.evening
+                      - script.execute: scene_feedback
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_40
+                        text_color: color_amber
+                        text: "\uF0826"   # home
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Evening"
+
+              # Button 2: Night
+              - button:
+                  id: scene_night_btn
+                  align: center
+                  width: 130
+                  height: 90
+                  radius: 16
+                  pad_all: 8
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: scene.turn_on
+                          data:
+                            entity_id: scene.night
+                      - script.execute: scene_feedback
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_52
+                        text_color: color_violet
+                        text: "\uF1828"   # shield moon
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Night"
+
+              # Button 3: Away
+              - button:
+                  id: scene_away_btn
+                  align: right_mid
+                  x: -8
+                  width: 130
+                  height: 90
+                  radius: 16
+                  pad_all: 8
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: scene.turn_on
+                          data:
+                            entity_id: scene.away
+                      - script.execute: scene_feedback
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_40
+                        text_color: color_sky_blue
+                        text: "\uF0F9B"   # cloud / away
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Away"
+
+        # Row 2 — 3 more scene/device buttons
+        - obj:
+            id: scenes_row2
+            y: 188
+            width: 440
+            height: 100
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+
+              # Button 4: Morning
+              - button:
+                  id: scene_morning_btn
+                  align: left_mid
+                  x: 8
+                  width: 130
+                  height: 90
+                  radius: 16
+                  pad_all: 8
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: scene.turn_on
+                          data:
+                            entity_id: scene.morning
+                      - script.execute: scene_feedback
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_40
+                        text_color: color_yellow
+                        text: "\uF015B"   # fire/sun
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Morning"
+
+              # Button 5: Movie
+              - button:
+                  id: scene_movie_btn
+                  align: center
+                  width: 130
+                  height: 90
+                  radius: 16
+                  pad_all: 8
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: scene.turn_on
+                          data:
+                            entity_id: scene.movie
+                      - script.execute: scene_feedback
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_40
+                        text_color: color_crimson
+                        text: "\uF040A"   # play
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Movie"
+
+              # Button 6: All Off
+              - button:
+                  id: scene_alloff_btn
+                  align: right_mid
+                  x: -8
+                  width: 130
+                  height: 90
+                  radius: 16
+                  pad_all: 8
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: homeassistant.turn_off
+                          data:
+                            entity_id: group.all_lights
+                      - script.execute: scene_feedback
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_40
+                        text_color: color_gray
+                        text: "\uF0906"   # power
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "All Off"
+
+        # ── SECTION: QUICK DEVICES ───────────────────────────
+        - label:
+            id: devices_section_label
+            y: 298
+            x: 24
+            align: top_left
+            text_font: nunito_16
+            text_color: color_steel_blue
+            text: "QUICK DEVICES"
+
+        # Device row — 4 toggle tiles
+        - obj:
+            id: devices_row
+            y: 318
+            width: 440
+            height: 90
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+
+              # Device 1: Woonkamer light
+              - button:
+                  id: dev_woonkamer_btn
+                  align: left_mid
+                  x: 8
+                  width: 96
+                  height: 80
+                  radius: 16
+                  pad_all: 6
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: light.toggle
+                          data:
+                            entity_id: light.woonkamer
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 4
+                        text_font: mdi_icons_40
+                        text_color: color_amber
+                        text: "\uF0241"   # flash = power/light
+                    - label:
+                        align: bottom_mid
+                        y: -2
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Living"
+
+              # Device 2: Slaapkamer
+              - button:
+                  id: dev_slaapkamer_btn
+                  align: left_mid
+                  x: 116
+                  width: 96
+                  height: 80
+                  radius: 16
+                  pad_all: 6
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: light.toggle
+                          data:
+                            entity_id: light.slaapkamer
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 4
+                        text_font: mdi_icons_40
+                        text_color: color_violet
+                        text: "\uF04B2"   # sleep moon
+                    - label:
+                        align: bottom_mid
+                        y: -2
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom"
+
+              # Device 3: Keuken
+              - button:
+                  id: dev_keuken_btn
+                  align: right_mid
+                  x: -116
+                  width: 96
+                  height: 80
+                  radius: 16
+                  pad_all: 6
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: light.toggle
+                          data:
+                            entity_id: light.keuken
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 4
+                        text_font: mdi_icons_40
+                        text_color: color_light_mint
+                        text: "\uF08DD"   # floor lamp
+                    - label:
+                        align: bottom_mid
+                        y: -2
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Kitchen"
+
+              # Device 4: All toggle
+              - button:
+                  id: dev_all_btn
+                  align: right_mid
+                  x: -8
+                  width: 96
+                  height: 80
+                  radius: 16
+                  pad_all: 6
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.service:
+                          service: light.toggle
+                          data:
+                            entity_id: group.all_lights
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 4
+                        text_font: mdi_icons_40
+                        text_color: color_sky_blue
+                        text: "\uF18DD"   # ceiling light multiple
+                    - label:
+                        align: bottom_mid
+                        y: -2
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "All"
+
+        # ── BOTTOM NAV ───────────────────────────────────────
+        - obj:
+            id: scenes_bottom_nav
+            y: 444
+            width: 460
+            height: 30
+            align: top_mid
+            radius: 0
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - button:
+                  align: left_mid
+                  x: 20
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: home_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF06A1"
+              - button:
+                  align: left_mid
+                  x: 90
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: energy_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF0241"
+              - button:
+                  align: center
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: weather_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF0F9B"
+              - button:
+                  align: right_mid
+                  x: -90
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\uF056E"
+              - button:
+                  align: right_mid
+                  x: -20
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - script.execute: trigger_night_mode
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\uF04B2"
+
+# ── Scene feedback script (brief visual flash) ───────────────
+
+# ── Boot sequence ────────────────────────────────────────────
+# ESPHome executes on_boot after all components are ready
+esphome:
+  on_boot:
+    priority: -200
+    then:
+      - lvgl.page.show: home_page
+      - script.execute: update_clock
+      - script.execute: update_ticker
