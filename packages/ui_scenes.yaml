@@ -319,7 +319,7 @@ lvgl:
                         y: 4
                         text_font: mdi_icons_40
                         text_color: color_amber
-                        text: "\uF0F14"   # ceiling light (fallback: \uF0241)
+                        text: "\uF0241"   # flash = power/light
                     - label:
                         align: bottom_mid
                         y: -2
