@@ -285,12 +285,8 @@ font:
       "\U000F0597", # thermometer
     ]
 
-# ── Eve character image ──────────────────────────────────────
-image:
-  - file: "images/eve_placeholder.png"
-    id: eve_sprite
-    type: RGB
-    transparency: alpha_channel
+# Eve head images are declared in packages/expressions.yaml
+# (head_colored, head_blond, etc.) — see expressions.yaml
 
 # ── LVGL home page ───────────────────────────────────────────
 
