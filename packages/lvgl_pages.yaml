@@ -263,6 +263,7 @@ lvgl:
                   text_font: nunito_16
                   text_color: color_misty_blue
                   long_mode: SCROLL_CIRCULAR
+                  anim_speed: 40
                   text: "Eve Display ready  ·  Touch to wake  ·  Home Assistant connected  ·  "
 
         # ── BOTTOM NAV BAR ───────────────────────────────────
@@ -474,22 +475,22 @@ lvgl:
               - label:
                   id: grid_power_value
                   align: center
-                  y: -10
+                  y: 0
                   text_font: nunito_36
                   text_color: color_orange
                   text: "-- W"
 
               - label:
                   align: center
-                  y: 30
+                  y: 40
                   text_font: nunito_16
                   text_color: color_misty_blue
                   text: "Grid"
 
-              # Icon top-center of arc
+              # Icon above value inside arc
               - label:
-                  align: top_mid
-                  y: 10
+                  align: center
+                  y: -38
                   text_font: mdi_icons_28
                   text_color: color_orange
                   text: "\U000F0241"   # flash
@@ -530,21 +531,21 @@ lvgl:
               - label:
                   id: solar_power_value
                   align: center
-                  y: -10
+                  y: 0
                   text_font: nunito_36
                   text_color: color_yellow
                   text: "-- W"
 
               - label:
                   align: center
-                  y: 30
+                  y: 40
                   text_font: nunito_16
                   text_color: color_misty_blue
                   text: "Solar"
 
               - label:
-                  align: top_mid
-                  y: 10
+                  align: center
+                  y: -38
                   text_font: mdi_icons_28
                   text_color: color_yellow
                   text: "\U000F1107"   # solar panel icon
@@ -610,13 +611,15 @@ lvgl:
                   widgets:
                     - label:
                         align: top_mid
+                        y: 2
                         text_font: nunito_16
                         text_color: color_misty_blue
                         text: "Today Grid"
                     - label:
                         id: grid_today_value
                         align: bottom_mid
-                        text_font: nunito_20
+                        y: -2
+                        text_font: nunito_16
                         text_color: color_orange
                         text: "-- kWh"
 
@@ -643,13 +646,15 @@ lvgl:
                   widgets:
                     - label:
                         align: top_mid
+                        y: 2
                         text_font: nunito_16
                         text_color: color_misty_blue
                         text: "Today Solar"
                     - label:
                         id: solar_today_value
                         align: bottom_mid
-                        text_font: nunito_20
+                        y: -2
+                        text_font: nunito_16
                         text_color: color_yellow
                         text: "-- kWh"
 
@@ -872,25 +877,27 @@ lvgl:
                   text_color: color_steel_blue
                   text: "Indoor"
 
-              # Temperature
+              # Temperature - icon left, value right
               - obj:
                   align: left_mid
-                  x: 30
+                  x: 20
                   y: 10
-                  width: 140
+                  width: 160
                   height: 64
                   bg_opa: transp
                   border_opa: transp
                   shadow_opa: transp
                   widgets:
                     - label:
-                        align: top_mid
-                        text_font: icons_48
+                        align: left_mid
+                        x: 8
+                        text_font: icons_28
                         text_color: color_orange
                         text: "\ue939"   # temperature icon
                     - label:
                         id: indoor_temp_value
-                        align: bottom_mid
+                        align: right_mid
+                        x: -8
                         text_font: nunito_30
                         text_color: color_white
                         text: "--°C"
@@ -905,25 +912,27 @@ lvgl:
                   shadow_opa: transp
                   clickable: false
 
-              # Humidity
+              # Humidity - icon left, value right
               - obj:
                   align: right_mid
-                  x: -30
+                  x: -20
                   y: 10
-                  width: 140
+                  width: 160
                   height: 64
                   bg_opa: transp
                   border_opa: transp
                   shadow_opa: transp
                   widgets:
                     - label:
-                        align: top_mid
-                        text_font: icons_48
+                        align: left_mid
+                        x: 8
+                        text_font: icons_28
                         text_color: color_sky_blue
                         text: "\ue938"   # humidity icon
                     - label:
                         id: indoor_humidity_value
-                        align: bottom_mid
+                        align: right_mid
+                        x: -8
                         text_font: nunito_30
                         text_color: color_white
                         text: "--%"
@@ -1179,7 +1188,7 @@ lvgl:
                     - label:
                         align: top_mid
                         y: 6
-                        text_font: mdi_icons_52
+                        text_font: mdi_icons_40
                         text_color: color_violet
                         text: "\U000F1828"   # shield moon
                     - label:
