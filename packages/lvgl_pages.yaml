@@ -13,9 +13,18 @@ lvgl:
     - id: loading_page
       bg_color: 0x0d0d1a
       scrollable: false
-      on_load:
+      on_ready:
+        - delay: 1s
+        # Start the loading bar animation after a short delay
+        - lvgl.bar.update:
+            id: loading_bar
+            value: 100
+            animated: true
         - delay: 3s
-        - lvgl.page.show: home_page
+        - lvgl.page.show:
+            id: home_page
+            animation: fade_in
+            time: 400ms
       widgets:
         - obj:
             align: center
@@ -31,13 +40,13 @@ lvgl:
               - label:
                   align: center
                   text: "Eve"
-                  text_font: nunito_48
+                  text_font: montserrat_48
                   text_color: 0xe8d5ff
         - label:
             align: center
             y: 110
             text: "Starting up..."
-            text_font: nunito_16
+            text_font: montserrat_14
             text_color: 0x8899aa
         - bar:
             id: loading_bar
@@ -51,11 +60,6 @@ lvgl:
               bg_color: 0x9b59b6
             value: 0
             animated: true
-            on_ready:
-              - lvgl.bar.update:
-                  id: loading_bar
-                  value: 100
-                  animated: true
 
     - id: home_page
       bg_color: color_black
