@@ -1149,8 +1149,8 @@ lvgl:
                   shadow_opa: transp
                   on_click:
                     then:
-                      - homeassistant.service:
-                          service: scene.turn_on
+                      - homeassistant.action:
+                          action: scene.turn_on
                           data:
                             entity_id: scene.evening
                       - script.execute: scene_feedback
@@ -1181,8 +1181,8 @@ lvgl:
                   shadow_opa: transp
                   on_click:
                     then:
-                      - homeassistant.service:
-                          service: scene.turn_on
+                      - homeassistant.action:
+                          action: scene.turn_on
                           data:
                             entity_id: scene.night
                       - script.execute: scene_feedback
@@ -1214,8 +1214,8 @@ lvgl:
                   shadow_opa: transp
                   on_click:
                     then:
-                      - homeassistant.service:
-                          service: scene.turn_on
+                      - homeassistant.action:
+                          action: scene.turn_on
                           data:
                             entity_id: scene.away
                       - script.execute: scene_feedback
@@ -1261,8 +1261,8 @@ lvgl:
                   shadow_opa: transp
                   on_click:
                     then:
-                      - homeassistant.service:
-                          service: scene.turn_on
+                      - homeassistant.action:
+                          action: scene.turn_on
                           data:
                             entity_id: scene.morning
                       - script.execute: scene_feedback
@@ -1293,8 +1293,8 @@ lvgl:
                   shadow_opa: transp
                   on_click:
                     then:
-                      - homeassistant.service:
-                          service: scene.turn_on
+                      - homeassistant.action:
+                          action: scene.turn_on
                           data:
                             entity_id: scene.movie
                       - script.execute: scene_feedback
@@ -1326,8 +1326,8 @@ lvgl:
                   shadow_opa: transp
                   on_click:
                     then:
-                      - homeassistant.service:
-                          service: homeassistant.turn_off
+                      - homeassistant.action:
+                          action: homeassistant.turn_off
                           data:
                             entity_id: group.all_lights
                       - script.execute: scene_feedback
@@ -1383,8 +1383,8 @@ lvgl:
                   shadow_opa: transp
                   on_click:
                     then:
-                      - homeassistant.service:
-                          service: light.toggle
+                      - homeassistant.action:
+                          action: light.toggle
                           data:
                             entity_id: light.woonkamer
                   widgets:
@@ -1415,8 +1415,8 @@ lvgl:
                   shadow_opa: transp
                   on_click:
                     then:
-                      - homeassistant.service:
-                          service: light.toggle
+                      - homeassistant.action:
+                          action: light.toggle
                           data:
                             entity_id: light.slaapkamer
                   widgets:
@@ -1447,8 +1447,8 @@ lvgl:
                   shadow_opa: transp
                   on_click:
                     then:
-                      - homeassistant.service:
-                          service: light.toggle
+                      - homeassistant.action:
+                          action: light.toggle
                           data:
                             entity_id: light.keuken
                   widgets:
@@ -1479,8 +1479,8 @@ lvgl:
                   shadow_opa: transp
                   on_click:
                     then:
-                      - homeassistant.service:
-                          service: light.toggle
+                      - homeassistant.action:
+                          action: light.toggle
                           data:
                             entity_id: group.all_lights
                   widgets:
