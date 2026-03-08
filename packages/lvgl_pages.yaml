@@ -279,7 +279,7 @@ lvgl:
                   text_font: nunito_16
                   text_color: color_misty_blue
                   long_mode: SCROLL_CIRCULAR
-                  anim_time: 10000
+                  anim_time: 10000ms
                   text: "Eve Display ready  ·  Touch to wake  ·  Home Assistant connected  ·  "
 
         # ── BOTTOM NAV BAR ───────────────────────────────────
