@@ -63,6 +63,10 @@ time:
   - platform: sntp
     id: sntp_time
     timezone: "Europe/Amsterdam"
+    on_time_sync:
+      then:
+        - script.execute: update_clock
+        - script.execute: update_ticker
     on_time:
       # Update clock every minute
       - minutes: '*'
