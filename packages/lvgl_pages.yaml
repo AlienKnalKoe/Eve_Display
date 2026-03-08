@@ -54,13 +54,11 @@ lvgl:
               bg_color: 0x9b59b6
             value: 0
             animated: true
-            on_load:
+            on_ready:
               - lvgl.bar.update:
                   id: loading_bar
                   value: 100
-                  animated:
-                    duration: 2800ms
-                    path: ease_out
+                  animated: true
 
     - id: home_page
       bg_color: color_black
