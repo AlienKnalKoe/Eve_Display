@@ -279,7 +279,7 @@ lvgl:
                   text_font: nunito_16
                   text_color: color_misty_blue
                   long_mode: SCROLL_CIRCULAR
-                  anim_speed: 40
+                  anim_time: 10000
                   text: "Eve Display ready  ·  Touch to wake  ·  Home Assistant connected  ·  "
 
         # ── BOTTOM NAV BAR ───────────────────────────────────
@@ -626,15 +626,15 @@ lvgl:
                   shadow_opa: transp
                   widgets:
                     - label:
-                        align: top_mid
-                        y: 2
+                        align: center
+                        y: -10
                         text_font: nunito_16
                         text_color: color_misty_blue
                         text: "Today Grid"
                     - label:
                         id: grid_today_value
-                        align: bottom_mid
-                        y: -2
+                        align: center
+                        y: 10
                         text_font: nunito_16
                         text_color: color_orange
                         text: "-- kWh"
@@ -661,15 +661,15 @@ lvgl:
                   shadow_opa: transp
                   widgets:
                     - label:
-                        align: top_mid
-                        y: 2
+                        align: center
+                        y: -10
                         text_font: nunito_16
                         text_color: color_misty_blue
                         text: "Today Solar"
                     - label:
                         id: solar_today_value
-                        align: bottom_mid
-                        y: -2
+                        align: center
+                        y: 10
                         text_font: nunito_16
                         text_color: color_yellow
                         text: "-- kWh"
