@@ -211,3 +211,42 @@ script:
           id(current_expression) = expr;
       - script.execute: set_expression
 
+  # eve_talk: animate mouth open↔normal to simulate speaking
+  # Cycles N times (default 4 cycles = ~1.6 seconds)
+  # Usage: script.execute: eve_talk
+  - id: eve_talk
+    mode: single
+    then:
+      - repeat:
+          count: 4
+          then:
+            - lvgl.image.update:
+                id: eve_mouth_layer
+                src: mouth_open
+            - delay: 200ms
+            - lvgl.image.update:
+                id: eve_mouth_layer
+                src: mouth_normal
+            - delay: 200ms
+
+  # eve_blink: single eye blink animation
+  - id: eve_blink
+    mode: single
+    then:
+      - lvgl.image.update:
+          id: eve_eye_layer
+          src: eye_closed
+      - delay: 150ms
+      - lvgl.image.update:
+          id: eve_eye_layer
+          src: eye_open
+
+  # eve_auto_blink: periodic blink (call once to start, it restarts itself)
+  - id: eve_auto_blink
+    mode: restart
+    then:
+      - delay: 4000ms
+      - script.execute: eve_blink
+      - delay: 500ms
+      - script.execute: eve_auto_blink
+
