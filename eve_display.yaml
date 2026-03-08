@@ -1,5 +1,7 @@
 # ============================================================
 # Eve Display — main config
+# Hardware: Guition ESP32-S3-4848S040 (480×480, 16 MB flash)
+# ESPHome: 2026.2.4
 # Run with: esphome run eve_display.yaml --device COM5
 # ============================================================
 
@@ -9,6 +11,11 @@ esphome:
   min_version: 2026.2.0
 
 packages:
-  hardware: !include packages/hardware_core.yaml
-  sensors:  !include packages/sensors.yaml
-  theme:    !include eve_display_theme_starter.yaml
+  hardware:     !include packages/hardware_core.yaml
+  sensors:      !include packages/sensors.yaml
+  ui_home:      !include packages/ui_home.yaml
+  ui_energy:    !include packages/ui_energy.yaml
+  ui_weather:   !include packages/ui_weather.yaml
+  ui_scenes:    !include packages/ui_scenes.yaml
+  expressions:  !include packages/expressions.yaml
+  automations:  !include packages/automations.yaml
