@@ -80,7 +80,7 @@ lvgl:
                   id: ha_status
                   align: left_mid
                   x: 52
-                  text: "\uF07D0"
+                  text: "\U000F07D0"
                   text_font: mdi_icons_28
                   text_color: color_steel_blue
 
@@ -192,7 +192,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_40
                         text_color: color_amber
-                        text: "\uF0241"   # flash/power = energy
+                        text: "\U000F0241"   # flash/power = energy
 
               # CENTER: Eve sprite
               - obj:
@@ -237,7 +237,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_sky_blue
-                        text: "\uF056E"   # devices
+                        text: "\U000F056E"   # devices
 
         # ── TICKER BAR ───────────────────────────────────────
         - obj:
@@ -298,7 +298,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_sky_blue
-                        text: "\uF06A1"
+                        text: "\U000F06A1"
 
               # Energy
               - button:
@@ -321,7 +321,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF0241"   # flash
+                        text: "\U000F0241"   # flash
 
               # Weather
               - button:
@@ -343,7 +343,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF0F9B"   # cloud
+                        text: "\U000F0F9B"   # cloud
 
               # Scenes
               - button:
@@ -366,7 +366,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF056E"
+                        text: "\U000F056E"
 
               # Settings/sleep
               - button:
@@ -386,7 +386,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF04B2"   # sleep
+                        text: "\U000F04B2"   # sleep
 
 # ── Clock / date update script ───────────────────────────────
     - id: energy_page
@@ -419,7 +419,7 @@ lvgl:
                   id: ha_status_energy
                   align: left_mid
                   x: 52
-                  text: "\uF07D0"
+                  text: "\U000F07D0"
                   text_font: mdi_icons_28
                   text_color: color_steel_blue
 
@@ -492,7 +492,7 @@ lvgl:
                   y: 10
                   text_font: mdi_icons_28
                   text_color: color_orange
-                  text: "\uF0241"   # flash
+                  text: "\U000F0241"   # flash
 
         # ── SOLAR ARC ────────────────────────────────────────
         - obj:
@@ -547,7 +547,7 @@ lvgl:
                   y: 10
                   text_font: mdi_icons_28
                   text_color: color_yellow
-                  text: "\uF1107"   # solar panel icon
+                  text: "\U000F1107"   # solar panel icon
 
         # ── NET USAGE CARD ───────────────────────────────────
         - obj:
@@ -685,7 +685,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF06A1"
+                        text: "\U000F06A1"
 
               - button:
                   align: left_mid
@@ -700,7 +700,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_sky_blue
-                        text: "\uF0241"
+                        text: "\U000F0241"
 
               - button:
                   align: center
@@ -720,7 +720,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF0F9B"
+                        text: "\U000F0F9B"
 
               - button:
                   align: right_mid
@@ -741,7 +741,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF056E"
+                        text: "\U000F056E"
 
               - button:
                   align: right_mid
@@ -759,7 +759,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF04B2"
+                        text: "\U000F04B2"
 
 # ── Energy page update script ────────────────────────────────
     - id: weather_page
@@ -821,7 +821,7 @@ lvgl:
                   x: 24
                   text_font: mdi_icons_52
                   text_color: color_sky_blue
-                  text: "\uF0F9B"   # default: cloud
+                  text: "\U000F0F9B"   # default: cloud
 
               # Outdoor temperature (center)
               - label:
@@ -995,7 +995,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF06A1"
+                        text: "\U000F06A1"
               - button:
                   align: left_mid
                   x: 90
@@ -1015,7 +1015,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF0241"
+                        text: "\U000F0241"
               - button:
                   align: center
                   width: 60
@@ -1028,7 +1028,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_sky_blue
-                        text: "\uF0F9B"
+                        text: "\U000F0F9B"
               - button:
                   align: right_mid
                   x: -90
@@ -1048,7 +1048,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF056E"
+                        text: "\U000F056E"
               - button:
                   align: right_mid
                   x: -20
@@ -1065,7 +1065,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF04B2"
+                        text: "\U000F04B2"
 
 # ── Weather page update script ───────────────────────────────
     - id: scenes_page
@@ -1149,7 +1149,7 @@ lvgl:
                         y: 6
                         text_font: mdi_icons_40
                         text_color: color_amber
-                        text: "\uF0826"   # home
+                        text: "\U000F0826"   # home
                     - label:
                         align: bottom_mid
                         y: -4
@@ -1181,7 +1181,7 @@ lvgl:
                         y: 6
                         text_font: mdi_icons_52
                         text_color: color_violet
-                        text: "\uF1828"   # shield moon
+                        text: "\U000F1828"   # shield moon
                     - label:
                         align: bottom_mid
                         y: -4
@@ -1214,7 +1214,7 @@ lvgl:
                         y: 6
                         text_font: mdi_icons_40
                         text_color: color_sky_blue
-                        text: "\uF0F9B"   # cloud / away
+                        text: "\U000F0F9B"   # cloud / away
                     - label:
                         align: bottom_mid
                         y: -4
@@ -1261,7 +1261,7 @@ lvgl:
                         y: 6
                         text_font: mdi_icons_40
                         text_color: color_yellow
-                        text: "\uF015B"   # fire/sun
+                        text: "\U000F015B"   # fire/sun
                     - label:
                         align: bottom_mid
                         y: -4
@@ -1293,7 +1293,7 @@ lvgl:
                         y: 6
                         text_font: mdi_icons_40
                         text_color: color_crimson
-                        text: "\uF040A"   # play
+                        text: "\U000F040A"   # play
                     - label:
                         align: bottom_mid
                         y: -4
@@ -1326,7 +1326,7 @@ lvgl:
                         y: 6
                         text_font: mdi_icons_40
                         text_color: color_gray
-                        text: "\uF0906"   # power
+                        text: "\U000F0906"   # power
                     - label:
                         align: bottom_mid
                         y: -4
@@ -1382,7 +1382,7 @@ lvgl:
                         y: 4
                         text_font: mdi_icons_40
                         text_color: color_amber
-                        text: "\uF0241"   # flash = power/light
+                        text: "\U000F0241"   # flash = power/light
                     - label:
                         align: bottom_mid
                         y: -2
@@ -1414,7 +1414,7 @@ lvgl:
                         y: 4
                         text_font: mdi_icons_40
                         text_color: color_violet
-                        text: "\uF04B2"   # sleep moon
+                        text: "\U000F04B2"   # sleep moon
                     - label:
                         align: bottom_mid
                         y: -2
@@ -1446,7 +1446,7 @@ lvgl:
                         y: 4
                         text_font: mdi_icons_40
                         text_color: color_light_mint
-                        text: "\uF08DD"   # floor lamp
+                        text: "\U000F08DD"   # floor lamp
                     - label:
                         align: bottom_mid
                         y: -2
@@ -1478,7 +1478,7 @@ lvgl:
                         y: 4
                         text_font: mdi_icons_40
                         text_color: color_sky_blue
-                        text: "\uF18DD"   # ceiling light multiple
+                        text: "\U000F18DD"   # ceiling light multiple
                     - label:
                         align: bottom_mid
                         y: -2
@@ -1518,7 +1518,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF06A1"
+                        text: "\U000F06A1"
               - button:
                   align: left_mid
                   x: 90
@@ -1538,7 +1538,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF0241"
+                        text: "\U000F0241"
               - button:
                   align: center
                   width: 60
@@ -1557,7 +1557,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF0F9B"
+                        text: "\U000F0F9B"
               - button:
                   align: right_mid
                   x: -90
@@ -1571,7 +1571,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_sky_blue
-                        text: "\uF056E"
+                        text: "\U000F056E"
               - button:
                   align: right_mid
                   x: -20
@@ -1588,7 +1588,7 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\uF04B2"
+                        text: "\U000F04B2"
 
 # ── Scene feedback script (brief visual flash) ───────────────
 
