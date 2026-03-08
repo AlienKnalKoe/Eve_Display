@@ -194,7 +194,7 @@ lvgl:
                         text_color: color_amber
                         text: "\U000F0241"   # flash/power = energy
 
-              # CENTER: Eve sprite
+              # CENTER: Eve face — layered head + eyes + mouth
               - obj:
                   id: eve_circle
                   align: center
@@ -205,12 +205,28 @@ lvgl:
                   bg_color: color_black
                   border_opa: transp
                   shadow_opa: transp
+                  clip_corner: true
                   clickable: false
                   widgets:
+                    # Layer 1: Head base
                     - image:
                         id: eve_image
                         align: center
-                        src: eve_sprite
+                        src: head_colored
+
+                    # Layer 2: Eyes (positioned ~35% down, centered)
+                    - image:
+                        id: eve_eye_layer
+                        align: center
+                        y: -16
+                        src: eye_open
+
+                    # Layer 3: Mouth (positioned ~64% down, centered)
+                    - image:
+                        id: eve_mouth_layer
+                        align: center
+                        y: 30
+                        src: mouth_normal
 
               # RIGHT button — navigate to scenes page
               - button:
