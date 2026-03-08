@@ -267,7 +267,6 @@ font:
       "\U000F0906", # power (all off)
       "\U000F08DD", # floor lamp
       "\U000F18DD", # ceiling light multiple
-      "\U000F0F14", # ceiling fan light (woonkamer)
       "\U000F04B2", # sleep (bedroom)
     ]
 
