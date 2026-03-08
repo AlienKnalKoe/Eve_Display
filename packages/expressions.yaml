@@ -153,41 +153,32 @@ script:
 
           ESP_LOGI("expr", "Expression %d: eye=%d mouth=%d", expr, eye_idx, mouth_idx);
 
-          // Swap eye image
-          lv_img_src_t eye_src;
-          switch (eye_idx) {
-            case 1:  eye_src = &id(eye_closed);  break;
-            default: eye_src = &id(eye_open);    break;
-          }
-          lv_img_set_src(id(eve_eye_layer), eye_src);
+          // Swap eye image — pass id() directly (esphome::image::Image*)
+          if (eye_idx == 1)
+            lv_img_set_src(id(eve_eye_layer), id(eye_closed));
+          else
+            lv_img_set_src(id(eve_eye_layer), id(eye_open));
 
           // Swap mouth image
-          lv_img_src_t mouth_src;
-          switch (mouth_idx) {
-            case 1:  mouth_src = &id(mouth_happy);        break;
-            case 2:  mouth_src = &id(mouth_smile_closed); break;
-            case 3:  mouth_src = &id(mouth_open);         break;
-            case 4:  mouth_src = &id(mouth_surprised);    break;
-            case 5:  mouth_src = &id(mouth_closed);       break;
-            default: mouth_src = &id(mouth_normal);       break;
-          }
-          lv_img_set_src(id(eve_mouth_layer), mouth_src);
+          if      (mouth_idx == 1) lv_img_set_src(id(eve_mouth_layer), id(mouth_happy));
+          else if (mouth_idx == 2) lv_img_set_src(id(eve_mouth_layer), id(mouth_smile_closed));
+          else if (mouth_idx == 3) lv_img_set_src(id(eve_mouth_layer), id(mouth_open));
+          else if (mouth_idx == 4) lv_img_set_src(id(eve_mouth_layer), id(mouth_surprised));
+          else if (mouth_idx == 5) lv_img_set_src(id(eve_mouth_layer), id(mouth_closed));
+          else                     lv_img_set_src(id(eve_mouth_layer), id(mouth_normal));
 
   # set_head_variant: swap Eve's head image (0=colored, 1=blond, 2=black, 3=brown, 4=blue, 5=kroes)
   - id: set_head_variant
     then:
       - lambda: |-
           int idx = id(current_head_idx);
-          lv_img_src_t src;
-          switch (idx) {
-            case 1:  src = &id(head_blond);   break;
-            case 2:  src = &id(head_black);   break;
-            case 3:  src = &id(head_brown);   break;
-            case 4:  src = &id(head_blue);    break;
-            case 5:  src = &id(head_kroes);   break;
-            default: src = &id(head_colored); break;
-          }
-          lv_img_set_src(id(eve_image), src);
+          // Pass id() directly — no intermediate lv_img_src_t needed
+          if      (idx == 1) lv_img_set_src(id(eve_image), id(head_blond));
+          else if (idx == 2) lv_img_set_src(id(eve_image), id(head_black));
+          else if (idx == 3) lv_img_set_src(id(eve_image), id(head_brown));
+          else if (idx == 4) lv_img_set_src(id(eve_image), id(head_blue));
+          else if (idx == 5) lv_img_set_src(id(eve_image), id(head_kroes));
+          else               lv_img_set_src(id(eve_image), id(head_colored));
 
   # Map HA emotion string → expression index
   - id: handle_eve_emotion
