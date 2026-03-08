@@ -1,10 +1,61 @@
+# ============================================================
+# Eve Display — Sensors & Connectivity
+# Includes: WiFi, API, OTA, logger, SNTP, HA sensors
+# ============================================================
+
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
+  on_connect:
+    then:
+      - lvgl.label.update:
+          id: wifi_status
+          text: "\ue934"
+          text_color: color_mint
+      - lvgl.label.update:
+          id: wifi_status_energy
+          text: "\ue934"
+          text_color: color_mint
+      - lvgl.label.update:
+          id: wifi_status_weather
+          text: "\ue934"
+          text_color: color_mint
+  on_disconnect:
+    then:
+      - lvgl.label.update:
+          id: wifi_status
+          text: "\ue931"
+          text_color: color_crimson
+      - lvgl.label.update:
+          id: wifi_status_energy
+          text: "\ue931"
+          text_color: color_crimson
+      - lvgl.label.update:
+          id: wifi_status_weather
+          text: "\ue931"
+          text_color: color_crimson
 
 api:
+  on_client_connected:
+    then:
+      - lvgl.label.update:
+          id: ha_status
+          text_color: color_mint
+      - lvgl.label.update:
+          id: ha_status_energy
+          text_color: color_mint
+  on_client_disconnected:
+    then:
+      - lvgl.label.update:
+          id: ha_status
+          text_color: color_crimson
+      - lvgl.label.update:
+          id: ha_status_energy
+          text_color: color_crimson
+
 ota:
   - platform: esphome
+
 logger:
   level: INFO
 
@@ -13,7 +64,109 @@ time:
     id: sntp_time
     timezone: "Europe/Amsterdam"
     on_time:
+      # Update clock every minute
       - minutes: '*'
         seconds: 0
         then:
           - script.execute: update_clock
+      # Update ticker + sync all page times every 5 minutes
+      - minutes: 0,5,10,15,20,25,30,35,40,45,50,55
+        seconds: 30
+        then:
+          - script.execute: update_ticker
+
+# ── Home Assistant Sensors ───────────────────────────────────
+
+# Electricity usage (kWh, Wh/min, or W depending on HA setup)
+sensor:
+  - platform: homeassistant
+    id: ha_electricity_usage
+    entity_id: sensor.electricity_meter_energieverbruik
+    unit_of_measurement: "W"
+    on_value:
+      then:
+        - script.execute: update_energy_page
+
+  - platform: homeassistant
+    id: ha_solar_power
+    entity_id: sensor.solaredge_current_power
+    unit_of_measurement: "W"
+    on_value:
+      then:
+        - script.execute: update_energy_page
+
+  - platform: homeassistant
+    id: ha_home_temperature
+    entity_id: sensor.home_temperature
+    unit_of_measurement: "°C"
+    on_value:
+      then:
+        - script.execute: update_weather_page
+
+  - platform: homeassistant
+    id: ha_home_humidity
+    entity_id: sensor.home_humidity
+    unit_of_measurement: "%"
+    on_value:
+      then:
+        - script.execute: update_weather_page
+
+  - platform: homeassistant
+    id: ha_outdoor_temperature
+    entity_id: sensor.outdoor_temperature
+    unit_of_measurement: "°C"
+    on_value:
+      then:
+        - script.execute: update_weather_page
+
+  - platform: homeassistant
+    id: ha_wifi_signal
+    entity_id: sensor.eve_display_wifi_signal
+    unit_of_measurement: "dBm"
+    on_value:
+      then:
+        - lambda: |-
+            float rssi = x;
+            // Map RSSI to WiFi icon
+            const char* icon;
+            lv_color_t col;
+            if (rssi >= -50) {
+              icon = "\ue934";  // 100%
+              col = lv_color_hex(0x39d19c);  // mint
+            } else if (rssi >= -65) {
+              icon = "\ue933";  // 75%
+              col = lv_color_hex(0x39d19c);  // mint
+            } else if (rssi >= -75) {
+              icon = "\ue932";  // 50%
+              col = lv_color_hex(0xe7c12c);  // yellow
+            } else {
+              icon = "\ue931";  // 25%
+              col = lv_color_hex(0xf5075c);  // crimson
+            }
+            lv_label_set_text(id(wifi_status), icon);
+            lv_obj_set_style_text_color(id(wifi_status), col, 0);
+            lv_label_set_text(id(wifi_status_energy), icon);
+            lv_obj_set_style_text_color(id(wifi_status_energy), col, 0);
+
+# ── Sun / Day-Night ──────────────────────────────────────────
+text_sensor:
+  - platform: homeassistant
+    id: ha_sun_state
+    entity_id: sun.sun
+    on_value:
+      then:
+        - script.execute: apply_day_night_mode
+
+  - platform: homeassistant
+    id: ha_weather_condition
+    entity_id: sensor.weather_condition
+    on_value:
+      then:
+        - script.execute: update_weather_page
+
+  - platform: homeassistant
+    id: ha_eve_emotion
+    entity_id: sensor.eve_emotion
+    on_value:
+      then:
+        - script.execute: handle_eve_emotion
