@@ -13,18 +13,7 @@ lvgl:
     - id: loading_page
       bg_color: 0x0d0d1a
       scrollable: false
-      on_load:
-        - delay: 1s
-        # Start the loading bar animation after a short delay
-        - lvgl.bar.update:
-            id: loading_bar
-            value: 100
-            animated: true
-        - delay: 3s
-        - lvgl.page.show:
-            id: home_page
-            animation: fade_in
-            time: 400ms
+
       widgets:
         - obj:
             align: center
@@ -1611,3 +1600,13 @@ esphome:
     then:
       - lvgl.page.show: loading_page
       - script.execute: update_clock
+      - delay: 500ms
+      - lvgl.bar.update:
+          id: loading_bar
+          value: 100
+          animated: true
+      - delay: 3s
+      - lvgl.page.show:
+          id: home_page
+          animation: fade_in
+          time: 400ms
