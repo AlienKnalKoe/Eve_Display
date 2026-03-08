@@ -13,7 +13,7 @@ lvgl:
     - id: loading_page
       bg_color: 0x0d0d1a
       scrollable: false
-      on_ready:
+      on_load:
         - delay: 1s
         # Start the loading bar animation after a short delay
         - lvgl.bar.update:
