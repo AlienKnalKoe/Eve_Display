@@ -1,0 +1,134 @@
+# ============================================================
+# Eve Display — Automations
+# Handles: day/night mode, backlight, wake triggers, ticker
+# ============================================================
+
+script:
+
+  # ── apply_day_night_mode ────────────────────────────────────
+  # Called by sensors.yaml when sun.sun state changes
+  - id: apply_day_night_mode
+    then:
+      - lambda: |-
+          std::string sun = id(ha_sun_state).state;
+          bool is_night = (sun == "below_horizon");
+          id(is_night_mode) = is_night;
+
+          if (is_night) {
+            // Night tint on Eve
+            lv_obj_set_style_img_recolor(id(eve_image),
+              lv_color_hex(0x0a0a1a), 0);
+            lv_obj_set_style_img_recolor_opa(id(eve_image), 80, 0);
+
+            // Night brightness cap: 40%
+            id(night_brightness_cap) = 0.4f;
+
+            // Dim display if currently above cap
+            ESP_LOGI("auto", "Night mode: dimming backlight to 40%%");
+          } else {
+            // Day: remove tint
+            lv_obj_set_style_img_recolor_opa(id(eve_image), 0, 0);
+
+            // Full brightness available
+            id(night_brightness_cap) = 1.0f;
+
+            ESP_LOGI("auto", "Day mode: full brightness available");
+          }
+
+  # ── apply_idle_dim ──────────────────────────────────────────
+  # Triggered by idle_dimmer_script after 60s idle
+  - id: apply_idle_dim
+    then:
+      - lambda: |-
+          // Respect night brightness cap
+          float target = id(is_night_mode) ? 0.15f : 0.20f;
+
+          auto call = id(display_backlight).make_call();
+          call.set_brightness(target);
+          call.perform();
+
+  # ── trigger_night_mode ──────────────────────────────────────
+  # Manual night mode toggle from bottom nav
+  - id: trigger_night_mode
+    then:
+      - lambda: |-
+          bool currently_night = id(is_night_mode);
+          id(is_night_mode) = !currently_night;
+
+          if (!currently_night) {
+            // Going to night mode
+            lv_obj_set_style_img_recolor(id(eve_image),
+              lv_color_hex(0x0a0a1a), 0);
+            lv_obj_set_style_img_recolor_opa(id(eve_image), 80, 0);
+            id(night_brightness_cap) = 0.4f;
+
+            auto call = id(display_backlight).make_call();
+            call.set_brightness(0.20f);
+            call.perform();
+          } else {
+            // Going to day mode
+            lv_obj_set_style_img_recolor_opa(id(eve_image), 0, 0);
+            id(night_brightness_cap) = 1.0f;
+
+            auto call = id(display_backlight).make_call();
+            call.set_brightness(0.80f);
+            call.perform();
+          }
+
+  # ── flash_and_wake ──────────────────────────────────────────
+  # Brief flash for doorbell / wake word, then settle at 80%
+  - id: flash_and_wake
+    mode: single
+    then:
+      - light.turn_on:
+          id: display_backlight
+          brightness: 100%
+      - delay: 300ms
+      - light.turn_on:
+          id: display_backlight
+          brightness: 80%
+      - script.execute: idle_dimmer_script
+
+  # ── update_ticker ───────────────────────────────────────────
+  # Updates the scrolling ticker bar on the home page
+  # Called periodically from SNTP on_time every 5 minutes
+  - id: update_ticker
+    then:
+      - lambda: |-
+          auto time = id(sntp_time).now();
+          if (!time.is_valid()) return;
+
+          char ticker[256];
+          bool is_night = id(is_night_mode);
+
+          // Build ticker string with current data
+          float grid = id(ha_electricity_usage).state;
+          float solar = id(ha_solar_power).state;
+          float indoor = id(ha_home_temperature).state;
+
+          char grid_str[16]   = "--";
+          char solar_str[16]  = "--";
+          char indoor_str[16] = "--";
+
+          if (!std::isnan(grid))   snprintf(grid_str,   sizeof(grid_str),   "%.0f W",  grid);
+          if (!std::isnan(solar))  snprintf(solar_str,  sizeof(solar_str),  "%.0f W",  solar);
+          if (!std::isnan(indoor)) snprintf(indoor_str, sizeof(indoor_str), "%.1f°C", indoor);
+
+          snprintf(ticker, sizeof(ticker),
+            "%02d:%02d  ·  Grid %s  ·  Solar %s  ·  Indoor %s  ·  %s  ·  ",
+            time.hour, time.minute,
+            grid_str, solar_str, indoor_str,
+            is_night ? "Night Mode" : "Day Mode"
+          );
+
+          lv_label_set_text(id(ticker_label), ticker);
+
+          // Also sync time on energy/weather/scenes pages
+          char tbuf[6];
+          snprintf(tbuf, sizeof(tbuf), "%02d:%02d", time.hour, time.minute);
+          lv_label_set_text(id(energy_time), tbuf);
+          lv_label_set_text(id(weather_time), tbuf);
+          lv_label_set_text(id(scenes_time), tbuf);
+
+# NOTE: Ticker is updated from sensors.yaml SNTP on_time trigger.
+# See: packages/sensors.yaml — on_time every 5 minutes calls update_ticker.
