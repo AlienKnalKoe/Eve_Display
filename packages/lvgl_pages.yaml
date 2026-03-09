@@ -533,7 +533,7 @@ lvgl:
               # Icon above value inside arc
               - label:
                   align: center
-                  y: -38
+                  y: -22
                   text_font: mdi_icons_28
                   text_color: color_orange
                   text: "\U000F0241"   # flash
@@ -588,7 +588,7 @@ lvgl:
 
               - label:
                   align: center
-                  y: -38
+                  y: -22
                   text_font: mdi_icons_28
                   text_color: color_yellow
                   text: "\U000F1107"   # solar panel icon
@@ -653,15 +653,15 @@ lvgl:
                   shadow_opa: transp
                   widgets:
                     - label:
-                        align: center
-                        y: -10
+                        align: top_mid
+                        y: 4
                         text_font: nunito_16
                         text_color: color_misty_blue
                         text: "Today Grid"
                     - label:
                         id: grid_today_value
-                        align: center
-                        y: 10
+                        align: bottom_mid
+                        y: -4
                         text_font: nunito_16
                         text_color: color_orange
                         text: "-- kWh"
@@ -688,15 +688,15 @@ lvgl:
                   shadow_opa: transp
                   widgets:
                     - label:
-                        align: center
-                        y: -10
+                        align: top_mid
+                        y: 4
                         text_font: nunito_16
                         text_color: color_misty_blue
                         text: "Today Solar"
                     - label:
                         id: solar_today_value
-                        align: center
-                        y: 10
+                        align: bottom_mid
+                        y: -4
                         text_font: nunito_16
                         text_color: color_yellow
                         text: "-- kWh"
@@ -923,9 +923,9 @@ lvgl:
               # Temperature - icon left, value right
               - obj:
                   align: left_mid
-                  x: 20
+                  x: 10
                   y: 10
-                  width: 160
+                  width: 180
                   height: 64
                   bg_opa: transp
                   border_opa: transp
@@ -933,15 +933,15 @@ lvgl:
                   widgets:
                     - label:
                         align: left_mid
-                        x: 8
+                        x: 4
                         text_font: icons_28
                         text_color: color_orange
                         text: "\ue939"   # temperature icon
                     - label:
                         id: indoor_temp_value
                         align: right_mid
-                        x: -8
-                        text_font: nunito_30
+                        x: -4
+                        text_font: nunito_24
                         text_color: color_white
                         text: "--°C"
 
@@ -958,9 +958,9 @@ lvgl:
               # Humidity - icon left, value right
               - obj:
                   align: right_mid
-                  x: -20
+                  x: -10
                   y: 10
-                  width: 160
+                  width: 180
                   height: 64
                   bg_opa: transp
                   border_opa: transp
@@ -968,15 +968,15 @@ lvgl:
                   widgets:
                     - label:
                         align: left_mid
-                        x: 8
+                        x: 4
                         text_font: icons_28
                         text_color: color_sky_blue
                         text: "\ue938"   # humidity icon
                     - label:
                         id: indoor_humidity_value
                         align: right_mid
-                        x: -8
-                        text_font: nunito_30
+                        x: -4
+                        text_font: nunito_24
                         text_color: color_white
                         text: "--%"
 
@@ -1230,8 +1230,8 @@ lvgl:
                   widgets:
                     - label:
                         align: top_mid
-                        y: 6
-                        text_font: mdi_icons_40
+                        y: 8
+                        text_font: mdi_icons_28
                         text_color: color_violet
                         text: "\U000F1828"   # shield moon
                     - label:
@@ -1386,157 +1386,49 @@ lvgl:
                         text_color: color_misty_blue
                         text: "All Off"
 
-        # ── SECTION: QUICK DEVICES ───────────────────────────
-        - label:
-            id: devices_section_label
-            y: 298
-            x: 24
-            align: top_left
-            text_font: nunito_16
-            text_color: color_steel_blue
-            text: "QUICK DEVICES"
-
-        # Device row — 4 toggle tiles
-        - obj:
-            id: devices_row
-            y: 318
+        # ── DINNER ANNOUNCE BUTTON ───────────────────────────
+        - button:
+            id: dinner_nav_btn
+            y: 302
             width: 440
-            height: 90
+            height: 104
             align: top_mid
-            pad_all: 0
-            bg_opa: transp
-            border_opa: transp
+            radius: 20
+            bg_color: color_slate_blue_gray
+            border_color: color_steel_blue
+            border_width: 1
             shadow_opa: transp
-            clickable: false
+            on_click:
+              then:
+                - lvgl.page.show:
+                    id: dinner_page
+                    animation: fade_in
+                    time: 300ms
             widgets:
-
-              # Device 1: Woonkamer light
-              - button:
-                  id: dev_woonkamer_btn
+              - label:
                   align: left_mid
-                  x: 8
-                  width: 96
-                  height: 80
-                  radius: 16
-                  pad_all: 6
-                  bg_color: color_slate_blue_gray
-                  border_opa: transp
-                  shadow_opa: transp
-                  on_click:
-                    then:
-                      - homeassistant.action:
-                          action: light.toggle
-                          data:
-                            entity_id: light.woonkamer
-                  widgets:
-                    - label:
-                        align: top_mid
-                        y: 4
-                        text_font: mdi_icons_40
-                        text_color: color_amber
-                        text: "\U000F0241"   # flash = power/light
-                    - label:
-                        align: bottom_mid
-                        y: -2
-                        text_font: nunito_16
-                        text_color: color_misty_blue
-                        text: "Living"
-
-              # Device 2: Slaapkamer
-              - button:
-                  id: dev_slaapkamer_btn
-                  align: left_mid
-                  x: 116
-                  width: 96
-                  height: 80
-                  radius: 16
-                  pad_all: 6
-                  bg_color: color_slate_blue_gray
-                  border_opa: transp
-                  shadow_opa: transp
-                  on_click:
-                    then:
-                      - homeassistant.action:
-                          action: light.toggle
-                          data:
-                            entity_id: light.slaapkamer
-                  widgets:
-                    - label:
-                        align: top_mid
-                        y: 4
-                        text_font: mdi_icons_40
-                        text_color: color_violet
-                        text: "\U000F04B2"   # sleep moon
-                    - label:
-                        align: bottom_mid
-                        y: -2
-                        text_font: nunito_16
-                        text_color: color_misty_blue
-                        text: "Bedroom"
-
-              # Device 3: Keuken
-              - button:
-                  id: dev_keuken_btn
+                  x: 20
+                  text_font: mdi_icons_40
+                  text_color: color_amber
+                  text: "\U000F019C"   # silverware-fork-knife
+              - label:
+                  align: center
+                  y: -14
+                  text_font: nunito_24
+                  text_color: color_white
+                  text: "Dinner is ready!"
+              - label:
+                  align: center
+                  y: 18
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "Announce to Google speakers"
+              - label:
                   align: right_mid
-                  x: -116
-                  width: 96
-                  height: 80
-                  radius: 16
-                  pad_all: 6
-                  bg_color: color_slate_blue_gray
-                  border_opa: transp
-                  shadow_opa: transp
-                  on_click:
-                    then:
-                      - homeassistant.action:
-                          action: light.toggle
-                          data:
-                            entity_id: light.keuken
-                  widgets:
-                    - label:
-                        align: top_mid
-                        y: 4
-                        text_font: mdi_icons_40
-                        text_color: color_light_mint
-                        text: "\U000F08DD"   # floor lamp
-                    - label:
-                        align: bottom_mid
-                        y: -2
-                        text_font: nunito_16
-                        text_color: color_misty_blue
-                        text: "Kitchen"
-
-              # Device 4: All toggle
-              - button:
-                  id: dev_all_btn
-                  align: right_mid
-                  x: -8
-                  width: 96
-                  height: 80
-                  radius: 16
-                  pad_all: 6
-                  bg_color: color_slate_blue_gray
-                  border_opa: transp
-                  shadow_opa: transp
-                  on_click:
-                    then:
-                      - homeassistant.action:
-                          action: light.toggle
-                          data:
-                            entity_id: group.all_lights
-                  widgets:
-                    - label:
-                        align: top_mid
-                        y: 4
-                        text_font: mdi_icons_40
-                        text_color: color_sky_blue
-                        text: "\U000F18DD"   # ceiling light multiple
-                    - label:
-                        align: bottom_mid
-                        y: -2
-                        text_font: nunito_16
-                        text_color: color_misty_blue
-                        text: "All"
+                  x: -20
+                  text_font: mdi_icons_28
+                  text_color: color_steel_blue
+                  text: "\U000F0156"   # chevron right
 
         # ── BOTTOM NAV ───────────────────────────────────────
         - obj:
@@ -3220,6 +3112,875 @@ lvgl:
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
                         text: "\U000F056E"
+
+# ── LAUNDRY PAGE ─────────────────────────────────────────────
+    # ══════════════════════════════════════════════════════════
+    # LAUNDRY PAGE — Washer + Dryer (AEG)
+    # ══════════════════════════════════════════════════════════
+    - id: laundry_page
+      bg_color: color_black
+      scrollable: false
+      widgets:
+
+        # ── TOP STATUS BAR ───────────────────────────────────
+        - obj:
+            id: laundry_status_bar
+            y: 8
+            width: 460
+            height: 40
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  id: wifi_status_laundry
+                  align: left_mid
+                  x: 16
+                  text: "\ue934"
+                  text_font: icons_24
+                  text_color: color_steel_blue
+              - label:
+                  align: center
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "Laundry"
+              - label:
+                  id: laundry_time
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "00:00"
+
+        # ── WARNING BANNER (hidden by default) ──────────────
+        - obj:
+            id: laundry_warning_banner
+            y: 56
+            width: 440
+            height: 40
+            align: top_mid
+            radius: 10
+            bg_color: 0x7a3000
+            border_color: color_deep_orange
+            border_width: 2
+            shadow_opa: transp
+            hidden: true
+            widgets:
+              - label:
+                  id: laundry_warning_text
+                  align: center
+                  text_font: nunito_16
+                  text_color: color_deep_orange
+                  text: "⚠  Soap low"
+
+        # ── WASHER CARD ──────────────────────────────────────
+        - obj:
+            id: washer_card
+            y: 106
+            width: 440
+            height: 150
+            align: top_mid
+            radius: 20
+            pad_all: 16
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              # Machine icon top-left
+              - label:
+                  align: top_left
+                  x: 0
+                  y: 0
+                  text_font: mdi_icons_40
+                  text_color: color_sky_blue
+                  text: "\U000F058A"   # washing-machine
+
+              # Title
+              - label:
+                  align: top_left
+                  x: 50
+                  y: 8
+                  text_font: nunito_20
+                  text_color: color_white
+                  text: "Washer"
+
+              # Status chip
+              - obj:
+                  id: washer_status_chip
+                  align: top_right
+                  x: 0
+                  y: 4
+                  width: 110
+                  height: 30
+                  radius: 15
+                  bg_color: color_dark_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        id: washer_status_text
+                        align: center
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Idle"
+
+              # Progress bar
+              - obj:
+                  align: top_mid
+                  y: 50
+                  width: 380
+                  height: 4
+                  radius: 2
+                  bg_color: color_dark_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  clickable: false
+                  widgets:
+                    - obj:
+                        id: washer_progress_bar
+                        align: left_mid
+                        y: 0
+                        x: 0
+                        width: 0
+                        height: 4
+                        radius: 2
+                        bg_color: color_sky_blue
+                        border_opa: transp
+                        shadow_opa: transp
+                        clickable: false
+
+              # Program name
+              - label:
+                  id: washer_program_text
+                  align: left_mid
+                  x: 0
+                  y: 10
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "—"
+
+              # Time remaining (big)
+              - label:
+                  id: washer_time_text
+                  align: right_mid
+                  x: 0
+                  y: 10
+                  text_font: nunito_36
+                  text_color: color_sky_blue
+                  text: "--:--"
+
+              # "remaining" label
+              - label:
+                  align: bottom_right
+                  x: -4
+                  y: -4
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "remaining"
+
+        # ── DRYER CARD ───────────────────────────────────────
+        - obj:
+            id: dryer_card
+            y: 270
+            width: 440
+            height: 150
+            align: top_mid
+            radius: 20
+            pad_all: 16
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              # Machine icon top-left
+              - label:
+                  align: top_left
+                  x: 0
+                  y: 0
+                  text_font: mdi_icons_40
+                  text_color: color_amber
+                  text: "\U000F02AD"   # tumble-dryer
+
+              # Title
+              - label:
+                  align: top_left
+                  x: 50
+                  y: 8
+                  text_font: nunito_20
+                  text_color: color_white
+                  text: "Dryer"
+
+              # Status chip
+              - obj:
+                  id: dryer_status_chip
+                  align: top_right
+                  x: 0
+                  y: 4
+                  width: 110
+                  height: 30
+                  radius: 15
+                  bg_color: color_dark_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        id: dryer_status_text
+                        align: center
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Idle"
+
+              # Progress bar
+              - obj:
+                  align: top_mid
+                  y: 50
+                  width: 380
+                  height: 4
+                  radius: 2
+                  bg_color: color_dark_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  clickable: false
+                  widgets:
+                    - obj:
+                        id: dryer_progress_bar
+                        align: left_mid
+                        y: 0
+                        x: 0
+                        width: 0
+                        height: 4
+                        radius: 2
+                        bg_color: color_amber
+                        border_opa: transp
+                        shadow_opa: transp
+                        clickable: false
+
+              # Program name
+              - label:
+                  id: dryer_program_text
+                  align: left_mid
+                  x: 0
+                  y: 10
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "—"
+
+              # Time remaining (big)
+              - label:
+                  id: dryer_time_text
+                  align: right_mid
+                  x: 0
+                  y: 10
+                  text_font: nunito_36
+                  text_color: color_amber
+                  text: "--:--"
+
+              # "remaining" label
+              - label:
+                  align: bottom_right
+                  x: -4
+                  y: -4
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "remaining"
+
+        # ── BOTTOM NAV ───────────────────────────────────────
+        - obj:
+            id: laundry_bottom_nav
+            y: 444
+            width: 460
+            height: 30
+            align: top_mid
+            radius: 0
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - button:
+                  align: left_mid
+                  x: 10
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: home_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F06A1"
+              - button:
+                  align: left_mid
+                  x: 70
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: energy_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0241"
+              - button:
+                  align: left_mid
+                  x: 130
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: vacuum_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F10E4"
+              - button:
+                  align: center
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\U000F058A"   # laundry (active)
+              - button:
+                  align: right_mid
+                  x: -70
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: climate_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F059D"
+              - button:
+                  align: right_mid
+                  x: -10
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F019C"
+
+# ── DINNER PAGE ──────────────────────────────────────────────
+    # ══════════════════════════════════════════════════════════
+    # DINNER PAGE — TTS announcement to Google speakers
+    # ══════════════════════════════════════════════════════════
+    - id: dinner_page
+      bg_color: color_black
+      scrollable: false
+      widgets:
+
+        # ── TOP STATUS BAR ───────────────────────────────────
+        - obj:
+            id: dinner_status_bar
+            y: 8
+            width: 460
+            height: 40
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - button:
+                  align: left_mid
+                  x: 8
+                  width: 40
+                  height: 36
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0156"   # back arrow / close
+              - label:
+                  align: center
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "Dinner Announcement"
+              - label:
+                  id: dinner_time
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_20
+                  text_color: color_misty_blue
+                  text: "00:00"
+
+        # ── BIG DINNER ICON + TITLE ──────────────────────────
+        - obj:
+            y: 60
+            width: 440
+            height: 64
+            align: top_mid
+            radius: 16
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 16
+                  text_font: mdi_icons_40
+                  text_color: color_amber
+                  text: "\U000F019C"   # silverware-fork-knife
+              - label:
+                  align: left_mid
+                  x: 70
+                  text_font: nunito_24
+                  text_color: color_white
+                  text: "Dinner is ready!"
+              - label:
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "Tap rooms below"
+
+        # ── ROOM SELECTOR LABEL ──────────────────────────────
+        - label:
+            y: 136
+            x: 24
+            align: top_left
+            text_font: nunito_16
+            text_color: color_steel_blue
+            text: "ANNOUNCE TO"
+
+        # ── ROOM TOGGLE BUTTONS ──────────────────────────────
+        # Row 1: All + Bedroom 1 + Bedroom 2
+        - obj:
+            id: dinner_room_row1
+            y: 156
+            width: 440
+            height: 68
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              # All rooms
+              - button:
+                  id: dinner_all_btn
+                  align: left_mid
+                  x: 8
+                  width: 130
+                  height: 58
+                  radius: 14
+                  bg_color: color_slate_blue_gray
+                  border_color: color_steel_blue
+                  border_width: 2
+                  shadow_opa: transp
+                  checkable: true
+                  on_click:
+                    then:
+                      - lambda: |-
+                          bool checked = lv_obj_has_state(id(dinner_all_btn), LV_STATE_CHECKED);
+                          // When "All" is checked, check all room buttons
+                          if (checked) {
+                            lv_obj_add_state(id(dinner_bed1_btn), LV_STATE_CHECKED);
+                            lv_obj_add_state(id(dinner_bed2_btn), LV_STATE_CHECKED);
+                            lv_obj_add_state(id(dinner_bed3_btn), LV_STATE_CHECKED);
+                            lv_obj_add_state(id(dinner_bed4_btn), LV_STATE_CHECKED);
+                            lv_obj_add_state(id(dinner_downstairs_btn), LV_STATE_CHECKED);
+                          } else {
+                            lv_obj_clear_state(id(dinner_bed1_btn), LV_STATE_CHECKED);
+                            lv_obj_clear_state(id(dinner_bed2_btn), LV_STATE_CHECKED);
+                            lv_obj_clear_state(id(dinner_bed3_btn), LV_STATE_CHECKED);
+                            lv_obj_clear_state(id(dinner_bed4_btn), LV_STATE_CHECKED);
+                            lv_obj_clear_state(id(dinner_downstairs_btn), LV_STATE_CHECKED);
+                          }
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_28
+                        text_color: color_mint
+                        text: "\U000F06A1"   # home
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "All"
+              # Bedroom 1
+              - button:
+                  id: dinner_bed1_btn
+                  align: center
+                  width: 130
+                  height: 58
+                  radius: 14
+                  bg_color: color_slate_blue_gray
+                  border_color: color_steel_blue
+                  border_width: 2
+                  shadow_opa: transp
+                  checkable: true
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\U000F04B2"   # sleep
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 1"
+              # Bedroom 2
+              - button:
+                  id: dinner_bed2_btn
+                  align: right_mid
+                  x: -8
+                  width: 130
+                  height: 58
+                  radius: 14
+                  bg_color: color_slate_blue_gray
+                  border_color: color_steel_blue
+                  border_width: 2
+                  shadow_opa: transp
+                  checkable: true
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\U000F04B2"   # sleep
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 2"
+
+        # Row 2: Bedroom 3 + Bedroom 4 + Downstairs
+        - obj:
+            id: dinner_room_row2
+            y: 234
+            width: 440
+            height: 68
+            align: top_mid
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              # Bedroom 3
+              - button:
+                  id: dinner_bed3_btn
+                  align: left_mid
+                  x: 8
+                  width: 130
+                  height: 58
+                  radius: 14
+                  bg_color: color_slate_blue_gray
+                  border_color: color_steel_blue
+                  border_width: 2
+                  shadow_opa: transp
+                  checkable: true
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\U000F04B2"   # sleep
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 3"
+              # Bedroom 4
+              - button:
+                  id: dinner_bed4_btn
+                  align: center
+                  width: 130
+                  height: 58
+                  radius: 14
+                  bg_color: color_slate_blue_gray
+                  border_color: color_steel_blue
+                  border_width: 2
+                  shadow_opa: transp
+                  checkable: true
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\U000F04B2"   # sleep
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 4"
+              # Downstairs
+              - button:
+                  id: dinner_downstairs_btn
+                  align: right_mid
+                  x: -8
+                  width: 130
+                  height: 58
+                  radius: 14
+                  bg_color: color_slate_blue_gray
+                  border_color: color_steel_blue
+                  border_width: 2
+                  shadow_opa: transp
+                  checkable: true
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_28
+                        text_color: color_amber
+                        text: "\U000F06A1"   # home
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Downstairs"
+
+        # ── SEND BUTTON ──────────────────────────────────────
+        - button:
+            id: dinner_send_btn
+            y: 316
+            width: 440
+            height: 72
+            align: top_mid
+            radius: 20
+            bg_color: 0x2a4a1a
+            border_color: color_mint
+            border_width: 2
+            shadow_opa: transp
+            on_click:
+              then:
+                - lambda: |-
+                    // Flash button green for feedback
+                    lv_obj_set_style_bg_color(id(dinner_send_btn),
+                      lv_color_hex(0x3a6a2a), LV_PART_MAIN);
+                - if:
+                    condition:
+                      lambda: 'return lv_obj_has_state(id(dinner_bed1_btn), LV_STATE_CHECKED);'
+                    then:
+                      - homeassistant.action:
+                          action: tts.speak
+                          data:
+                            entity_id: tts.google_en_com
+                            media_player_entity_id: media_player.bedroom_1_speaker
+                            message: "Dinner is ready!"
+                - if:
+                    condition:
+                      lambda: 'return lv_obj_has_state(id(dinner_bed2_btn), LV_STATE_CHECKED);'
+                    then:
+                      - homeassistant.action:
+                          action: tts.speak
+                          data:
+                            entity_id: tts.google_en_com
+                            media_player_entity_id: media_player.bedroom_2_speaker
+                            message: "Dinner is ready!"
+                - if:
+                    condition:
+                      lambda: 'return lv_obj_has_state(id(dinner_bed3_btn), LV_STATE_CHECKED);'
+                    then:
+                      - homeassistant.action:
+                          action: tts.speak
+                          data:
+                            entity_id: tts.google_en_com
+                            media_player_entity_id: media_player.bedroom_3_speaker
+                            message: "Dinner is ready!"
+                - if:
+                    condition:
+                      lambda: 'return lv_obj_has_state(id(dinner_bed4_btn), LV_STATE_CHECKED);'
+                    then:
+                      - homeassistant.action:
+                          action: tts.speak
+                          data:
+                            entity_id: tts.google_en_com
+                            media_player_entity_id: media_player.bedroom_4_speaker
+                            message: "Dinner is ready!"
+                - if:
+                    condition:
+                      lambda: 'return lv_obj_has_state(id(dinner_downstairs_btn), LV_STATE_CHECKED);'
+                    then:
+                      - homeassistant.action:
+                          action: tts.speak
+                          data:
+                            entity_id: tts.google_en_com
+                            media_player_entity_id: media_player.downstairs_speaker
+                            message: "Dinner is ready!"
+                - delay: 400ms
+                - lambda: |-
+                    lv_obj_set_style_bg_color(id(dinner_send_btn),
+                      lv_color_hex(0x2a4a1a), LV_PART_MAIN);
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 24
+                  text_font: mdi_icons_40
+                  text_color: color_mint
+                  text: "\U000F019C"   # fork-knife
+              - label:
+                  align: center
+                  text_font: nunito_24
+                  text_color: color_mint
+                  text: "Dinner is ready!"
+              - label:
+                  align: right_mid
+                  x: -20
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "Announce"
+
+        # ── STATUS FEEDBACK LABEL ────────────────────────────
+        - label:
+            id: dinner_feedback_label
+            y: 400
+            align: top_mid
+            text_font: nunito_16
+            text_color: color_mint
+            text: ""
+
+        # ── BOTTOM NAV ───────────────────────────────────────
+        - obj:
+            id: dinner_bottom_nav
+            y: 444
+            width: 460
+            height: 30
+            align: top_mid
+            radius: 0
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - button:
+                  align: left_mid
+                  x: 10
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: home_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F06A1"
+              - button:
+                  align: center
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\U000F056E"   # scenes (active)
+              - button:
+                  align: right_mid
+                  x: -10
+                  width: 60
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: laundry_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F058A"   # washing machine
 
 # ── SETTINGS PAGE ────────────────────────────────────────────
 # Hidden — only accessible via long-press on gear icon (top-right corner of home page)
