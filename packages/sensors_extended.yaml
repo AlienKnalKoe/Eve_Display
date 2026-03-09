@@ -1,0 +1,345 @@
+# ============================================================
+# Eve Display — Extended sensors (vacuum, climate, blinds, settings)
+# Added as separate package to avoid duplicate key conflicts.
+# ============================================================
+
+text_sensor:
+  # ── Vacuum state ──
+  - platform: homeassistant
+    id: ha_vacuum_state
+    entity_id: vacuum.robot_vacuum
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: vacuum_state_label
+            text: !lambda "return x.c_str();"
+
+  # ── WiFi info (for settings page) ──
+  - platform: wifi_info
+    ssid:
+      id: wifi_ssid_info
+      name: "WiFi SSID"
+      on_value:
+        then:
+          - lvgl.label.update:
+              id: settings_wifi_ssid
+              text: !lambda |
+                return "WiFi: " + x;
+    ip_address:
+      id: wifi_ip_info
+      name: "IP Address"
+      on_value:
+        then:
+          - lvgl.label.update:
+              id: settings_ip
+              text: !lambda "return x;"
+
+sensor:
+  - platform: homeassistant
+    id: ha_vacuum_battery
+    entity_id: vacuum.robot_vacuum
+    attribute: battery_level
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: vacuum_battery_label
+            text: !lambda |
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%d%%", (int)x);
+              return std::string(buf);
+
+  - platform: homeassistant
+    id: ha_vacuum_fan_speed
+    entity_id: vacuum.robot_vacuum
+    attribute: fan_speed
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: vacuum_fan_speed_label
+            text: !lambda "return std::to_string((int)x);"
+
+# ══════════════════════════════════════════════════════════════
+# ── FLOOR HEATING / CLIMATE ───────────────────────────────────
+# ══════════════════════════════════════════════════════════════
+
+  - platform: homeassistant
+    id: ha_floor_heat_target
+    entity_id: climate.floor_heating
+    attribute: temperature
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: floor_heat_target_label
+            text: !lambda |
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%.1f°", x);
+              return std::string(buf);
+
+  - platform: homeassistant
+    id: ha_floor_heat_current
+    entity_id: climate.floor_heating
+    attribute: current_temperature
+    on_value:
+      then: []
+
+# Floor heating on/off state
+  - platform: homeassistant
+    id: ha_floor_heat_hvac_action
+    entity_id: climate.floor_heating
+    attribute: hvac_action
+    on_value:
+      then: []
+
+# ══════════════════════════════════════════════════════════════
+# ── TEMPERATURE / HUMIDITY SENSORS ────────────────────────────
+# ══════════════════════════════════════════════════════════════
+
+  # Living Room
+  - platform: homeassistant
+    id: ha_temp_living
+    entity_id: sensor.temp_living_room
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: temp_living
+            text: !lambda |
+              char buf[10]; snprintf(buf,sizeof(buf),"%.1f°C",x); return buf;
+  - platform: homeassistant
+    id: ha_hum_living
+    entity_id: sensor.humidity_living_room
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: hum_living
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+
+  # Bathroom
+  - platform: homeassistant
+    id: ha_temp_bathroom
+    entity_id: sensor.temp_bathroom
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: temp_bathroom
+            text: !lambda |
+              char buf[10]; snprintf(buf,sizeof(buf),"%.1f°C",x); return buf;
+  - platform: homeassistant
+    id: ha_hum_bathroom
+    entity_id: sensor.humidity_bathroom
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: hum_bathroom
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+
+  # Bedroom 1
+  - platform: homeassistant
+    id: ha_temp_bedroom1
+    entity_id: sensor.temp_bedroom1
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: temp_bedroom1
+            text: !lambda |
+              char buf[10]; snprintf(buf,sizeof(buf),"%.1f°C",x); return buf;
+  - platform: homeassistant
+    id: ha_hum_bedroom1
+    entity_id: sensor.humidity_bedroom1
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: hum_bedroom1
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+
+  # Bedroom 2
+  - platform: homeassistant
+    id: ha_temp_bedroom2
+    entity_id: sensor.temp_bedroom2
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: temp_bedroom2
+            text: !lambda |
+              char buf[10]; snprintf(buf,sizeof(buf),"%.1f°C",x); return buf;
+  - platform: homeassistant
+    id: ha_hum_bedroom2
+    entity_id: sensor.humidity_bedroom2
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: hum_bedroom2
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+
+  # Bedroom 3
+  - platform: homeassistant
+    id: ha_temp_bedroom3
+    entity_id: sensor.temp_bedroom3
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: temp_bedroom3
+            text: !lambda |
+              char buf[10]; snprintf(buf,sizeof(buf),"%.1f°C",x); return buf;
+  - platform: homeassistant
+    id: ha_hum_bedroom3
+    entity_id: sensor.humidity_bedroom3
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: hum_bedroom3
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+
+  # Bedroom 4
+  - platform: homeassistant
+    id: ha_temp_bedroom4
+    entity_id: sensor.temp_bedroom4
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: temp_bedroom4
+            text: !lambda |
+              char buf[10]; snprintf(buf,sizeof(buf),"%.1f°C",x); return buf;
+  - platform: homeassistant
+    id: ha_hum_bedroom4
+    entity_id: sensor.humidity_bedroom4
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: hum_bedroom4
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+
+# ══════════════════════════════════════════════════════════════
+# ── BLINDS (cover position) ───────────────────────────────────
+# ══════════════════════════════════════════════════════════════
+
+  - platform: homeassistant
+    id: ha_blind_bedroom1
+    entity_id: cover.blinds_bedroom1
+    attribute: current_position
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: blind_pos_bedroom1
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+  - platform: homeassistant
+    id: ha_blind_bedroom2
+    entity_id: cover.blinds_bedroom2
+    attribute: current_position
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: blind_pos_bedroom2
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+  - platform: homeassistant
+    id: ha_blind_bedroom3
+    entity_id: cover.blinds_bedroom3
+    attribute: current_position
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: blind_pos_bedroom3
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+  - platform: homeassistant
+    id: ha_blind_bedroom4
+    entity_id: cover.blinds_bedroom4
+    attribute: current_position
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: blind_pos_bedroom4
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+  - platform: homeassistant
+    id: ha_blind_hal
+    entity_id: cover.blinds_hal_1st_floor
+    attribute: current_position
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: blind_pos_hal
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+  - platform: homeassistant
+    id: ha_blind_attic
+    entity_id: cover.blinds_attic
+    attribute: current_position
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: blind_pos_attic
+            text: !lambda |
+              char buf[8]; snprintf(buf,sizeof(buf),"%d%%",(int)x); return buf;
+
+# ══════════════════════════════════════════════════════════════
+# ── SETTINGS PAGE — SYSTEM INFO ───────────────────────────────
+# ══════════════════════════════════════════════════════════════
+
+  # Internal CPU temperature
+  - platform: internal_temperature
+    id: cpu_temp
+    name: "CPU Temperature"
+    update_interval: 30s
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: settings_cpu_temp
+            text: !lambda |
+              char buf[20]; snprintf(buf,sizeof(buf),"CPU: %.1f°C",x); return buf;
+
+  # Free heap
+  - platform: template
+    id: free_heap
+    name: "Free Heap"
+    update_interval: 30s
+    unit_of_measurement: "KB"
+    lambda: "return esp_get_free_heap_size() / 1024.0f;"
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: settings_heap
+            text: !lambda |
+              char buf[20]; snprintf(buf,sizeof(buf),"RAM: %d KB",(int)x); return buf;
+
+  # Uptime
+  - platform: uptime
+    id: uptime_sensor
+    name: "Uptime"
+    update_interval: 60s
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: settings_uptime
+            text: !lambda |
+              int s = (int)x;
+              int h = s/3600; int m = (s%3600)/60;
+              char buf[20];
+              if(h>0) snprintf(buf,sizeof(buf),"up %dh %dm",h,m);
+              else snprintf(buf,sizeof(buf),"up %dm",m);
+              return std::string(buf);
+
+  # WiFi RSSI
+  - platform: wifi_signal
+    id: wifi_rssi
+    name: "WiFi Signal"
+    update_interval: 60s
+    on_value:
+      then:
+        - lvgl.label.update:
+            id: settings_wifi_rssi
+            text: !lambda |
+              char buf[12]; snprintf(buf,sizeof(buf),"%d dBm",(int)x); return buf;
+
+# WiFi SSID for settings page
+button:
+  - platform: restart
+    id: restart_btn_internal
+    name: "Restart"
