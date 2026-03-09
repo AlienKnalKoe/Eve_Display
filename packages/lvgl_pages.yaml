@@ -101,6 +101,33 @@ lvgl:
                   text_color: color_misty_blue
                   text: "00:00"
 
+        # ── SETTINGS GEAR (long-press → settings page) ────────
+        # Red gear in top-right corner — long-press to enter settings
+        - button:
+            id: settings_gear_btn
+            align: top_right
+            x: -8
+            y: 8
+            width: 40
+            height: 40
+            radius: 20
+            bg_color: 0x1a0000
+            border_width: 1
+            border_color: 0xaa2222
+            shadow_opa: transp
+            on_long_press:
+              then:
+                - lvgl.page.show:
+                    id: settings_page
+                    animation: fade_in
+                    time: 300ms
+            widgets:
+              - label:
+                  align: center
+                  text_font: mdi_icons_28
+                  text_color: 0xcc3333
+                  text: "\U000F0493"   # mdi:cog
+
         # ── MAIN CLOCK CARD ──────────────────────────────────
         - obj:
             id: main_card
@@ -1616,6 +1643,1815 @@ lvgl:
                         text: "\U000F04B2"
 
 # ── Scene feedback script (brief visual flash) ───────────────
+
+# ── VACUUM PAGE ──────────────────────────────────────────────
+# JONR Robotstofzuiger P20 Pro
+# Entity assumption: vacuum.robot_vacuum (adjust to match your HA entity)
+    - id: vacuum_page
+      bg_color: color_black
+      scrollable: false
+      widgets:
+
+        # ── TOP STATUS BAR ─────────────────────────────────
+        - obj:
+            align: top_mid
+            y: 8
+            width: 460
+            height: 40
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: center
+                  text_font: nunito_24
+                  text_color: color_misty_blue
+                  text: "Robot Vacuum"
+              - label:
+                  align: right_mid
+                  x: -16
+                  text_font: mdi_icons_28
+                  text_color: color_mint
+                  text: "\U000F10E4"   # mdi:robot-vacuum
+
+        # ── ROBOT STATUS CARD ──────────────────────────────
+        - obj:
+            id: vacuum_status_card
+            align: top_mid
+            y: 56
+            width: 440
+            height: 120
+            radius: 20
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  id: vacuum_state_label
+                  align: left_mid
+                  x: 20
+                  text_font: nunito_36
+                  text_color: color_mint
+                  text: "--"
+              - label:
+                  id: vacuum_battery_label
+                  align: right_mid
+                  x: -60
+                  text_font: nunito_24
+                  text_color: color_yellow
+                  text: "--%"
+              - label:
+                  align: right_mid
+                  x: -20
+                  text_font: mdi_icons_28
+                  text_color: color_yellow
+                  text: "\U000F0079"   # mdi:battery
+
+        # ── CONTROL BUTTONS ROW ────────────────────────────
+        - obj:
+            align: top_mid
+            y: 188
+            width: 440
+            height: 100
+            radius: 20
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+
+              # Start / Resume
+              - button:
+                  id: vacuum_start_btn
+                  align: left_mid
+                  x: 16
+                  width: 90
+                  height: 80
+                  radius: 16
+                  bg_color: color_mint
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.action:
+                          action: vacuum.start
+                          data:
+                            entity_id: vacuum.robot_vacuum
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_40
+                        text_color: color_black
+                        text: "\U000F040A"   # mdi:play
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_black
+                        text: "Start"
+
+              # Pause
+              - button:
+                  id: vacuum_pause_btn
+                  align: center
+                  x: -54
+                  width: 90
+                  height: 80
+                  radius: 16
+                  bg_color: color_slate_blue_gray
+                  border_width: 1
+                  border_color: color_steel_blue
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.action:
+                          action: vacuum.pause
+                          data:
+                            entity_id: vacuum.robot_vacuum
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_40
+                        text_color: color_misty_blue
+                        text: "\U000F03E4"   # mdi:pause
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Pause"
+
+              # Stop
+              - button:
+                  id: vacuum_stop_btn
+                  align: center
+                  x: 54
+                  width: 90
+                  height: 80
+                  radius: 16
+                  bg_color: color_slate_blue_gray
+                  border_width: 1
+                  border_color: color_steel_blue
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.action:
+                          action: vacuum.stop
+                          data:
+                            entity_id: vacuum.robot_vacuum
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_40
+                        text_color: color_orange
+                        text: "\U000F0497"   # mdi:stop
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_orange
+                        text: "Stop"
+
+              # Return to dock
+              - button:
+                  id: vacuum_dock_btn
+                  align: right_mid
+                  x: -16
+                  width: 90
+                  height: 80
+                  radius: 16
+                  bg_color: color_slate_blue_gray
+                  border_width: 1
+                  border_color: color_steel_blue
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.action:
+                          action: vacuum.return_to_base
+                          data:
+                            entity_id: vacuum.robot_vacuum
+                  widgets:
+                    - label:
+                        align: top_mid
+                        y: 6
+                        text_font: mdi_icons_40
+                        text_color: color_violet
+                        text: "\U000F10E5"   # mdi:robot-vacuum (dock variant)
+                    - label:
+                        align: bottom_mid
+                        y: -4
+                        text_font: nunito_16
+                        text_color: color_violet
+                        text: "Dock"
+
+        # ── FAN SPEED / SUCTION ────────────────────────────
+        - obj:
+            align: top_mid
+            y: 300
+            width: 440
+            height: 60
+            radius: 16
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 16
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Suction"
+              - label:
+                  id: vacuum_fan_speed_label
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_24
+                  text_color: color_sky_blue
+                  text: "--"
+
+        # ── BOTTOM NAV ─────────────────────────────────────
+        - obj:
+            id: vacuum_bottom_nav
+            y: 444
+            width: 460
+            height: 30
+            align: top_mid
+            radius: 0
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - button:
+                  align: left_mid
+                  x: 10
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: home_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F06A1"
+              - button:
+                  align: left_mid
+                  x: 70
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: energy_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0241"
+              - button:
+                  align: center
+                  x: -60
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: climate_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F059D"
+              - button:
+                  align: center
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\U000F10E4"
+              - button:
+                  align: center
+                  x: 60
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: blinds_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0046"
+              - button:
+                  align: right_mid
+                  x: -10
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F056E"
+
+# ── CLIMATE PAGE ─────────────────────────────────────────────
+# Floor heating/cooling + 6 temp/hum sensors
+    - id: climate_page
+      bg_color: color_black
+      scrollable: false
+      widgets:
+
+        # ── HEADER ─────────────────────────────────────────
+        - obj:
+            align: top_mid
+            y: 8
+            width: 460
+            height: 40
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: center
+                  text_font: nunito_24
+                  text_color: color_misty_blue
+                  text: "Climate"
+              - label:
+                  align: right_mid
+                  x: -16
+                  text_font: mdi_icons_28
+                  text_color: color_orange
+                  text: "\U000F059D"   # mdi:radiator
+
+        # ── FLOOR HEATING CONTROL CARD ─────────────────────
+        - obj:
+            align: top_mid
+            y: 56
+            width: 440
+            height: 100
+            radius: 20
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 20
+                  text_font: mdi_icons_40
+                  text_color: color_orange
+                  text: "\U000F059D"
+              - label:
+                  align: left_mid
+                  x: 72
+                  text_font: nunito_24
+                  text_color: color_misty_blue
+                  text: "Floor Heating"
+              # On/Off toggle button
+              - button:
+                  id: floor_heat_toggle
+                  align: right_mid
+                  x: -100
+                  width: 80
+                  height: 40
+                  radius: 20
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.action:
+                          action: climate.toggle
+                          data:
+                            entity_id: climate.floor_heating
+                  widgets:
+                    - label:
+                        id: floor_heat_state_label
+                        align: center
+                        text_font: nunito_16
+                        text_color: color_mint
+                        text: "--"
+              # Target temperature
+              - label:
+                  id: floor_heat_target_label
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_24
+                  text_color: color_orange
+                  text: "--°"
+
+        # ── TEMP/HUM SENSOR GRID (2 columns × 3 rows) ──────
+        # Row 1: Living room | Bathroom
+        # Row 2: Bedroom 1   | Bedroom 2
+        # Row 3: Bedroom 3   | Bedroom 4
+
+        - obj:
+            align: top_mid
+            y: 168
+            width: 440
+            height: 260
+            radius: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+
+              # ── Living Room ───────────────────────────────
+              - obj:
+                  align: top_left
+                  x: 0
+                  y: 0
+                  width: 210
+                  height: 78
+                  radius: 16
+                  bg_color: color_card_bg
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: top_left
+                        x: 10
+                        y: 6
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Living Room"
+                    - label:
+                        id: temp_living
+                        align: bottom_left
+                        x: 10
+                        y: -6
+                        text_font: nunito_24
+                        text_color: color_sky_blue
+                        text: "--°C"
+                    - label:
+                        id: hum_living
+                        align: bottom_right
+                        x: -10
+                        y: -6
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--%"
+
+              # ── Bathroom ──────────────────────────────────
+              - obj:
+                  align: top_right
+                  x: 0
+                  y: 0
+                  width: 210
+                  height: 78
+                  radius: 16
+                  bg_color: color_card_bg
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: top_left
+                        x: 10
+                        y: 6
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bathroom"
+                    - label:
+                        id: temp_bathroom
+                        align: bottom_left
+                        x: 10
+                        y: -6
+                        text_font: nunito_24
+                        text_color: color_sky_blue
+                        text: "--°C"
+                    - label:
+                        id: hum_bathroom
+                        align: bottom_right
+                        x: -10
+                        y: -6
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--%"
+
+              # ── Bedroom 1 ─────────────────────────────────
+              - obj:
+                  align: top_left
+                  x: 0
+                  y: 88
+                  width: 210
+                  height: 78
+                  radius: 16
+                  bg_color: color_card_bg
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: top_left
+                        x: 10
+                        y: 6
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 1"
+                    - label:
+                        id: temp_bedroom1
+                        align: bottom_left
+                        x: 10
+                        y: -6
+                        text_font: nunito_24
+                        text_color: color_sky_blue
+                        text: "--°C"
+                    - label:
+                        id: hum_bedroom1
+                        align: bottom_right
+                        x: -10
+                        y: -6
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--%"
+
+              # ── Bedroom 2 ─────────────────────────────────
+              - obj:
+                  align: top_right
+                  x: 0
+                  y: 88
+                  width: 210
+                  height: 78
+                  radius: 16
+                  bg_color: color_card_bg
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: top_left
+                        x: 10
+                        y: 6
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 2"
+                    - label:
+                        id: temp_bedroom2
+                        align: bottom_left
+                        x: 10
+                        y: -6
+                        text_font: nunito_24
+                        text_color: color_sky_blue
+                        text: "--°C"
+                    - label:
+                        id: hum_bedroom2
+                        align: bottom_right
+                        x: -10
+                        y: -6
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--%"
+
+              # ── Bedroom 3 ─────────────────────────────────
+              - obj:
+                  align: top_left
+                  x: 0
+                  y: 176
+                  width: 210
+                  height: 78
+                  radius: 16
+                  bg_color: color_card_bg
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: top_left
+                        x: 10
+                        y: 6
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 3"
+                    - label:
+                        id: temp_bedroom3
+                        align: bottom_left
+                        x: 10
+                        y: -6
+                        text_font: nunito_24
+                        text_color: color_sky_blue
+                        text: "--°C"
+                    - label:
+                        id: hum_bedroom3
+                        align: bottom_right
+                        x: -10
+                        y: -6
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--%"
+
+              # ── Bedroom 4 ─────────────────────────────────
+              - obj:
+                  align: top_right
+                  x: 0
+                  y: 176
+                  width: 210
+                  height: 78
+                  radius: 16
+                  bg_color: color_card_bg
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: top_left
+                        x: 10
+                        y: 6
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 4"
+                    - label:
+                        id: temp_bedroom4
+                        align: bottom_left
+                        x: 10
+                        y: -6
+                        text_font: nunito_24
+                        text_color: color_sky_blue
+                        text: "--°C"
+                    - label:
+                        id: hum_bedroom4
+                        align: bottom_right
+                        x: -10
+                        y: -6
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--%"
+
+        # ── BOTTOM NAV ─────────────────────────────────────
+        - obj:
+            id: climate_bottom_nav
+            y: 444
+            width: 460
+            height: 30
+            align: top_mid
+            radius: 0
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - button:
+                  align: left_mid
+                  x: 10
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: home_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F06A1"
+              - button:
+                  align: left_mid
+                  x: 70
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: energy_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0241"
+              - button:
+                  align: center
+                  x: -60
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: vacuum_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F10E4"
+              - button:
+                  align: center
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\U000F059D"
+              - button:
+                  align: center
+                  x: 60
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: blinds_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0046"
+              - button:
+                  align: right_mid
+                  x: -10
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F056E"
+
+# ── BLINDS PAGE ──────────────────────────────────────────────
+# 6 covers: 4 bedrooms + hal 1st floor + attic
+    - id: blinds_page
+      bg_color: color_black
+      scrollable: false
+      widgets:
+
+        # ── HEADER ─────────────────────────────────────────
+        - obj:
+            align: top_mid
+            y: 8
+            width: 460
+            height: 40
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: center
+                  text_font: nunito_24
+                  text_color: color_misty_blue
+                  text: "Blinds"
+              - label:
+                  align: right_mid
+                  x: -16
+                  text_font: mdi_icons_28
+                  text_color: color_sky_blue
+                  text: "\U000F0046"   # mdi:blinds
+
+        # ── ALL BLINDS QUICK ROW ───────────────────────────
+        - obj:
+            align: top_mid
+            y: 56
+            width: 440
+            height: 52
+            radius: 16
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 16
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "All blinds"
+              - button:
+                  align: right_mid
+                  x: -120
+                  width: 48
+                  height: 36
+                  radius: 10
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.action:
+                          action: cover.open_cover
+                          data:
+                            entity_id: group.all_blinds
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_mint
+                        text: "\U000F004F"   # mdi:arrow-up
+              - button:
+                  align: right_mid
+                  x: -66
+                  width: 48
+                  height: 36
+                  radius: 10
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.action:
+                          action: cover.stop_cover
+                          data:
+                            entity_id: group.all_blinds
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_orange
+                        text: "\U000F04DB"   # mdi:stop
+              - button:
+                  align: right_mid
+                  x: -12
+                  width: 48
+                  height: 36
+                  radius: 10
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.action:
+                          action: cover.close_cover
+                          data:
+                            entity_id: group.all_blinds
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0045"   # mdi:arrow-down
+
+        # ── INDIVIDUAL BLIND ROWS ──────────────────────────
+        # Each row: room label | open | stop | close | position%
+
+        # Blind row macro (repeated 6×):
+        # bedroom1: cover.blinds_bedroom1
+        # bedroom2: cover.blinds_bedroom2
+        # bedroom3: cover.blinds_bedroom3
+        # bedroom4: cover.blinds_bedroom4
+        # hal_1st:  cover.blinds_hal_1st_floor
+        # attic:    cover.blinds_attic
+
+        - obj:
+            align: top_mid
+            y: 120
+            width: 440
+            height: 200
+            radius: 16
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+
+              # ── Bedroom 1 ───────────────────
+              - obj:
+                  align: top_left
+                  x: 8
+                  y: 8
+                  width: 420
+                  height: 28
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: left_mid
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 1"
+                    - label:
+                        id: blind_pos_bedroom1
+                        align: center
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--%"
+                    - button:
+                        align: right_mid
+                        x: -110
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.open_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom1
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_mint
+                              text: "\U000F004F"
+                    - button:
+                        align: right_mid
+                        x: -68
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.stop_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom1
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_orange
+                              text: "\U000F04DB"
+                    - button:
+                        align: right_mid
+                        x: -26
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.close_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom1
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_misty_blue
+                              text: "\U000F0045"
+
+              # ── Bedroom 2 ───────────────────
+              - obj:
+                  align: top_left
+                  x: 8
+                  y: 44
+                  width: 420
+                  height: 28
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: left_mid
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 2"
+                    - label:
+                        id: blind_pos_bedroom2
+                        align: center
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--%"
+                    - button:
+                        align: right_mid
+                        x: -110
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.open_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom2
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_mint
+                              text: "\U000F004F"
+                    - button:
+                        align: right_mid
+                        x: -68
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.stop_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom2
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_orange
+                              text: "\U000F04DB"
+                    - button:
+                        align: right_mid
+                        x: -26
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.close_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom2
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_misty_blue
+                              text: "\U000F0045"
+
+              # ── Bedroom 3 ───────────────────
+              - obj:
+                  align: top_left
+                  x: 8
+                  y: 80
+                  width: 420
+                  height: 28
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: left_mid
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 3"
+                    - label:
+                        id: blind_pos_bedroom3
+                        align: center
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--%"
+                    - button:
+                        align: right_mid
+                        x: -110
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.open_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom3
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_mint
+                              text: "\U000F004F"
+                    - button:
+                        align: right_mid
+                        x: -68
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.stop_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom3
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_orange
+                              text: "\U000F04DB"
+                    - button:
+                        align: right_mid
+                        x: -26
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.close_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom3
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_misty_blue
+                              text: "\U000F0045"
+
+              # ── Bedroom 4 ───────────────────
+              - obj:
+                  align: top_left
+                  x: 8
+                  y: 116
+                  width: 420
+                  height: 28
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: left_mid
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Bedroom 4"
+                    - label:
+                        id: blind_pos_bedroom4
+                        align: center
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--%"
+                    - button:
+                        align: right_mid
+                        x: -110
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.open_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom4
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_mint
+                              text: "\U000F004F"
+                    - button:
+                        align: right_mid
+                        x: -68
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.stop_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom4
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_orange
+                              text: "\U000F04DB"
+                    - button:
+                        align: right_mid
+                        x: -26
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.close_cover
+                                data:
+                                  entity_id: cover.blinds_bedroom4
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_misty_blue
+                              text: "\U000F0045"
+
+              # ── Hal 1st Floor ────────────────
+              - obj:
+                  align: top_left
+                  x: 8
+                  y: 152
+                  width: 420
+                  height: 28
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: left_mid
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "Hal 1st Floor"
+                    - label:
+                        id: blind_pos_hal
+                        align: center
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--%"
+                    - button:
+                        align: right_mid
+                        x: -110
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.open_cover
+                                data:
+                                  entity_id: cover.blinds_hal_1st_floor
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_mint
+                              text: "\U000F004F"
+                    - button:
+                        align: right_mid
+                        x: -68
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.stop_cover
+                                data:
+                                  entity_id: cover.blinds_hal_1st_floor
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_orange
+                              text: "\U000F04DB"
+                    - button:
+                        align: right_mid
+                        x: -26
+                        width: 36
+                        height: 24
+                        radius: 8
+                        bg_color: color_slate_blue_gray
+                        border_opa: transp
+                        shadow_opa: transp
+                        on_click:
+                          then:
+                            - homeassistant.action:
+                                action: cover.close_cover
+                                data:
+                                  entity_id: cover.blinds_hal_1st_floor
+                        widgets:
+                          - label:
+                              align: center
+                              text_font: mdi_icons_24
+                              text_color: color_misty_blue
+                              text: "\U000F0045"
+
+        # ── ATTIC BLIND (wider card) ────────────────────────
+        - obj:
+            align: top_mid
+            y: 332
+            width: 440
+            height: 44
+            radius: 16
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 16
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Attic"
+              - label:
+                  id: blind_pos_attic
+                  align: center
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "--%"
+              - button:
+                  align: right_mid
+                  x: -110
+                  width: 36
+                  height: 32
+                  radius: 8
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.action:
+                          action: cover.open_cover
+                          data:
+                            entity_id: cover.blinds_attic
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_24
+                        text_color: color_mint
+                        text: "\U000F004F"
+              - button:
+                  align: right_mid
+                  x: -68
+                  width: 36
+                  height: 32
+                  radius: 8
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.action:
+                          action: cover.stop_cover
+                          data:
+                            entity_id: cover.blinds_attic
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_24
+                        text_color: color_orange
+                        text: "\U000F04DB"
+              - button:
+                  align: right_mid
+                  x: -26
+                  width: 36
+                  height: 32
+                  radius: 8
+                  bg_color: color_slate_blue_gray
+                  border_opa: transp
+                  shadow_opa: transp
+                  on_click:
+                    then:
+                      - homeassistant.action:
+                          action: cover.close_cover
+                          data:
+                            entity_id: cover.blinds_attic
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_24
+                        text_color: color_misty_blue
+                        text: "\U000F0045"
+
+        # ── BOTTOM NAV ─────────────────────────────────────
+        - obj:
+            id: blinds_bottom_nav
+            y: 444
+            width: 460
+            height: 30
+            align: top_mid
+            radius: 0
+            pad_all: 0
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - button:
+                  align: left_mid
+                  x: 10
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: home_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F06A1"
+              - button:
+                  align: left_mid
+                  x: 70
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: energy_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0241"
+              - button:
+                  align: center
+                  x: -60
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: vacuum_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F10E4"
+              - button:
+                  align: center
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: climate_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F059D"
+              - button:
+                  align: center
+                  x: 60
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_sky_blue
+                        text: "\U000F0046"
+              - button:
+                  align: right_mid
+                  x: -10
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: scenes_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F056E"
+
+# ── SETTINGS PAGE ────────────────────────────────────────────
+# Hidden — only accessible via long-press on gear icon (top-right corner of home page)
+    - id: settings_page
+      bg_color: color_black
+      scrollable: false
+      widgets:
+
+        # ── HEADER ─────────────────────────────────────────
+        - obj:
+            align: top_mid
+            y: 8
+            width: 460
+            height: 40
+            pad_all: 0
+            bg_opa: transp
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: center
+                  text_font: nunito_24
+                  text_color: color_misty_blue
+                  text: "Settings"
+              # Close / back button
+              - button:
+                  align: right_mid
+                  x: -8
+                  width: 40
+                  height: 36
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: home_page
+                          animation: fade_in
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0156"   # mdi:close
+
+        # ── DEVICE INFO CARD ───────────────────────────────
+        - obj:
+            align: top_mid
+            y: 56
+            width: 440
+            height: 140
+            radius: 20
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              # WiFi SSID
+              - label:
+                  align: top_left
+                  x: 16
+                  y: 12
+                  text_font: mdi_icons_24
+                  text_color: color_sky_blue
+                  text: "\U000F05A9"   # mdi:wifi
+              - label:
+                  id: settings_wifi_ssid
+                  align: top_left
+                  x: 44
+                  y: 14
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "WiFi: --"
+              - label:
+                  id: settings_wifi_rssi
+                  align: top_right
+                  x: -16
+                  y: 14
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "-- dBm"
+
+              # HA Connection
+              - label:
+                  align: top_left
+                  x: 16
+                  y: 46
+                  text_font: mdi_icons_24
+                  text_color: color_violet
+                  text: "\U000F06E0"   # mdi:home-assistant
+              - label:
+                  id: settings_ha_status
+                  align: top_left
+                  x: 44
+                  y: 48
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "HA: --"
+              - label:
+                  id: settings_ip
+                  align: top_right
+                  x: -16
+                  y: 48
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "--"
+
+              # CPU temp
+              - label:
+                  align: top_left
+                  x: 16
+                  y: 80
+                  text_font: mdi_icons_24
+                  text_color: color_orange
+                  text: "\U000F050F"   # mdi:thermometer
+              - label:
+                  id: settings_cpu_temp
+                  align: top_left
+                  x: 44
+                  y: 82
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "CPU: --°C"
+
+              # Heap free
+              - label:
+                  align: top_left
+                  x: 16
+                  y: 112
+                  text_font: mdi_icons_24
+                  text_color: color_mint
+                  text: "\U000F035B"   # mdi:memory
+              - label:
+                  id: settings_heap
+                  align: top_left
+                  x: 44
+                  y: 114
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "RAM: -- KB"
+
+        # ── BRIGHTNESS SLIDER ──────────────────────────────
+        - obj:
+            align: top_mid
+            y: 210
+            width: 440
+            height: 72
+            radius: 16
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 16
+                  text_font: mdi_icons_28
+                  text_color: color_yellow
+                  text: "\U000F0335"   # mdi:brightness-6
+              - label:
+                  align: left_mid
+                  x: 54
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Brightness"
+              - slider:
+                  id: brightness_slider
+                  align: right_mid
+                  x: -16
+                  width: 220
+                  height: 20
+                  min_value: 10
+                  max_value: 100
+                  value: 100
+                  indicator:
+                    bg_color: color_yellow
+                  knob:
+                    bg_color: color_yellow
+                    radius: 12
+                    width: 24
+                    height: 24
+                  on_value:
+                    then:
+                      - light.turn_on:
+                          id: display_backlight
+                          brightness: !lambda "return x / 100.0f;"
+
+        # ── ESPHome / IP info ──────────────────────────────
+        - obj:
+            align: top_mid
+            y: 296
+            width: 440
+            height: 56
+            radius: 16
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 16
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "ESPHome 2026.2.4  •  ESP32-S3"
+              - label:
+                  id: settings_uptime
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "up --"
+
+        # ── Restart button ─────────────────────────────────
+        - button:
+            id: settings_restart_btn
+            align: top_mid
+            y: 366
+            width: 200
+            height: 48
+            radius: 24
+            bg_color: 0x3a1a1a
+            border_width: 1
+            border_color: 0xaa3333
+            shadow_opa: transp
+            on_click:
+              then:
+                - button.press: restart_btn_internal
+            widgets:
+              - label:
+                  align: center
+                  text_font: nunito_16
+                  text_color: 0xcc4444
+                  text: "Restart"
 
 # ── Boot sequence ────────────────────────────────────────────
 # ESPHome executes on_boot after all components are ready
