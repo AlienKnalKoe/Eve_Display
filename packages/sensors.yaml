@@ -3,6 +3,14 @@
 # Includes: WiFi, API, OTA, logger, SNTP, HA sensors
 # ============================================================
 
+esphome:
+  on_boot:
+    priority: -100.0   # Run after display is initialized
+    then:
+      - delay: 3s
+      - script.execute: update_clock
+      - script.execute: update_ticker
+
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
@@ -21,6 +29,10 @@ wifi:
           id: wifi_status_weather
           text: "\ue934"
           text_color: color_mint
+      - lvgl.label.update:
+          id: wifi_status_laundry
+          text: "\ue934"
+          text_color: color_mint
   on_disconnect:
     then:
       - lvgl.label.update:
@@ -33,6 +45,10 @@ wifi:
           text_color: color_crimson
       - lvgl.label.update:
           id: wifi_status_weather
+          text: "\ue931"
+          text_color: color_crimson
+      - lvgl.label.update:
+          id: wifi_status_laundry
           text: "\ue931"
           text_color: color_crimson
 
@@ -155,6 +171,8 @@ sensor:
             lv_obj_set_style_text_color(id(wifi_status), col, 0);
             lv_label_set_text(id(wifi_status_energy), icon);
             lv_obj_set_style_text_color(id(wifi_status_energy), col, 0);
+            lv_label_set_text(id(wifi_status_laundry), icon);
+            lv_obj_set_style_text_color(id(wifi_status_laundry), col, 0);
 
 # ── Sun / Day-Night ──────────────────────────────────────────
 text_sensor:
