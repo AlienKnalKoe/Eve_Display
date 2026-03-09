@@ -362,6 +362,7 @@
     "\U000F0046", # blinds (blinds nav + header icon)
     "\U000F0079", # battery (vacuum battery icon)
     "\U000F1107", # solar-panel (solar arc icon)
+    "\U000F0682", # console (serial logging toggle)
   ]
 
 - file: "assets/fonts/materialdesignicons-webfont.ttf"

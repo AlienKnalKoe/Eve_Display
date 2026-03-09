@@ -4090,7 +4090,7 @@ lvgl:
 # Hidden — only accessible via long-press on gear icon (top-right corner of home page)
     - id: settings_page
       bg_color: color_black
-      scrollable: false
+      scrollable: true
       widgets:
 
         # ── HEADER ─────────────────────────────────────────
@@ -4296,11 +4296,59 @@ lvgl:
                   text_color: color_steel_blue
                   text: "up --"
 
+        # ── SERIAL LOGGING TOGGLE ──────────────────────────
+        - obj:
+            align: top_mid
+            y: 366
+            width: 440
+            height: 56
+            radius: 16
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 16
+                  text_font: mdi_icons_28
+                  text_color: color_steel_blue
+                  text: "\U000F0682"   # mdi:console
+              - label:
+                  align: left_mid
+                  x: 54
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Serial Logging"
+              - switch:
+                  id: settings_log_toggle
+                  align: right_mid
+                  x: -16
+                  width: 52
+                  height: 28
+                  bg_color: color_steel_blue
+                  checked:
+                    bg_color: color_mint
+                  indicator:
+                    bg_color: color_steel_blue
+                    checked:
+                      bg_color: color_mint
+                  knob:
+                    bg_color: color_misty_blue
+                  on_value:
+                    then:
+                      - if:
+                          condition:
+                            switch.is_on: settings_log_toggle
+                          then:
+                            - switch.turn_on: serial_logging_switch
+                          else:
+                            - switch.turn_off: serial_logging_switch
+
         # ── Restart button ─────────────────────────────────
         - button:
             id: settings_restart_btn
             align: top_mid
-            y: 366
+            y: 436
             width: 200
             height: 48
             radius: 24
