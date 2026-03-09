@@ -96,7 +96,7 @@ lvgl:
               - label:
                   id: status_time
                   align: right_mid
-                  x: -16
+                  x: -36
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
@@ -502,7 +502,7 @@ lvgl:
               - label:
                   id: energy_time
                   align: right_mid
-                  x: -16
+                  x: -36
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
@@ -894,7 +894,7 @@ lvgl:
               - label:
                   id: weather_time
                   align: right_mid
-                  x: -16
+                  x: -36
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
@@ -1226,7 +1226,7 @@ lvgl:
               - label:
                   id: scenes_time
                   align: right_mid
-                  x: -16
+                  x: -36
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
@@ -3253,7 +3253,7 @@ lvgl:
               - label:
                   id: laundry_time
                   align: right_mid
-                  x: -16
+                  x: -36
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
@@ -3667,7 +3667,7 @@ lvgl:
               - label:
                   id: dinner_time
                   align: right_mid
-                  x: -16
+                  x: -36
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
