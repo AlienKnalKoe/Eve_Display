@@ -129,6 +129,8 @@ script:
           lv_label_set_text(id(energy_time), tbuf);
           lv_label_set_text(id(weather_time), tbuf);
           lv_label_set_text(id(scenes_time), tbuf);
+          lv_label_set_text(id(laundry_time), tbuf);
+          lv_label_set_text(id(dinner_time), tbuf);
 
 # NOTE: Ticker is updated from sensors.yaml SNTP on_time trigger.
 # See: packages/sensors.yaml — on_time every 5 minutes calls update_ticker.
