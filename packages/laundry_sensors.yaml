@@ -1,0 +1,216 @@
+# ============================================================
+# Eve Display — Laundry Sensors (AEG washer + dryer)
+# Sensors for wash machine and dryer time remaining + status
+# ============================================================
+# !! Entity IDs are placeholders — adjust to match your HA !!
+# AEG entities come from the AEG/Electrolux integration.
+# Example entity: sensor.aeg_series_9000_time_to_end
+#
+# To find your entity IDs:
+#   HA → Settings → Devices → search "AEG" or your device name
+# ============================================================
+
+sensor:
+  - platform: homeassistant
+    id: ha_washer_time_remaining
+    entity_id: sensor.washer_time_remaining
+    internal: true
+    on_value:
+      then:
+        - script.execute: update_laundry_display
+
+  - platform: homeassistant
+    id: ha_dryer_time_remaining
+    entity_id: sensor.dryer_time_remaining
+    internal: true
+    on_value:
+      then:
+        - script.execute: update_laundry_display
+
+text_sensor:
+  - platform: homeassistant
+    id: ha_washer_state
+    entity_id: sensor.washer_state
+    internal: true
+    on_value:
+      then:
+        - script.execute: update_laundry_display
+
+  - platform: homeassistant
+    id: ha_washer_program
+    entity_id: sensor.washer_program
+    internal: true
+    on_value:
+      then:
+        - script.execute: update_laundry_display
+
+  - platform: homeassistant
+    id: ha_dryer_state
+    entity_id: sensor.dryer_state
+    internal: true
+    on_value:
+      then:
+        - script.execute: update_laundry_display
+
+  - platform: homeassistant
+    id: ha_dryer_program
+    entity_id: sensor.dryer_program
+    internal: true
+    on_value:
+      then:
+        - script.execute: update_laundry_display
+
+binary_sensor:
+  - platform: homeassistant
+    id: ha_washer_soap_low
+    entity_id: binary_sensor.washer_soap_low
+    internal: true
+    on_state:
+      then:
+        - script.execute: update_laundry_warnings
+
+  - platform: homeassistant
+    id: ha_washer_clean_needed
+    entity_id: binary_sensor.washer_clean_needed
+    internal: true
+    on_state:
+      then:
+        - script.execute: update_laundry_warnings
+
+  - platform: homeassistant
+    id: ha_dryer_clean_needed
+    entity_id: binary_sensor.dryer_clean_needed
+    internal: true
+    on_state:
+      then:
+        - script.execute: update_laundry_warnings
+
+script:
+  # ── update_laundry_display ─────────────────────────────────
+  # Called whenever washer or dryer state/time changes
+  - id: update_laundry_display
+    mode: restart
+    then:
+      - lambda: |-
+          // ── Washer ───────────────────────────────────────
+          auto ws = id(ha_washer_state).state;
+
+          // Status chip + color
+          if (ws == "running" || ws == "Run") {
+            lv_label_set_text(id(washer_status_text), "Running");
+            lv_obj_set_style_bg_color(id(washer_status_chip),
+              lv_color_hex(0x1a3a1a), LV_PART_MAIN);
+            lv_label_set_style_text_color(id(washer_status_text),
+              lv_color_hex(0x66dcb3), LV_PART_MAIN | LV_STATE_DEFAULT);
+          } else if (ws == "finished" || ws == "End" || ws == "Ready") {
+            lv_label_set_text(id(washer_status_text), "Done!");
+            lv_obj_set_style_bg_color(id(washer_status_chip),
+              lv_color_hex(0x1a3a2a), LV_PART_MAIN);
+            lv_label_set_style_text_color(id(washer_status_text),
+              lv_color_hex(0x39d19c), LV_PART_MAIN | LV_STATE_DEFAULT);
+          } else if (ws == "paused" || ws == "Pause") {
+            lv_label_set_text(id(washer_status_text), "Paused");
+            lv_obj_set_style_bg_color(id(washer_status_chip),
+              lv_color_hex(0x3a3a1a), LV_PART_MAIN);
+            lv_label_set_style_text_color(id(washer_status_text),
+              lv_color_hex(0xe7c12c), LV_PART_MAIN | LV_STATE_DEFAULT);
+          } else {
+            lv_label_set_text(id(washer_status_text), "Idle");
+            lv_obj_set_style_bg_color(id(washer_status_chip),
+              lv_color_hex(0x333333), LV_PART_MAIN);
+            lv_label_set_style_text_color(id(washer_status_text),
+              lv_color_hex(0x9BA2BC), LV_PART_MAIN | LV_STATE_DEFAULT);
+          }
+
+          // Time remaining display
+          float wt = id(ha_washer_time_remaining).state;
+          if (!std::isnan(wt) && wt > 0) {
+            int mins = (int)wt;
+            char tbuf[8];
+            snprintf(tbuf, sizeof(tbuf), "%d:%02d", mins / 60, mins % 60);
+            lv_label_set_text(id(washer_time_text), tbuf);
+            // Progress bar: assume max 120 min program
+            int prog = (int)((1.0f - (float)mins / 120.0f) * 380.0f);
+            if (prog < 0) prog = 0; if (prog > 380) prog = 380;
+            lv_obj_set_width(id(washer_progress_bar), prog);
+          } else {
+            lv_label_set_text(id(washer_time_text), "--:--");
+            lv_obj_set_width(id(washer_progress_bar), 0);
+          }
+
+          // Program name
+          auto wp = id(ha_washer_program).state;
+          if (!wp.empty())
+            lv_label_set_text(id(washer_program_text), wp.c_str());
+          else
+            lv_label_set_text(id(washer_program_text), "—");
+
+          // ── Dryer ────────────────────────────────────────
+          auto ds = id(ha_dryer_state).state;
+
+          if (ds == "running" || ds == "Run") {
+            lv_label_set_text(id(dryer_status_text), "Running");
+            lv_obj_set_style_bg_color(id(dryer_status_chip),
+              lv_color_hex(0x3a2a00), LV_PART_MAIN);
+            lv_label_set_style_text_color(id(dryer_status_text),
+              lv_color_hex(0xf4a900), LV_PART_MAIN | LV_STATE_DEFAULT);
+          } else if (ds == "finished" || ds == "End" || ds == "Ready") {
+            lv_label_set_text(id(dryer_status_text), "Done!");
+            lv_obj_set_style_bg_color(id(dryer_status_chip),
+              lv_color_hex(0x1a3a2a), LV_PART_MAIN);
+            lv_label_set_style_text_color(id(dryer_status_text),
+              lv_color_hex(0x39d19c), LV_PART_MAIN | LV_STATE_DEFAULT);
+          } else {
+            lv_label_set_text(id(dryer_status_text), "Idle");
+            lv_obj_set_style_bg_color(id(dryer_status_chip),
+              lv_color_hex(0x333333), LV_PART_MAIN);
+            lv_label_set_style_text_color(id(dryer_status_text),
+              lv_color_hex(0x9BA2BC), LV_PART_MAIN | LV_STATE_DEFAULT);
+          }
+
+          float dt = id(ha_dryer_time_remaining).state;
+          if (!std::isnan(dt) && dt > 0) {
+            int mins = (int)dt;
+            char tbuf[8];
+            snprintf(tbuf, sizeof(tbuf), "%d:%02d", mins / 60, mins % 60);
+            lv_label_set_text(id(dryer_time_text), tbuf);
+            // Progress bar: assume max 90 min
+            int prog = (int)((1.0f - (float)mins / 90.0f) * 380.0f);
+            if (prog < 0) prog = 0; if (prog > 380) prog = 380;
+            lv_obj_set_width(id(dryer_progress_bar), prog);
+          } else {
+            lv_label_set_text(id(dryer_time_text), "--:--");
+            lv_obj_set_width(id(dryer_progress_bar), 0);
+          }
+
+          auto dp = id(ha_dryer_program).state;
+          if (!dp.empty())
+            lv_label_set_text(id(dryer_program_text), dp.c_str());
+          else
+            lv_label_set_text(id(dryer_program_text), "—");
+
+  # ── update_laundry_warnings ────────────────────────────────
+  - id: update_laundry_warnings
+    then:
+      - lambda: |-
+          bool soap_low   = id(ha_washer_soap_low).state;
+          bool wash_clean = id(ha_washer_clean_needed).state;
+          bool dry_clean  = id(ha_dryer_clean_needed).state;
+
+          if (soap_low || wash_clean || dry_clean) {
+            char warn[80];
+            if (soap_low && wash_clean)
+              snprintf(warn, sizeof(warn), "\u26a0  Soap low  \u00b7  Clean washer needed");
+            else if (soap_low)
+              snprintf(warn, sizeof(warn), "\u26a0  Soap low");
+            else if (wash_clean && dry_clean)
+              snprintf(warn, sizeof(warn), "\u26a0  Clean washer & dryer needed");
+            else if (wash_clean)
+              snprintf(warn, sizeof(warn), "\u26a0  Clean washer needed");
+            else
+              snprintf(warn, sizeof(warn), "\u26a0  Clean dryer needed");
+            lv_label_set_text(id(laundry_warning_text), warn);
+            lv_obj_clear_flag(id(laundry_warning_banner), LV_OBJ_FLAG_HIDDEN);
+          } else {
+            lv_obj_add_flag(id(laundry_warning_banner), LV_OBJ_FLAG_HIDDEN);
+          }
