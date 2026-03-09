@@ -228,6 +228,9 @@ font:
       "\U000F068A", # shield home
       "\U000F1828", # shield moon
       "\U000F0493", # settings
+      "\U000F004F", # arrow-up (blinds open)
+      "\U000F04DB", # stop (blinds stop)
+      "\U000F0045", # arrow-down (blinds close)
     ]
 
   - file: "assets/fonts/materialdesignicons-webfont.ttf"
@@ -263,6 +266,13 @@ font:
       "\U000F02AD", # tumble-dryer
       "\U000F07D6", # alert
       "\U000F019C", # silverware-fork-knife (dinner)
+      "\U000F0079", # battery (vacuum status)
+      "\U000F004F", # arrow-up (blinds open)
+      "\U000F04DB", # stop (blinds stop)
+      "\U000F0045", # arrow-down (blinds close)
+      "\U000F0682", # console (serial logging)
+      "\U000F1828", # shield-moon (night scene)
+      "\U000F0493", # cog/settings
     ]
 
   - file: "assets/fonts/materialdesignicons-webfont.ttf"
@@ -290,6 +300,9 @@ font:
       "\U000F10E4", # robot-vacuum
       "\U000F059D", # radiator
       "\U000F0046", # blinds
+      "\U000F03E4", # pause (vacuum control)
+      "\U000F0497", # stop (vacuum control)
+      "\U000F10E5", # robot-vacuum-variant (dock button)
     ]
 
   - file: "assets/fonts/materialdesignicons-webfont.ttf"
