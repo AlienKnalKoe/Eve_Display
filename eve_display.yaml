@@ -20,4 +20,5 @@ packages:
   ui_scenes:          !include packages/ui_scenes.yaml
   expressions:        !include packages/expressions.yaml
   automations:        !include packages/automations.yaml
+  laundry_sensors:    !include packages/laundry_sensors.yaml
   lvgl_pages:         !include packages/lvgl_pages.yaml
