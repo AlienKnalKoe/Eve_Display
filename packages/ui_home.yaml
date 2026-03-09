@@ -248,6 +248,19 @@ font:
       "\U000F0241", # flash (energy)
       "\U000F0F9B", # weather cloud
       "\U000F1107", # solar panel
+      "\U000F10E4", # robot-vacuum
+      "\U000F059D", # radiator (climate)
+      "\U000F0046", # blinds
+      "\U000F0156", # close (X button)
+      "\U000F05A9", # wifi (mdi)
+      "\U000F06E0", # home-assistant
+      "\U000F050F", # thermometer (settings)
+      "\U000F035B", # memory/ram
+      "\U000F0335", # brightness-6
+      "\U000F058A", # washing-machine
+      "\U000F02AD", # tumble-dryer
+      "\U000F07D6", # alert
+      "\U000F019C", # silverware-fork-knife (dinner)
     ]
 
   - file: "assets/fonts/materialdesignicons-webfont.ttf"
@@ -268,6 +281,13 @@ font:
       "\U000F08DD", # floor lamp
       "\U000F18DD", # ceiling light multiple
       "\U000F04B2", # sleep (bedroom)
+      "\U000F058A", # washing-machine
+      "\U000F02AD", # tumble-dryer
+      "\U000F019C", # silverware-fork-knife (dinner)
+      "\U000F07D6", # alert / warning
+      "\U000F10E4", # robot-vacuum
+      "\U000F059D", # radiator
+      "\U000F0046", # blinds
     ]
 
   - file: "assets/fonts/materialdesignicons-webfont.ttf"
@@ -310,11 +330,14 @@ script:
           lv_label_set_text(id(status_time), buf);
 
           // Day of week
+          // ESPHome day_of_week: 1=Sunday, 2=Monday ... 7=Saturday
           const char* days[] = {
-            "Sunday","Monday","Tuesday","Wednesday",
+            "", "Sunday","Monday","Tuesday","Wednesday",
             "Thursday","Friday","Saturday"
           };
-          lv_label_set_text(id(day_of_week_value), days[time.day_of_week]);
+          int dow = time.day_of_week;
+          if (dow >= 1 && dow <= 7)
+            lv_label_set_text(id(day_of_week_value), days[dow]);
 
           // Date  "8, March"
           const char* months[] = {
@@ -325,9 +348,3 @@ script:
           snprintf(dbuf, sizeof(dbuf), "%d, %s", time.day_of_month, months[time.month]);
           lv_label_set_text(id(date_value), dbuf);
 
-          // Update ticker with time
-          char ticker[128];
-          snprintf(ticker, sizeof(ticker),
-            "%02d:%02d  ·  Eve Display  ·  Have a great day!  ·  ",
-            time.hour, time.minute);
-          lv_label_set_text(id(ticker_label), ticker);
