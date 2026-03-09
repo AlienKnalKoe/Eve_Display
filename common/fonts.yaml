@@ -27,6 +27,14 @@
     - GF_Cyrillic_Core
 
 - file: "assets/fonts/Nunito-SemiBold.ttf"
+  id: nunito_24
+  size: 24
+  bpp: 4
+  glyphsets:
+    - GF_Latin_Core
+    - GF_Cyrillic_Core
+
+- file: "assets/fonts/Nunito-SemiBold.ttf"
   id: nunito_30
   size: 30
   bpp: 4
@@ -348,6 +356,12 @@
     "\U000F0241", # flash / power (energy nav + arc label)
     "\U000F0F9B", # cloud / away (weather nav + weather icon)
     "\U000F04B2", # sleep / night (night nav button)
+    "\U000F10E4", # robot-vacuum (vacuum nav + header icon)
+    "\U000F10E5", # robot-vacuum-variant (dock button)
+    "\U000F059D", # radiator (climate nav + header icon)
+    "\U000F0046", # blinds (blinds nav + header icon)
+    "\U000F0079", # battery (vacuum battery icon)
+    "\U000F1107", # solar-panel (solar arc icon)
   ]
 
 - file: "assets/fonts/materialdesignicons-webfont.ttf"
@@ -387,6 +401,8 @@
     "\U000F04B2", # sleep / moon (Bedroom device button)
     "\U000F08DD", # floor lamp (Kitchen device button)
     "\U000F18DD", # ceiling light multiple (All lights button)
+    "\U000F059D", # radiator (climate floor heating card icon)
+    "\U000F0497", # stop (vacuum stop button)
   ]
 
 - file: "assets/fonts/materialdesignicons-webfont.ttf"

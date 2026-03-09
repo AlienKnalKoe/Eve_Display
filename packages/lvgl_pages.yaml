@@ -150,7 +150,7 @@ lvgl:
                   align: top_mid
                   text_font: nunito_64
                   text_color: color_misty_blue
-                  text: "00:00"
+                  text: "--:--"
 
               - obj:
                   y: 82
@@ -323,12 +323,12 @@ lvgl:
             shadow_opa: transp
             widgets:
 
-              # Home (active)
+              # Home (active — highlighted)
               - button:
                   id: nav_home_btn
                   align: left_mid
-                  x: 20
-                  width: 60
+                  x: 10
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -348,8 +348,8 @@ lvgl:
               - button:
                   id: nav_energy_btn
                   align: left_mid
-                  x: 90
-                  width: 60
+                  x: 70
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -367,11 +367,12 @@ lvgl:
                         text_color: color_misty_blue
                         text: "\U000F0241"   # flash
 
-              # Weather
+              # Vacuum
               - button:
-                  id: nav_weather_btn
+                  id: nav_vacuum_btn
                   align: center
-                  width: 60
+                  x: -60
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -379,7 +380,7 @@ lvgl:
                   on_click:
                     then:
                       - lvgl.page.show:
-                          id: weather_page
+                          id: vacuum_page
                           animation: move_left
                           time: 300ms
                   widgets:
@@ -387,14 +388,59 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\U000F0F9B"   # cloud
+                        text: "\U000F10E4"   # robot-vacuum
+
+              # Climate
+              - button:
+                  id: nav_climate_btn
+                  align: center
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: climate_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F059D"   # radiator
+
+              # Blinds
+              - button:
+                  id: nav_blinds_btn
+                  align: center
+                  x: 60
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: blinds_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0046"   # blinds
 
               # Scenes
               - button:
                   id: nav_scenes_nav_btn
                   align: right_mid
-                  x: -90
-                  width: 60
+                  x: -10
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -411,26 +457,6 @@ lvgl:
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
                         text: "\U000F056E"
-
-              # Settings/sleep
-              - button:
-                  id: nav_settings_btn
-                  align: right_mid
-                  x: -20
-                  width: 60
-                  height: 28
-                  bg_opa: transp
-                  shadow_opa: transp
-                  border_opa: transp
-                  on_click:
-                    then:
-                      - script.execute: trigger_night_mode
-                  widgets:
-                    - label:
-                        align: center
-                        text_font: mdi_icons_28
-                        text_color: color_misty_blue
-                        text: "\U000F04B2"   # sleep
 
 # ── Clock / date update script ───────────────────────────────
     - id: energy_page
@@ -657,6 +683,7 @@ lvgl:
                         y: 4
                         text_font: nunito_16
                         text_color: color_misty_blue
+                        long_mode: dot
                         text: "Today Grid"
                     - label:
                         id: grid_today_value
@@ -692,6 +719,7 @@ lvgl:
                         y: 4
                         text_font: nunito_16
                         text_color: color_misty_blue
+                        long_mode: dot
                         text: "Today Solar"
                     - label:
                         id: solar_today_value
@@ -716,8 +744,8 @@ lvgl:
             widgets:
               - button:
                   align: left_mid
-                  x: 20
-                  width: 60
+                  x: 10
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -737,8 +765,8 @@ lvgl:
 
               - button:
                   align: left_mid
-                  x: 90
-                  width: 60
+                  x: 70
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -752,7 +780,8 @@ lvgl:
 
               - button:
                   align: center
-                  width: 60
+                  x: -60
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -760,7 +789,7 @@ lvgl:
                   on_click:
                     then:
                       - lvgl.page.show:
-                          id: weather_page
+                          id: vacuum_page
                           animation: move_left
                           time: 300ms
                   widgets:
@@ -768,12 +797,53 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\U000F0F9B"
+                        text: "\U000F10E4"   # robot-vacuum
+
+              - button:
+                  align: center
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: climate_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F059D"   # radiator
+
+              - button:
+                  align: center
+                  x: 60
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: blinds_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0046"   # blinds
 
               - button:
                   align: right_mid
-                  x: -90
-                  width: 60
+                  x: -10
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -790,24 +860,6 @@ lvgl:
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
                         text: "\U000F056E"
-
-              - button:
-                  align: right_mid
-                  x: -20
-                  width: 60
-                  height: 28
-                  bg_opa: transp
-                  shadow_opa: transp
-                  border_opa: transp
-                  on_click:
-                    then:
-                      - script.execute: trigger_night_mode
-                  widgets:
-                    - label:
-                        align: center
-                        text_font: mdi_icons_28
-                        text_color: color_misty_blue
-                        text: "\U000F04B2"
 
 # ── Energy page update script ────────────────────────────────
     - id: weather_page
@@ -920,7 +972,7 @@ lvgl:
                   text_color: color_steel_blue
                   text: "Indoor"
 
-              # Temperature - icon left, value right
+              # Temperature - icon left, value centered-right (push icon out of text path)
               - obj:
                   align: left_mid
                   x: 10
@@ -955,7 +1007,7 @@ lvgl:
                   shadow_opa: transp
                   clickable: false
 
-              # Humidity - icon left, value right
+              # Humidity - icon left, value centered-right (push icon out of text path)
               - obj:
                   align: right_mid
                   x: -10
@@ -1030,8 +1082,8 @@ lvgl:
             widgets:
               - button:
                   align: left_mid
-                  x: 20
-                  width: 60
+                  x: 10
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -1050,8 +1102,8 @@ lvgl:
                         text: "\U000F06A1"
               - button:
                   align: left_mid
-                  x: 90
-                  width: 60
+                  x: 70
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -1070,21 +1122,67 @@ lvgl:
                         text: "\U000F0241"
               - button:
                   align: center
-                  width: 60
+                  x: -60
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
                   border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: vacuum_page
+                          animation: move_left
+                          time: 300ms
                   widgets:
                     - label:
                         align: center
                         text_font: mdi_icons_28
-                        text_color: color_sky_blue
-                        text: "\U000F0F9B"
+                        text_color: color_misty_blue
+                        text: "\U000F10E4"
+              - button:
+                  align: center
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: climate_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F059D"   # radiator / climate
+              - button:
+                  align: center
+                  x: 60
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: blinds_page
+                          animation: move_left
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0046"
               - button:
                   align: right_mid
-                  x: -90
-                  width: 60
+                  x: -10
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -1101,23 +1199,6 @@ lvgl:
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
                         text: "\U000F056E"
-              - button:
-                  align: right_mid
-                  x: -20
-                  width: 60
-                  height: 28
-                  bg_opa: transp
-                  shadow_opa: transp
-                  border_opa: transp
-                  on_click:
-                    then:
-                      - script.execute: trigger_night_mode
-                  widgets:
-                    - label:
-                        align: center
-                        text_font: mdi_icons_28
-                        text_color: color_misty_blue
-                        text: "\U000F04B2"
 
 # ── Weather page update script ───────────────────────────────
     - id: scenes_page
@@ -1445,8 +1526,8 @@ lvgl:
             widgets:
               - button:
                   align: left_mid
-                  x: 20
-                  width: 60
+                  x: 10
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -1465,8 +1546,8 @@ lvgl:
                         text: "\U000F06A1"
               - button:
                   align: left_mid
-                  x: 90
-                  width: 60
+                  x: 70
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -1485,7 +1566,8 @@ lvgl:
                         text: "\U000F0241"
               - button:
                   align: center
-                  width: 60
+                  x: -60
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -1493,7 +1575,7 @@ lvgl:
                   on_click:
                     then:
                       - lvgl.page.show:
-                          id: weather_page
+                          id: vacuum_page
                           animation: move_right
                           time: 300ms
                   widgets:
@@ -1501,11 +1583,50 @@ lvgl:
                         align: center
                         text_font: mdi_icons_28
                         text_color: color_misty_blue
-                        text: "\U000F0F9B"
+                        text: "\U000F10E4"
+              - button:
+                  align: center
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: climate_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F059D"
+              - button:
+                  align: center
+                  x: 60
+                  width: 50
+                  height: 28
+                  bg_opa: transp
+                  shadow_opa: transp
+                  border_opa: transp
+                  on_click:
+                    then:
+                      - lvgl.page.show:
+                          id: blinds_page
+                          animation: move_right
+                          time: 300ms
+                  widgets:
+                    - label:
+                        align: center
+                        text_font: mdi_icons_28
+                        text_color: color_misty_blue
+                        text: "\U000F0046"
               - button:
                   align: right_mid
-                  x: -90
-                  width: 60
+                  x: -10
+                  width: 50
                   height: 28
                   bg_opa: transp
                   shadow_opa: transp
@@ -1516,23 +1637,6 @@ lvgl:
                         text_font: mdi_icons_28
                         text_color: color_sky_blue
                         text: "\U000F056E"
-              - button:
-                  align: right_mid
-                  x: -20
-                  width: 60
-                  height: 28
-                  bg_opa: transp
-                  shadow_opa: transp
-                  border_opa: transp
-                  on_click:
-                    then:
-                      - script.execute: trigger_night_mode
-                  widgets:
-                    - label:
-                        align: center
-                        text_font: mdi_icons_28
-                        text_color: color_misty_blue
-                        text: "\U000F04B2"
 
 # ── Scene feedback script (brief visual flash) ───────────────
 

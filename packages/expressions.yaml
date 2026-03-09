@@ -153,7 +153,7 @@ script:
 
           ESP_LOGI("expr", "Expression %d: eye=%d mouth=%d", expr, eye_idx, mouth_idx);
 
-          // Swap eye image — pass id() directly (esphome::image::Image*)
+          // Swap eye image — use get_lv_img_dsc() to obtain lv_img_src_t from Image*
           if (eye_idx == 1)
             lv_img_set_src(id(eve_eye_layer), id(eye_closed)->get_lv_img_dsc());
           else
@@ -172,7 +172,7 @@ script:
     then:
       - lambda: |-
           int idx = id(current_head_idx);
-          // Pass id() directly — no intermediate lv_img_src_t needed
+          // Use get_lv_img_dsc() to obtain lv_img_src_t from Image*
           if      (idx == 1) lv_img_set_src(id(eve_image), id(head_blond)->get_lv_img_dsc());
           else if (idx == 2) lv_img_set_src(id(eve_image), id(head_black)->get_lv_img_dsc());
           else if (idx == 3) lv_img_set_src(id(eve_image), id(head_brown)->get_lv_img_dsc());

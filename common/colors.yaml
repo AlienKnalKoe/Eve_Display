@@ -48,3 +48,5 @@
   hex: 4867aa
 - id: color_deep_purple
   hex: 543D72
+- id: color_card_bg
+  hex: 1e2030
