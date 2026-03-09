@@ -165,10 +165,6 @@ switch:
     optimistic: true
     restore_mode: RESTORE_DEFAULT_OFF
     turn_on_action:
-      - logger.set_level:
-          id: logger
-          level: DEBUG
+      - logger.set_level: DEBUG
     turn_off_action:
-      - logger.set_level:
-          id: logger
-          level: NONE
+      - logger.set_level: NONE
