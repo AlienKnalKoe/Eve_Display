@@ -99,6 +99,7 @@ wifi:
           id: wifi_status_laundry
           text: ""
           text_color: color_mint
+      - script.execute: update_ticker
   on_disconnect:
     then:
       - lvgl.label.update:
@@ -117,3 +118,4 @@ wifi:
           id: wifi_status_laundry
           text: ""
           text_color: color_crimson
+      - script.execute: update_ticker

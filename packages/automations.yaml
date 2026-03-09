@@ -114,11 +114,17 @@ script:
           if (!std::isnan(solar))  snprintf(solar_str,  sizeof(solar_str),  "%.0f W",  solar);
           if (!std::isnan(indoor)) snprintf(indoor_str, sizeof(indoor_str), "%.1f°C", indoor);
 
+          // Build error flags
+          char errors[128] = "";
+          if (!wifi::global_wifi_component->is_connected()) strncat(errors, "  \u26a0 WiFi offline", sizeof(errors) - strlen(errors) - 1);
+          if (!api::global_api_server->is_connected())      strncat(errors, "  \u26a0 HA offline",   sizeof(errors) - strlen(errors) - 1);
+
           snprintf(ticker, sizeof(ticker),
-            "%02d:%02d  ·  Grid %s  ·  Solar %s  ·  Indoor %s  ·  %s  ·  ",
+            "%02d:%02d  ·  Grid %s  ·  Solar %s  ·  Indoor %s  ·  %s%s  ·  ",
             time.hour, time.minute,
             grid_str, solar_str, indoor_str,
-            is_night ? "Night Mode" : "Day Mode"
+            is_night ? "Night Mode" : "Day Mode",
+            errors
           );
 
           lv_label_set_text(id(ticker_label), ticker);
