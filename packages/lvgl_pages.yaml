@@ -4338,11 +4338,11 @@ lvgl:
                     then:
                       - if:
                           condition:
-                            switch.is_on: settings_log_toggle
+                            lambda: "return x;"
                           then:
-                            - switch.turn_on: serial_logging_switch
+                            - logger.set_level: DEBUG
                           else:
-                            - switch.turn_off: serial_logging_switch
+                            - logger.set_level: NONE
 
         # ── Restart button ─────────────────────────────────
         - button:

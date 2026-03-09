@@ -156,15 +156,3 @@ text_sensor:
     on_value:
       then:
         - script.execute: handle_eve_emotion
-
-# ── Serial Logging Toggle ─────────────────────────────────────
-switch:
-  - platform: template
-    id: serial_logging_switch
-    name: "Serial Logging"
-    optimistic: true
-    restore_mode: RESTORE_DEFAULT_OFF
-    turn_on_action:
-      - logger.set_level: DEBUG
-    turn_off_action:
-      - logger.set_level: NONE
