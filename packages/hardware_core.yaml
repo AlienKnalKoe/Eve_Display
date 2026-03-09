@@ -77,39 +77,43 @@ wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
   power_save_mode: NONE   # Prevents ESP32 light sleep (fixes display blink)
+  reboot_timeout: 0s      # Don't reboot if WiFi drops; reconnect silently
+  ap:
+    ssid: "Eve-Display-AP"
+    password: !secret wifi_password
   on_connect:
     then:
       - lvgl.label.update:
           id: wifi_status
-          text: "\ue934"
+          text: ""
           text_color: color_mint
       - lvgl.label.update:
           id: wifi_status_energy
-          text: "\ue934"
+          text: ""
           text_color: color_mint
       - lvgl.label.update:
           id: wifi_status_weather
-          text: "\ue934"
+          text: ""
           text_color: color_mint
       - lvgl.label.update:
           id: wifi_status_laundry
-          text: "\ue934"
+          text: ""
           text_color: color_mint
   on_disconnect:
     then:
       - lvgl.label.update:
           id: wifi_status
-          text: "\ue931"
+          text: ""
           text_color: color_crimson
       - lvgl.label.update:
           id: wifi_status_energy
-          text: "\ue931"
+          text: ""
           text_color: color_crimson
       - lvgl.label.update:
           id: wifi_status_weather
-          text: "\ue931"
+          text: ""
           text_color: color_crimson
       - lvgl.label.update:
           id: wifi_status_laundry
-          text: "\ue931"
+          text: ""
           text_color: color_crimson

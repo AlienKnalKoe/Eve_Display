@@ -156,3 +156,5 @@ text_sensor:
     on_value:
       then:
         - script.execute: handle_eve_emotion
+
+captive_portal:
