@@ -155,17 +155,17 @@ script:
 
           // Swap eye image — pass id() directly (esphome::image::Image*)
           if (eye_idx == 1)
-            lv_img_set_src(id(eve_eye_layer), id(eye_closed));
+            lv_img_set_src(id(eve_eye_layer), id(eye_closed)->get_lv_img_dsc());
           else
-            lv_img_set_src(id(eve_eye_layer), id(eye_open));
+            lv_img_set_src(id(eve_eye_layer), id(eye_open)->get_lv_img_dsc());
 
           // Swap mouth image
-          if      (mouth_idx == 1) lv_img_set_src(id(eve_mouth_layer), id(mouth_happy));
-          else if (mouth_idx == 2) lv_img_set_src(id(eve_mouth_layer), id(mouth_smile_closed));
-          else if (mouth_idx == 3) lv_img_set_src(id(eve_mouth_layer), id(mouth_open));
-          else if (mouth_idx == 4) lv_img_set_src(id(eve_mouth_layer), id(mouth_surprised));
-          else if (mouth_idx == 5) lv_img_set_src(id(eve_mouth_layer), id(mouth_closed));
-          else                     lv_img_set_src(id(eve_mouth_layer), id(mouth_normal));
+          if      (mouth_idx == 1) lv_img_set_src(id(eve_mouth_layer), id(mouth_happy)->get_lv_img_dsc());
+          else if (mouth_idx == 2) lv_img_set_src(id(eve_mouth_layer), id(mouth_smile_closed)->get_lv_img_dsc());
+          else if (mouth_idx == 3) lv_img_set_src(id(eve_mouth_layer), id(mouth_open)->get_lv_img_dsc());
+          else if (mouth_idx == 4) lv_img_set_src(id(eve_mouth_layer), id(mouth_surprised)->get_lv_img_dsc());
+          else if (mouth_idx == 5) lv_img_set_src(id(eve_mouth_layer), id(mouth_closed)->get_lv_img_dsc());
+          else                     lv_img_set_src(id(eve_mouth_layer), id(mouth_normal)->get_lv_img_dsc());
 
   # set_head_variant: swap Eve's head image (0=colored, 1=blond, 2=black, 3=brown, 4=blue, 5=kroes)
   - id: set_head_variant
@@ -173,12 +173,12 @@ script:
       - lambda: |-
           int idx = id(current_head_idx);
           // Pass id() directly — no intermediate lv_img_src_t needed
-          if      (idx == 1) lv_img_set_src(id(eve_image), id(head_blond));
-          else if (idx == 2) lv_img_set_src(id(eve_image), id(head_black));
-          else if (idx == 3) lv_img_set_src(id(eve_image), id(head_brown));
-          else if (idx == 4) lv_img_set_src(id(eve_image), id(head_blue));
-          else if (idx == 5) lv_img_set_src(id(eve_image), id(head_kroes));
-          else               lv_img_set_src(id(eve_image), id(head_colored));
+          if      (idx == 1) lv_img_set_src(id(eve_image), id(head_blond)->get_lv_img_dsc());
+          else if (idx == 2) lv_img_set_src(id(eve_image), id(head_black)->get_lv_img_dsc());
+          else if (idx == 3) lv_img_set_src(id(eve_image), id(head_brown)->get_lv_img_dsc());
+          else if (idx == 4) lv_img_set_src(id(eve_image), id(head_blue)->get_lv_img_dsc());
+          else if (idx == 5) lv_img_set_src(id(eve_image), id(head_kroes)->get_lv_img_dsc());
+          else               lv_img_set_src(id(eve_image), id(head_colored)->get_lv_img_dsc());
 
   # Map HA emotion string → expression index
   - id: handle_eve_emotion
