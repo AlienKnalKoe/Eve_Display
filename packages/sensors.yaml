@@ -37,6 +37,8 @@ wifi:
           text_color: color_crimson
 
 api:
+  encryption:
+    key: !secret api_encryption_key
   on_client_connected:
     then:
       - lvgl.label.update:
@@ -56,6 +58,7 @@ api:
 
 ota:
   - platform: esphome
+    password: !secret ota_password
 
 logger:
   level: INFO
