@@ -11,12 +11,13 @@ esphome:
   min_version: 2026.2.0
 
 packages:
-  hardware:     !include packages/hardware_core.yaml
-  sensors:      !include packages/sensors.yaml
-  ui_home:      !include packages/ui_home.yaml
-  ui_energy:    !include packages/ui_energy.yaml
-  ui_weather:   !include packages/ui_weather.yaml
-  ui_scenes:    !include packages/ui_scenes.yaml
-  expressions:  !include packages/expressions.yaml
-  automations:  !include packages/automations.yaml
-  lvgl_pages:   !include packages/lvgl_pages.yaml
+  hardware:           !include packages/hardware_core.yaml
+  sensors:            !include packages/sensors.yaml
+  sensors_extended:   !include packages/sensors_extended.yaml
+  ui_home:            !include packages/ui_home.yaml
+  ui_energy:          !include packages/ui_energy.yaml
+  ui_weather:         !include packages/ui_weather.yaml
+  ui_scenes:          !include packages/ui_scenes.yaml
+  expressions:        !include packages/expressions.yaml
+  automations:        !include packages/automations.yaml
+  lvgl_pages:         !include packages/lvgl_pages.yaml
