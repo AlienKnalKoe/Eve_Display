@@ -101,25 +101,25 @@ script:
             lv_obj_set_style_bg_color(id(washer_status_chip),
               lv_color_hex(0x1a3a1a), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(washer_status_text),
-              lv_color_hex(0x66dcb3), LV_PART_MAIN | LV_STATE_DEFAULT);
+              lv_color_hex(0x66dcb3), (uint32_t)(LV_PART_MAIN | LV_STATE_DEFAULT));
           } else if (ws == "finished" || ws == "End" || ws == "Ready") {
             lv_label_set_text(id(washer_status_text), "Done!");
             lv_obj_set_style_bg_color(id(washer_status_chip),
               lv_color_hex(0x1a3a2a), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(washer_status_text),
-              lv_color_hex(0x39d19c), LV_PART_MAIN | LV_STATE_DEFAULT);
+              lv_color_hex(0x39d19c), (uint32_t)(LV_PART_MAIN | LV_STATE_DEFAULT));
           } else if (ws == "paused" || ws == "Pause") {
             lv_label_set_text(id(washer_status_text), "Paused");
             lv_obj_set_style_bg_color(id(washer_status_chip),
               lv_color_hex(0x3a3a1a), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(washer_status_text),
-              lv_color_hex(0xe7c12c), LV_PART_MAIN | LV_STATE_DEFAULT);
+              lv_color_hex(0xe7c12c), (uint32_t)(LV_PART_MAIN | LV_STATE_DEFAULT));
           } else {
             lv_label_set_text(id(washer_status_text), "Idle");
             lv_obj_set_style_bg_color(id(washer_status_chip),
               lv_color_hex(0x333333), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(washer_status_text),
-              lv_color_hex(0x9BA2BC), LV_PART_MAIN | LV_STATE_DEFAULT);
+              lv_color_hex(0x9BA2BC), (uint32_t)(LV_PART_MAIN | LV_STATE_DEFAULT));
           }
 
           // Time remaining display
@@ -153,19 +153,19 @@ script:
             lv_obj_set_style_bg_color(id(dryer_status_chip),
               lv_color_hex(0x3a2a00), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(dryer_status_text),
-              lv_color_hex(0xf4a900), LV_PART_MAIN | LV_STATE_DEFAULT);
+              lv_color_hex(0xf4a900), (uint32_t)(LV_PART_MAIN | LV_STATE_DEFAULT));
           } else if (ds == "finished" || ds == "End" || ds == "Ready") {
             lv_label_set_text(id(dryer_status_text), "Done!");
             lv_obj_set_style_bg_color(id(dryer_status_chip),
               lv_color_hex(0x1a3a2a), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(dryer_status_text),
-              lv_color_hex(0x39d19c), LV_PART_MAIN | LV_STATE_DEFAULT);
+              lv_color_hex(0x39d19c), (uint32_t)(LV_PART_MAIN | LV_STATE_DEFAULT));
           } else {
             lv_label_set_text(id(dryer_status_text), "Idle");
             lv_obj_set_style_bg_color(id(dryer_status_chip),
               lv_color_hex(0x333333), LV_PART_MAIN);
             lv_obj_set_style_text_color(id(dryer_status_text),
-              lv_color_hex(0x9BA2BC), LV_PART_MAIN | LV_STATE_DEFAULT);
+              lv_color_hex(0x9BA2BC), (uint32_t)(LV_PART_MAIN | LV_STATE_DEFAULT));
           }
 
           float dt = id(ha_dryer_time_remaining).state;
