@@ -240,6 +240,7 @@ lvgl:
                         id: eve_image
                         align: center
                         src: head_colored
+                        bg_opa: TRANSP    # Transparent background so RGBA alpha channel shows correctly
 
                     # Layer 2: Eyes (positioned ~35% down, centered)
                     - image:
@@ -247,6 +248,7 @@ lvgl:
                         align: center
                         y: -16
                         src: eye_open
+                        bg_opa: TRANSP    # Transparent background so RGBA alpha channel shows correctly
 
                     # Layer 3: Mouth (positioned ~64% down, centered)
                     - image:
@@ -254,6 +256,7 @@ lvgl:
                         align: center
                         y: 30
                         src: mouth_normal
+                        bg_opa: TRANSP    # Transparent background so RGBA alpha channel shows correctly
 
               # RIGHT button — navigate to scenes page
               - button:
