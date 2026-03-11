@@ -6,12 +6,14 @@ esp32:
     type: esp-idf
     sdkconfig_options:
       CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240: "y"
-      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: y
-      CONFIG_SPIRAM_RODATA: y
-      # WiFi RX buffer tuning — prevents buffer starvation when PSRAM is in use
-      CONFIG_ESP32_WIFI_STATIC_RX_BUFFER_NUM: "16"
-      CONFIG_ESP32_WIFI_DYNAMIC_RX_BUFFER_NUM: "32"
-      # LCD ISR in IRAM — reduces display glitches when CPU cache is busy
+      # SPIRAM_FETCH_INSTRUCTIONS/RODATA disabled: these put WiFi driver code in PSRAM,
+      # which shares bandwidth with the RGB display DMA → WiFi fails to connect.
+      # WiFi IRAM ops must run from real IRAM to coexist with the RGB LCD DMA.
+      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: "n"
+      CONFIG_SPIRAM_RODATA: "n"
+      # 32-byte cache lines reduce PSRAM bandwidth use by RGB DMA → fixes flickering
+      CONFIG_ESP32S3_DATA_CACHE_LINE_32B: "y"
+      # LCD ISR in IRAM — prevents display glitches when flash/cache is busy
       CONFIG_LCD_RGB_ISR_IRAM_SAFE: "y"
 
 psram:
