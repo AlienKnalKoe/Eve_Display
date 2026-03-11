@@ -129,3 +129,5 @@ wifi:
           text: ""
           text_color: color_crimson
       - script.execute: update_ticker
+
+captive_portal:
