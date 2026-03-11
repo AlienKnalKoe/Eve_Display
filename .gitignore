@@ -1,0 +1,4 @@
+# ESPHome — ignore secrets and build artifacts
+secrets.yaml
+.esphome/
+build/
