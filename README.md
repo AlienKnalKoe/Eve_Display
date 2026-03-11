@@ -91,8 +91,4 @@ Replace with 120×60 ARGB PNGs (eyes) and 100×50 ARGB PNGs (mouth) when artwork
    esphome run eve_display.yaml --device COM5
    ```
 
-## Theme
 
-Based on [alaltitov/Guition-ESP32-S3-4848S040](https://github.com/alaltitov/Guition-ESP32-S3-4848S040) (MIT).  
-Colour palette: `#343645` bg · `#9BA2BC` text · `#3FA7F3` accent · `#39d19c` mint.  
-Fonts: Nunito SemiBold + icons_v2 + Material Design Icons.
