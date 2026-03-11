@@ -4369,6 +4369,41 @@ lvgl:
                   text_color: 0xcc4444
                   text: "Restart"
 
+        # ── WiFi Config button ─────────────────────────────
+        - button:
+            id: settings_wifi_config_btn
+            align: top_mid
+            y: 500
+            width: 440
+            height: 64
+            radius: 16
+            bg_color: color_card_bg
+            border_width: 1
+            border_color: color_sky_blue
+            shadow_opa: transp
+            on_click:
+              then:
+                - captive_portal.activate:
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 16
+                  text_font: mdi_icons_28
+                  text_color: color_sky_blue
+                  text: "󰖩"   # mdi:wifi
+              - label:
+                  align: left_mid
+                  x: 56
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "WiFi Config"
+              - label:
+                  align: right_mid
+                  x: -16
+                  text_font: mdi_icons_24
+                  text_color: color_steel_blue
+                  text: "󰅂"   # mdi:chevron-right
+
 # ── Boot sequence ────────────────────────────────────────────
 # ESPHome executes on_boot after all components are ready
 esphome:
