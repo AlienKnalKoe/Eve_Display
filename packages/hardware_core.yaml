@@ -39,7 +39,7 @@ display:
     spi_id: display_init_spi
     auto_clear_enabled: false
     rotation: 90
-    pclk_inverted: true   # Fix flickering/ghosting on GUITION-4848S040 RGB panel
+    pclk_inverted: false   # Fix flickering/ghosting on GUITION-4848S040 RGB panel
 
 touchscreen:
   - platform: gt911
