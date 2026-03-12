@@ -129,6 +129,13 @@ script:
 
           lv_label_set_text(id(ticker_label), ticker);
 
+          // Sync ticker text to all other pages
+          lv_label_set_text(id(ticker_label_energy), ticker);
+          lv_label_set_text(id(ticker_label_weather), ticker);
+          lv_label_set_text(id(ticker_label_scenes), ticker);
+          lv_label_set_text(id(ticker_label_laundry), ticker);
+          lv_label_set_text(id(ticker_label_dinner), ticker);
+
           // Also sync time on energy/weather/scenes pages
           char tbuf[6];
           snprintf(tbuf, sizeof(tbuf), "%02d:%02d", time.hour, time.minute);
