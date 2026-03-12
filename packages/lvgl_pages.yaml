@@ -4369,7 +4369,10 @@ lvgl:
                   text_color: 0xcc4444
                   text: "Restart"
 
-        # ── WiFi Config button ─────────────────────────────
+        # ── WiFi Config info button ────────────────────────
+        # captive_portal is Arduino-only — not supported with ESP-IDF.
+        # This button shows the fallback AP credentials so you can connect
+        # manually. The AP "Eve-Display-AP" is always active when WiFi drops.
         - button:
             id: settings_wifi_config_btn
             align: top_mid
@@ -4383,7 +4386,13 @@ lvgl:
             shadow_opa: transp
             on_click:
               then:
-                - captive_portal.activate:
+                - logger.log:
+                    level: INFO
+                    format: "WiFi fallback AP: SSID=Eve-Display-AP (use wifi_password from secrets)"
+                - lvgl.label.update:
+                    id: settings_wifi_config_label
+                    text: "Fallback AP: Eve-Display-AP"
+                    text_color: color_mint
             widgets:
               - label:
                   align: left_mid
@@ -4392,6 +4401,7 @@ lvgl:
                   text_color: color_sky_blue
                   text: "󰖩"   # mdi:wifi
               - label:
+                  id: settings_wifi_config_label
                   align: left_mid
                   x: 56
                   text_font: nunito_16
