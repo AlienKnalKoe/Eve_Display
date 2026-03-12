@@ -157,4 +157,7 @@ text_sensor:
       then:
         - script.execute: handle_eve_emotion
 
-captive_portal:
+# NOTE: captive_portal is not supported with the ESP-IDF framework.
+# The WiFi AP fallback (defined in hardware_core.yaml) still works — the device
+# creates an open AP named "Eve-Display-AP" when WiFi is unavailable, but without
+# a captive portal redirect page (that requires Arduino framework).
