@@ -96,7 +96,7 @@ lvgl:
               - label:
                   id: status_time
                   align: right_mid
-                  x: -36
+                  x: -41
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
@@ -505,10 +505,36 @@ lvgl:
               - label:
                   id: energy_time
                   align: right_mid
-                  x: -36
+                  x: -41
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
+
+        # ── SETTINGS GEAR (long-press → settings page) ────────
+        - button:
+            id: settings_gear_energy
+            align: top_right
+            x: -8
+            y: 8
+            width: 40
+            height: 40
+            radius: 20
+            bg_color: 0x1a0000
+            border_width: 1
+            border_color: 0xaa2222
+            shadow_opa: transp
+            on_long_press:
+              then:
+                - lvgl.page.show:
+                    id: settings_page
+                    animation: fade_in
+                    time: 300ms
+            widgets:
+              - label:
+                  align: center
+                  text_font: mdi_icons_28
+                  text_color: 0xcc3333
+                  text: "\U000F0493"   # mdi:cog
 
         # ── GRID USAGE ARC ───────────────────────────────────
         - obj:
@@ -732,6 +758,33 @@ lvgl:
                         text_color: color_yellow
                         text: "-- kWh"
 
+        # ── TICKER BAR ───────────────────────────────────────
+        - obj:
+            id: ticker_bar_energy
+            y: 402
+            width: 440
+            height: 32
+            align: top_mid
+            radius: 8
+            pad_left: 12
+            pad_right: 12
+            pad_top: 4
+            pad_bottom: 4
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              - label:
+                  id: ticker_label_energy
+                  align: left_mid
+                  width: 416
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  long_mode: SCROLL_CIRCULAR
+                  anim_time: 10000ms
+                  text: "Eve Display ready  ·  "
+
         # ── BOTTOM NAV ───────────────────────────────────────
         - obj:
             id: energy_bottom_nav
@@ -890,6 +943,13 @@ lvgl:
                   text_font: icons_24
                   text_color: color_steel_blue
               - label:
+                  id: ha_status_weather
+                  align: left_mid
+                  x: 52
+                  text: "\U000F07D0"
+                  text_font: mdi_icons_28
+                  text_color: color_steel_blue
+              - label:
                   align: center
                   text_font: nunito_20
                   text_color: color_misty_blue
@@ -897,10 +957,36 @@ lvgl:
               - label:
                   id: weather_time
                   align: right_mid
-                  x: -36
+                  x: -41
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
+
+        # ── SETTINGS GEAR (long-press → settings page) ────────
+        - button:
+            id: settings_gear_weather
+            align: top_right
+            x: -8
+            y: 8
+            width: 40
+            height: 40
+            radius: 20
+            bg_color: 0x1a0000
+            border_width: 1
+            border_color: 0xaa2222
+            shadow_opa: transp
+            on_long_press:
+              then:
+                - lvgl.page.show:
+                    id: settings_page
+                    animation: fade_in
+                    time: 300ms
+            widgets:
+              - label:
+                  align: center
+                  text_font: mdi_icons_28
+                  text_color: 0xcc3333
+                  text: "\U000F0493"   # mdi:cog
 
         # ── OUTDOOR TEMPERATURE — BIG HERO ───────────────────
         - obj:
@@ -1070,6 +1156,33 @@ lvgl:
                   text_color: color_misty_blue
                   text: "Comfortable"
 
+        # ── TICKER BAR ───────────────────────────────────────
+        - obj:
+            id: ticker_bar_weather
+            y: 402
+            width: 440
+            height: 32
+            align: top_mid
+            radius: 8
+            pad_left: 12
+            pad_right: 12
+            pad_top: 4
+            pad_bottom: 4
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              - label:
+                  id: ticker_label_weather
+                  align: left_mid
+                  width: 416
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  long_mode: SCROLL_CIRCULAR
+                  anim_time: 10000ms
+                  text: "Eve Display ready  ·  "
+
         # ── BOTTOM NAV ───────────────────────────────────────
         - obj:
             id: weather_bottom_nav
@@ -1222,6 +1335,20 @@ lvgl:
             shadow_opa: transp
             widgets:
               - label:
+                  id: wifi_status_scenes
+                  align: left_mid
+                  x: 16
+                  text: "\ue934"
+                  text_font: icons_24
+                  text_color: color_steel_blue
+              - label:
+                  id: ha_status_scenes
+                  align: left_mid
+                  x: 52
+                  text: "\U000F07D0"
+                  text_font: mdi_icons_28
+                  text_color: color_steel_blue
+              - label:
                   align: center
                   text_font: nunito_20
                   text_color: color_misty_blue
@@ -1229,10 +1356,36 @@ lvgl:
               - label:
                   id: scenes_time
                   align: right_mid
-                  x: -36
+                  x: -41
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
+
+        # ── SETTINGS GEAR (long-press → settings page) ────────
+        - button:
+            id: settings_gear_scenes
+            align: top_right
+            x: -8
+            y: 8
+            width: 40
+            height: 40
+            radius: 20
+            bg_color: 0x1a0000
+            border_width: 1
+            border_color: 0xaa2222
+            shadow_opa: transp
+            on_long_press:
+              then:
+                - lvgl.page.show:
+                    id: settings_page
+                    animation: fade_in
+                    time: 300ms
+            widgets:
+              - label:
+                  align: center
+                  text_font: mdi_icons_28
+                  text_color: 0xcc3333
+                  text: "\U000F0493"   # mdi:cog
 
         # ── SECTION: SCENES ──────────────────────────────────
         - label:
@@ -1513,6 +1666,33 @@ lvgl:
                   text_font: mdi_icons_28
                   text_color: color_steel_blue
                   text: "\U000F0156"   # chevron right
+
+        # ── TICKER BAR ───────────────────────────────────────
+        - obj:
+            id: ticker_bar_scenes
+            y: 402
+            width: 440
+            height: 32
+            align: top_mid
+            radius: 8
+            pad_left: 12
+            pad_right: 12
+            pad_top: 4
+            pad_bottom: 4
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              - label:
+                  id: ticker_label_scenes
+                  align: left_mid
+                  width: 416
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  long_mode: SCROLL_CIRCULAR
+                  anim_time: 10000ms
+                  text: "Eve Display ready  ·  "
 
         # ── BOTTOM NAV ───────────────────────────────────────
         - obj:
@@ -3249,6 +3429,13 @@ lvgl:
                   text_font: icons_24
                   text_color: color_steel_blue
               - label:
+                  id: ha_status_laundry
+                  align: left_mid
+                  x: 52
+                  text: "\U000F07D0"
+                  text_font: mdi_icons_28
+                  text_color: color_steel_blue
+              - label:
                   align: center
                   text_font: nunito_20
                   text_color: color_misty_blue
@@ -3256,10 +3443,36 @@ lvgl:
               - label:
                   id: laundry_time
                   align: right_mid
-                  x: -36
+                  x: -41
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
+
+        # ── SETTINGS GEAR (long-press → settings page) ────────
+        - button:
+            id: settings_gear_laundry
+            align: top_right
+            x: -8
+            y: 8
+            width: 40
+            height: 40
+            radius: 20
+            bg_color: 0x1a0000
+            border_width: 1
+            border_color: 0xaa2222
+            shadow_opa: transp
+            on_long_press:
+              then:
+                - lvgl.page.show:
+                    id: settings_page
+                    animation: fade_in
+                    time: 300ms
+            widgets:
+              - label:
+                  align: center
+                  text_font: mdi_icons_28
+                  text_color: 0xcc3333
+                  text: "\U000F0493"   # mdi:cog
 
         # ── WARNING BANNER (hidden by default) ──────────────
         - obj:
@@ -3494,6 +3707,33 @@ lvgl:
                   text_color: color_steel_blue
                   text: "remaining"
 
+        # ── TICKER BAR ───────────────────────────────────────
+        - obj:
+            id: ticker_bar_laundry
+            y: 402
+            width: 440
+            height: 32
+            align: top_mid
+            radius: 8
+            pad_left: 12
+            pad_right: 12
+            pad_top: 4
+            pad_bottom: 4
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              - label:
+                  id: ticker_label_laundry
+                  align: left_mid
+                  width: 416
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  long_mode: SCROLL_CIRCULAR
+                  anim_time: 10000ms
+                  text: "Eve Display ready  ·  "
+
         # ── BOTTOM NAV ───────────────────────────────────────
         - obj:
             id: laundry_bottom_nav
@@ -3663,6 +3903,20 @@ lvgl:
                         text_color: color_misty_blue
                         text: "\U000F0156"   # back arrow / close
               - label:
+                  id: wifi_status_dinner
+                  align: left_mid
+                  x: 56
+                  text: "\ue934"
+                  text_font: icons_24
+                  text_color: color_steel_blue
+              - label:
+                  id: ha_status_dinner
+                  align: left_mid
+                  x: 92
+                  text: "\U000F07D0"
+                  text_font: mdi_icons_28
+                  text_color: color_steel_blue
+              - label:
                   align: center
                   text_font: nunito_20
                   text_color: color_misty_blue
@@ -3670,10 +3924,36 @@ lvgl:
               - label:
                   id: dinner_time
                   align: right_mid
-                  x: -36
+                  x: -41
                   text_font: nunito_20
                   text_color: color_misty_blue
                   text: "00:00"
+
+        # ── SETTINGS GEAR (long-press → settings page) ────────
+        - button:
+            id: settings_gear_dinner
+            align: top_right
+            x: -8
+            y: 8
+            width: 40
+            height: 40
+            radius: 20
+            bg_color: 0x1a0000
+            border_width: 1
+            border_color: 0xaa2222
+            shadow_opa: transp
+            on_long_press:
+              then:
+                - lvgl.page.show:
+                    id: settings_page
+                    animation: fade_in
+                    time: 300ms
+            widgets:
+              - label:
+                  align: center
+                  text_font: mdi_icons_28
+                  text_color: 0xcc3333
+                  text: "\U000F0493"   # mdi:cog
 
         # ── BIG DINNER ICON + TITLE ──────────────────────────
         - obj:
@@ -4016,6 +4296,33 @@ lvgl:
             text_color: color_mint
             text: ""
 
+        # ── TICKER BAR ───────────────────────────────────────
+        - obj:
+            id: ticker_bar_dinner
+            y: 402
+            width: 440
+            height: 32
+            align: top_mid
+            radius: 8
+            pad_left: 12
+            pad_right: 12
+            pad_top: 4
+            pad_bottom: 4
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            clickable: false
+            widgets:
+              - label:
+                  id: ticker_label_dinner
+                  align: left_mid
+                  width: 416
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  long_mode: SCROLL_CIRCULAR
+                  anim_time: 10000ms
+                  text: "Eve Display ready  ·  "
+
         # ── BOTTOM NAV ───────────────────────────────────────
         - obj:
             id: dinner_bottom_nav
@@ -4134,105 +4441,163 @@ lvgl:
                         text_color: color_misty_blue
                         text: "\U000F0156"   # mdi:close
 
-        # ── DEVICE INFO CARD ───────────────────────────────
+        # ── ESPHome version + uptime ───────────────────────────
         - obj:
             align: top_mid
             y: 56
             width: 440
-            height: 140
+            height: 56
+            radius: 16
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 16
+                  text_font: mdi_icons_24
+                  text_color: color_violet
+                  text: "\U000F013B"   # mdi:information
+              - label:
+                  align: left_mid
+                  x: 46
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "ESPHome 2026.2.4  •  ESP32-S3"
+              - label:
+                  id: settings_uptime
+                  align: right_mid
+                  x: -16
+                  text_font: nunito_16
+                  text_color: color_steel_blue
+                  text: "up --"
+
+        # ── DEVICE INFO CARD ───────────────────────────────
+        - obj:
+            align: top_mid
+            y: 130
+            width: 440
+            height: 152
             radius: 20
             bg_color: color_card_bg
             border_opa: transp
             shadow_opa: transp
             widgets:
-              # WiFi SSID
-              - label:
+              # WiFi row
+              - obj:
                   align: top_left
-                  x: 16
-                  y: 12
-                  text_font: mdi_icons_24
-                  text_color: color_sky_blue
-                  text: "\U000F05A9"   # mdi:wifi
-              - label:
-                  id: settings_wifi_ssid
+                  x: 0
+                  y: 0
+                  width: 440
+                  height: 38
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: left_mid
+                        x: 16
+                        text_font: mdi_icons_24
+                        text_color: color_sky_blue
+                        text: "\U000F05A9"   # mdi:wifi
+                    - label:
+                        id: settings_wifi_ssid
+                        align: left_mid
+                        x: 46
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "WiFi: --"
+                    - label:
+                        id: settings_wifi_rssi
+                        align: right_mid
+                        x: -16
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "-- dBm"
+              # HA row
+              - obj:
                   align: top_left
-                  x: 44
-                  y: 14
-                  text_font: nunito_16
-                  text_color: color_misty_blue
-                  text: "WiFi: --"
-              - label:
-                  id: settings_wifi_rssi
-                  align: top_right
-                  x: -16
-                  y: 14
-                  text_font: nunito_16
-                  text_color: color_steel_blue
-                  text: "-- dBm"
-
-              # HA Connection
-              - label:
+                  x: 0
+                  y: 38
+                  width: 440
+                  height: 38
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: left_mid
+                        x: 16
+                        text_font: mdi_icons_24
+                        text_color: color_violet
+                        text: "\U000F06E0"   # mdi:home-assistant
+                    - label:
+                        id: settings_ha_status
+                        align: left_mid
+                        x: 46
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "HA: --"
+                    - label:
+                        id: settings_ip
+                        align: right_mid
+                        x: -16
+                        text_font: nunito_16
+                        text_color: color_steel_blue
+                        text: "--"
+              # CPU temp row
+              - obj:
                   align: top_left
-                  x: 16
-                  y: 46
-                  text_font: mdi_icons_24
-                  text_color: color_violet
-                  text: "\U000F06E0"   # mdi:home-assistant
-              - label:
-                  id: settings_ha_status
+                  x: 0
+                  y: 76
+                  width: 440
+                  height: 38
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: left_mid
+                        x: 16
+                        text_font: mdi_icons_24
+                        text_color: color_orange
+                        text: "\U000F050F"   # mdi:thermometer
+                    - label:
+                        id: settings_cpu_temp
+                        align: left_mid
+                        x: 46
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "CPU: --°C"
+              # RAM row
+              - obj:
                   align: top_left
-                  x: 44
-                  y: 48
-                  text_font: nunito_16
-                  text_color: color_misty_blue
-                  text: "HA: --"
-              - label:
-                  id: settings_ip
-                  align: top_right
-                  x: -16
-                  y: 48
-                  text_font: nunito_16
-                  text_color: color_steel_blue
-                  text: "--"
-
-              # CPU temp
-              - label:
-                  align: top_left
-                  x: 16
-                  y: 80
-                  text_font: mdi_icons_24
-                  text_color: color_orange
-                  text: "\U000F050F"   # mdi:thermometer
-              - label:
-                  id: settings_cpu_temp
-                  align: top_left
-                  x: 44
-                  y: 82
-                  text_font: nunito_16
-                  text_color: color_misty_blue
-                  text: "CPU: --°C"
-
-              # Heap free
-              - label:
-                  align: top_left
-                  x: 16
-                  y: 112
-                  text_font: mdi_icons_24
-                  text_color: color_mint
-                  text: "\U000F035B"   # mdi:memory
-              - label:
-                  id: settings_heap
-                  align: top_left
-                  x: 44
+                  x: 0
                   y: 114
-                  text_font: nunito_16
-                  text_color: color_misty_blue
-                  text: "RAM: -- KB"
+                  width: 440
+                  height: 38
+                  bg_opa: transp
+                  border_opa: transp
+                  shadow_opa: transp
+                  widgets:
+                    - label:
+                        align: left_mid
+                        x: 16
+                        text_font: mdi_icons_24
+                        text_color: color_mint
+                        text: "\U000F035B"   # mdi:memory
+                    - label:
+                        id: settings_heap
+                        align: left_mid
+                        x: 46
+                        text_font: nunito_16
+                        text_color: color_misty_blue
+                        text: "RAM: -- KB"
 
         # ── BRIGHTNESS SLIDER ──────────────────────────────
         - obj:
             align: top_mid
-            y: 210
+            y: 300
             width: 440
             height: 72
             radius: 16
@@ -4274,84 +4639,11 @@ lvgl:
                           id: display_backlight
                           brightness: !lambda "return x / 100.0f;"
 
-        # ── ESPHome / IP info ──────────────────────────────
-        - obj:
-            align: top_mid
-            y: 296
-            width: 440
-            height: 56
-            radius: 16
-            bg_color: color_card_bg
-            border_opa: transp
-            shadow_opa: transp
-            widgets:
-              - label:
-                  align: left_mid
-                  x: 16
-                  text_font: nunito_16
-                  text_color: color_misty_blue
-                  text: "ESPHome 2026.2.4  •  ESP32-S3"
-              - label:
-                  id: settings_uptime
-                  align: right_mid
-                  x: -16
-                  text_font: nunito_16
-                  text_color: color_steel_blue
-                  text: "up --"
-
-        # ── SERIAL LOGGING TOGGLE ──────────────────────────
-        - obj:
-            align: top_mid
-            y: 366
-            width: 440
-            height: 56
-            radius: 16
-            bg_color: color_card_bg
-            border_opa: transp
-            shadow_opa: transp
-            widgets:
-              - label:
-                  align: left_mid
-                  x: 16
-                  text_font: mdi_icons_28
-                  text_color: color_steel_blue
-                  text: "\U000F0682"   # mdi:console
-              - label:
-                  align: left_mid
-                  x: 54
-                  text_font: nunito_16
-                  text_color: color_misty_blue
-                  text: "Serial Logging"
-              - switch:
-                  id: settings_log_toggle
-                  align: right_mid
-                  x: -16
-                  width: 52
-                  height: 28
-                  bg_color: color_steel_blue
-                  checked:
-                    bg_color: color_mint
-                  indicator:
-                    bg_color: color_steel_blue
-                    checked:
-                      bg_color: color_mint
-                  knob:
-                    bg_color: color_misty_blue
-                  on_value:
-                    then:
-                      - if:
-                          condition:
-                            lambda: "return x;"
-                          then:
-                            - logger.set_level: DEBUG
-                          else:
-                            - logger.set_level: NONE
-
         # ── Restart button ─────────────────────────────────
         - button:
             id: settings_restart_btn
             align: top_mid
-            y: 436
+            y: 392
             width: 200
             height: 48
             radius: 24
@@ -4376,7 +4668,7 @@ lvgl:
         - button:
             id: settings_wifi_config_btn
             align: top_mid
-            y: 500
+            y: 456
             width: 440
             height: 64
             radius: 16

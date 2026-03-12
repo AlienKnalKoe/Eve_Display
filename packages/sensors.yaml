@@ -22,6 +22,18 @@ api:
       - lvgl.label.update:
           id: ha_status_energy
           text_color: color_mint
+      - lvgl.label.update:
+          id: ha_status_weather
+          text_color: color_mint
+      - lvgl.label.update:
+          id: ha_status_scenes
+          text_color: color_mint
+      - lvgl.label.update:
+          id: ha_status_laundry
+          text_color: color_mint
+      - lvgl.label.update:
+          id: ha_status_dinner
+          text_color: color_mint
   on_client_disconnected:
     then:
       - lvgl.label.update:
@@ -29,6 +41,18 @@ api:
           text_color: color_crimson
       - lvgl.label.update:
           id: ha_status_energy
+          text_color: color_crimson
+      - lvgl.label.update:
+          id: ha_status_weather
+          text_color: color_crimson
+      - lvgl.label.update:
+          id: ha_status_scenes
+          text_color: color_crimson
+      - lvgl.label.update:
+          id: ha_status_laundry
+          text_color: color_crimson
+      - lvgl.label.update:
+          id: ha_status_dinner
           text_color: color_crimson
 
 ota:
@@ -131,8 +155,14 @@ sensor:
             lv_obj_set_style_text_color(id(wifi_status), col, 0);
             lv_label_set_text(id(wifi_status_energy), icon);
             lv_obj_set_style_text_color(id(wifi_status_energy), col, 0);
+            lv_label_set_text(id(wifi_status_weather), icon);
+            lv_obj_set_style_text_color(id(wifi_status_weather), col, 0);
+            lv_label_set_text(id(wifi_status_scenes), icon);
+            lv_obj_set_style_text_color(id(wifi_status_scenes), col, 0);
             lv_label_set_text(id(wifi_status_laundry), icon);
             lv_obj_set_style_text_color(id(wifi_status_laundry), col, 0);
+            lv_label_set_text(id(wifi_status_dinner), icon);
+            lv_obj_set_style_text_color(id(wifi_status_dinner), col, 0);
 
 # ── Sun / Day-Night ──────────────────────────────────────────
 text_sensor:
