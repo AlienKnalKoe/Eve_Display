@@ -4712,6 +4712,13 @@ esphome:
   on_boot:
     priority: -200
     then:
+      # Explicitly turn on backlight at 100% — avoids restoring a stale dim
+      # value from NVS flash (restore_mode: ALWAYS_ON restores last saved
+      # brightness, which can be near-zero after an idle-dim cycle).
+      - light.turn_on:
+          id: display_backlight
+          brightness: 100%
+      - script.execute: idle_dimmer_script
       - lvgl.page.show: loading_page
       - script.execute: update_clock
       - delay: 500ms
