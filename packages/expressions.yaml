@@ -43,96 +43,81 @@ image:
   - file: "images/head-colored.png"
     id: head_colored
     resize: 156x156
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
   - file: "images/head-blond.png"
     id: head_blond
     resize: 156x156
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
   - file: "images/head-black.png"
     id: head_black
     resize: 156x156
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
   - file: "images/head-brown.png"
     id: head_brown
     resize: 156x156
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
   - file: "images/head-blue.png"
     id: head_blue
     resize: 156x156
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
   - file: "images/head-kroes.png"
     id: head_kroes
     resize: 156x156
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
 # ── Eye images (2 variants) ───────────────────────────────────
 # Sized to ~80×33 relative to 156px head
   - file: "images/eye-open.png"
     id: eye_open
     resize: 80x34
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
   - file: "images/eye-closed.png"
     id: eye_closed
     resize: 80x28
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
 # ── Mouth images (6 variants) ─────────────────────────────────
   - file: "images/mouth-normal.png"
     id: mouth_normal
     resize: 55x33
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
   - file: "images/mouth-happy.png"
     id: mouth_happy
     resize: 60x43
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
   - file: "images/Mouth-smile-closed.png"
     id: mouth_smile_closed
     resize: 55x33
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
   - file: "images/mouth-open.png"
     id: mouth_open
     resize: 55x43
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
   - file: "images/mouth-suprised.png"
     id: mouth_surprised
     resize: 50x50
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
   - file: "images/mouth-closed.png"
     id: mouth_closed
     resize: 55x33
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
 # ── Heart image (special state) ──────────────────────────────
   - file: "images/heart.png"
     id: heart_sprite
     resize: 80x62
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
 
 # ── Expression scripts ───────────────────────────────────────
 script:

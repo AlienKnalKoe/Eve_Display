@@ -23,27 +23,25 @@ image:
   # A: 32x32 solid red square — simplest baseline
   - file: "images/test_solid_rgb.png"
     id: test_img_solid
-    type: RGB
+    type: RGB565
     resize: 64x64
 
   # B: 32x32 circle on transparent background
   - file: "images/test_rgba_circle.png"
     id: test_img_rgba
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
     resize: 64x64
 
   # C: Eve head at 64x64 — same config as production
   - file: "images/head_small_64.png"
     id: test_head_small
-    type: RGB
-    transparency: alpha_channel
+    type: RGB565
     resize: 64x64
 
   # D: Production head 156x156 WITHOUT transparency
   - file: "images/head-colored.png"
     id: test_head_notransp
-    type: RGB
+    type: RGB565
     resize: 156x156
 
 # ── Test page ─────────────────────────────────────────────────
@@ -118,7 +116,7 @@ lvgl:
                   y: 18
                   text_font: nunito_16
                   text_color: color_light_gray
-                  text: "type: RGB, no transparency"
+                  text: "type: RGB565"
 
         # ── B: RGBA circle ────────────────────────────────────
         - obj:
@@ -148,7 +146,7 @@ lvgl:
                   y: 18
                   text_font: nunito_16
                   text_color: color_light_gray
-                  text: "type: RGB + alpha_channel"
+                  text: "type: RGB565 (was: RGB+alpha)"
 
         # ── C: Small Eve head ─────────────────────────────────
         - obj:
@@ -178,7 +176,7 @@ lvgl:
                   y: 18
                   text_font: nunito_16
                   text_color: color_light_gray
-                  text: "head_small_64.png + alpha_channel"
+                  text: "head_small_64.png, RGB565"
 
         # ── D: Full head no transparency ──────────────────────
         - obj:
@@ -209,4 +207,4 @@ lvgl:
                   y: -8
                   text_font: nunito_16
                   text_color: color_light_gray
-                  text: "head-colored.png, type: RGB only"
+                  text: "head-colored.png, RGB565"
