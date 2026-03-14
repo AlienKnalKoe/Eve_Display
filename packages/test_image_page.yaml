@@ -214,8 +214,7 @@ lvgl:
                   text_color: color_light_gray
                   text: "head-colored.png, type: RGB only"
 
-  # ── Add Image Test button to settings page ─────────────────
-  pages:
+    # ── Add Image Test button to settings page ─────────────────
     - id: settings_page
       widgets:
         - button:
