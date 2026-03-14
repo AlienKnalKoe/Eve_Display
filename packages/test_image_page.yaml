@@ -49,9 +49,11 @@ image:
     type: RGB
     resize: 156x156
 
-# ── Test page ─────────────────────────────────────────────────
+# ── Single lvgl block: test page + settings button ───────────
 lvgl:
   pages:
+
+    # ── Test page ────────────────────────────────────────────
     - id: image_test_page
       bg_color: color_black
       scrollable: true
@@ -214,8 +216,7 @@ lvgl:
                   text_color: color_light_gray
                   text: "head-colored.png, type: RGB only"
 
-  # ── Add Image Test button to settings page ─────────────────
-  pages:
+    # ── Settings page — extend with Image Test button ────────
     - id: settings_page
       widgets:
         - button:
