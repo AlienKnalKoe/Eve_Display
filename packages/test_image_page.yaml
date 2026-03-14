@@ -1,0 +1,253 @@
+# ============================================================
+# Eve Display — Image Diagnostic Test Page
+#
+# Tests 4 different image loading approaches on-screen so
+# you can see which ones work vs fail.
+#
+# HOW TO ENABLE:
+#   In eve_display.yaml, add ONE line under packages:
+#     test_images: !include packages/test_image_page.yaml
+#
+# HOW TO REACH:
+#   After flashing: Settings page → scroll down → tap "🖼 Image Test"
+#
+# WHAT TO LOOK FOR:
+#   Each row shows one approach. If the image renders = that approach works.
+#   Report back which A/B/C/D rows show an image → tells us which config to use.
+# ============================================================
+
+# ── Test images — 4 approaches ───────────────────────────────
+image:
+
+  # A: Tiny 32x32 solid red square — RGB, no transparency
+  #    SIMPLEST possible. If this fails, LVGL image is fundamentally broken.
+  - file: "images/test_solid_rgb.png"
+    id: test_img_solid
+    type: RGB
+    resize: 64x64
+
+  # B: Tiny 32x32 circle on transparent background
+  #    Tests type: RGB + transparency: alpha_channel with a small file
+  - file: "images/test_rgba_circle.png"
+    id: test_img_rgba
+    type: RGB
+    transparency: alpha_channel
+    resize: 64x64
+
+  # C: Eve head scaled to 64x64, same settings as production
+  #    Tests whether the head image itself is the problem at smaller size
+  - file: "images/head_small_64.png"
+    id: test_head_small
+    type: RGB
+    transparency: alpha_channel
+    resize: 64x64
+
+  # D: Production head at full 156x156, but WITHOUT transparency
+  #    Tests if removing transparency: alpha_channel fixes the render
+  - file: "images/head-colored.png"
+    id: test_head_notransp
+    type: RGB
+    resize: 156x156
+
+# ── Test page ─────────────────────────────────────────────────
+lvgl:
+  pages:
+    - id: image_test_page
+      bg_color: color_black
+      scrollable: true
+
+      on_load:
+        then:
+          - logger.log:
+              level: INFO
+              format: "IMAGE TEST PAGE loaded"
+
+      widgets:
+
+        # Back button
+        - button:
+            align: top_left
+            x: 8
+            y: 8
+            width: 72
+            height: 36
+            radius: 18
+            bg_color: color_slate_blue_gray
+            border_opa: transp
+            shadow_opa: transp
+            on_click:
+              then:
+                - lvgl.page.show: settings_page
+            widgets:
+              - label:
+                  align: center
+                  text_font: nunito_16
+                  text_color: color_white
+                  text: "< Back"
+
+        # Title
+        - label:
+            align: top_mid
+            y: 14
+            text: "Image Diagnostics"
+            text_font: nunito_20
+            text_color: color_misty_blue
+
+        # ── A: RGB solid ──────────────────────────────────────
+        - obj:
+            align: top_mid
+            y: 60
+            width: 440
+            height: 76
+            radius: 12
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - image:
+                  align: left_mid
+                  x: 12
+                  src: test_img_solid
+                  bg_opa: TRANSP
+              - label:
+                  align: left_mid
+                  x: 88
+                  text_font: nunito_16
+                  text_color: color_sky_blue
+                  text: "A: RGB solid (32x32)"
+              - label:
+                  align: left_mid
+                  x: 88
+                  y: 18
+                  text_font: nunito_16
+                  text_color: color_light_gray
+                  text: "type: RGB, no transparency"
+
+        # ── B: RGBA circle ────────────────────────────────────
+        - obj:
+            align: top_mid
+            y: 148
+            width: 440
+            height: 76
+            radius: 12
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - image:
+                  align: left_mid
+                  x: 12
+                  src: test_img_rgba
+                  bg_opa: TRANSP
+              - label:
+                  align: left_mid
+                  x: 88
+                  text_font: nunito_16
+                  text_color: color_sky_blue
+                  text: "B: RGBA circle (32x32)"
+              - label:
+                  align: left_mid
+                  x: 88
+                  y: 18
+                  text_font: nunito_16
+                  text_color: color_light_gray
+                  text: "type: RGB + alpha_channel"
+
+        # ── C: Small head ─────────────────────────────────────
+        - obj:
+            align: top_mid
+            y: 236
+            width: 440
+            height: 76
+            radius: 12
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - image:
+                  align: left_mid
+                  x: 12
+                  src: test_head_small
+                  bg_opa: TRANSP
+              - label:
+                  align: left_mid
+                  x: 88
+                  text_font: nunito_16
+                  text_color: color_sky_blue
+                  text: "C: Eve head small (64x64)"
+              - label:
+                  align: left_mid
+                  x: 88
+                  y: 18
+                  text_font: nunito_16
+                  text_color: color_light_gray
+                  text: "head_small_64.png + alpha_channel"
+
+        # ── D: Full head no transparency ──────────────────────
+        - obj:
+            align: top_mid
+            y: 324
+            width: 440
+            height: 172
+            radius: 12
+            bg_color: color_card_bg
+            border_opa: transp
+            shadow_opa: transp
+            widgets:
+              - image:
+                  align: center
+                  y: 10
+                  src: test_head_notransp
+                  bg_opa: TRANSP
+              - label:
+                  align: top_left
+                  x: 12
+                  y: 8
+                  text_font: nunito_16
+                  text_color: color_sky_blue
+                  text: "D: Eve head 156x156 (no alpha)"
+              - label:
+                  align: bottom_left
+                  x: 12
+                  y: -8
+                  text_font: nunito_16
+                  text_color: color_light_gray
+                  text: "head-colored.png, type: RGB only"
+
+  # ── Add Image Test button to settings page ─────────────────
+  pages:
+    - id: settings_page
+      widgets:
+        - button:
+            id: settings_imgtest_btn
+            align: top_mid
+            y: 532
+            width: 440
+            height: 48
+            radius: 24
+            bg_color: color_card_bg
+            border_width: 1
+            border_color: color_violet
+            shadow_opa: transp
+            on_click:
+              then:
+                - lvgl.page.show: image_test_page
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 16
+                  text_font: mdi_icons_28
+                  text_color: color_violet
+                  text: "\U000F0498"   # mdi:image-outline
+              - label:
+                  align: left_mid
+                  x: 56
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Image Test"
+              - label:
+                  align: right_mid
+                  x: -16
+                  text_font: mdi_icons_24
+                  text_color: color_steel_blue
+                  text: "\U000F0142"   # mdi:chevron-right
