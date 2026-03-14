@@ -4706,6 +4706,41 @@ lvgl:
                   text_color: color_steel_blue
                   text: "󰅂"   # mdi:chevron-right
 
+        # ── IMAGE TEST button (diagnostic — remove after fix) ──
+        - button:
+            id: settings_imgtest_btn
+            align: top_mid
+            y: 532
+            width: 440
+            height: 48
+            radius: 24
+            bg_color: color_card_bg
+            border_width: 1
+            border_color: color_violet
+            shadow_opa: transp
+            on_click:
+              then:
+                - lvgl.page.show: image_test_page
+            widgets:
+              - label:
+                  align: left_mid
+                  x: 16
+                  text_font: mdi_icons_28
+                  text_color: color_violet
+                  text: "󰉼"   # mdi:image-outline
+              - label:
+                  align: left_mid
+                  x: 56
+                  text_font: nunito_16
+                  text_color: color_misty_blue
+                  text: "Image Test"
+              - label:
+                  align: right_mid
+                  x: -16
+                  text_font: mdi_icons_24
+                  text_color: color_steel_blue
+                  text: "󰅂"   # mdi:chevron-right
+
 # ── Boot sequence ────────────────────────────────────────────
 # ESPHome executes on_boot after all components are ready
 esphome:
