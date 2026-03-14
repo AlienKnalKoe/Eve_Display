@@ -2,48 +2,45 @@
 # Eve Display — Image Diagnostic Test Page
 #
 # Tests 4 different image loading approaches on-screen so
-# you can see which ones work vs fail.
-#
-# HOW TO ENABLE:
-#   In eve_display.yaml, add ONE line under packages:
-#     test_images: !include packages/test_image_page.yaml
+# you can see which ones work on hardware.
 #
 # HOW TO REACH:
-#   After flashing: Settings page → scroll down → tap "🖼 Image Test"
+#   Settings page → scroll down → tap "Image Test" button
+#   (button is added to settings_page in lvgl_pages.yaml)
 #
 # WHAT TO LOOK FOR:
-#   Each row shows one approach. If the image renders = that approach works.
-#   Report back which A/B/C/D rows show an image → tells us which config to use.
+#   Each row uses a different config. Report which A/B/C/D rows
+#   show an image → tells us which config to use for Eve's head.
+#
+# REMOVE AFTER DIAGNOSIS:
+#   1. Remove 'test_images' from eve_display.yaml packages
+#   2. Remove the Image Test button block from lvgl_pages.yaml
 # ============================================================
 
-# ── Test images — 4 approaches ───────────────────────────────
+# ── Test images ───────────────────────────────────────────────
 image:
 
-  # A: Tiny 32x32 solid red square — RGB, no transparency
-  #    SIMPLEST possible. If this fails, LVGL image is fundamentally broken.
+  # A: 32x32 solid red square — simplest baseline
   - file: "images/test_solid_rgb.png"
     id: test_img_solid
     type: RGB
     resize: 64x64
 
-  # B: Tiny 32x32 circle on transparent background
-  #    Tests type: RGB + transparency: alpha_channel with a small file
+  # B: 32x32 circle on transparent background
   - file: "images/test_rgba_circle.png"
     id: test_img_rgba
     type: RGB
     transparency: alpha_channel
     resize: 64x64
 
-  # C: Eve head scaled to 64x64, same settings as production
-  #    Tests whether the head image itself is the problem at smaller size
+  # C: Eve head at 64x64 — same config as production
   - file: "images/head_small_64.png"
     id: test_head_small
     type: RGB
     transparency: alpha_channel
     resize: 64x64
 
-  # D: Production head at full 156x156, but WITHOUT transparency
-  #    Tests if removing transparency: alpha_channel fixes the render
+  # D: Production head 156x156 WITHOUT transparency
   - file: "images/head-colored.png"
     id: test_head_notransp
     type: RGB
@@ -153,7 +150,7 @@ lvgl:
                   text_color: color_light_gray
                   text: "type: RGB + alpha_channel"
 
-        # ── C: Small head ─────────────────────────────────────
+        # ── C: Small Eve head ─────────────────────────────────
         - obj:
             align: top_mid
             y: 236
@@ -213,40 +210,3 @@ lvgl:
                   text_font: nunito_16
                   text_color: color_light_gray
                   text: "head-colored.png, type: RGB only"
-
-    # ── Add Image Test button to settings page ─────────────────
-    - id: settings_page
-      widgets:
-        - button:
-            id: settings_imgtest_btn
-            align: top_mid
-            y: 532
-            width: 440
-            height: 48
-            radius: 24
-            bg_color: color_card_bg
-            border_width: 1
-            border_color: color_violet
-            shadow_opa: transp
-            on_click:
-              then:
-                - lvgl.page.show: image_test_page
-            widgets:
-              - label:
-                  align: left_mid
-                  x: 16
-                  text_font: mdi_icons_28
-                  text_color: color_violet
-                  text: "\U000F0498"   # mdi:image-outline
-              - label:
-                  align: left_mid
-                  x: 56
-                  text_font: nunito_16
-                  text_color: color_misty_blue
-                  text: "Image Test"
-              - label:
-                  align: right_mid
-                  x: -16
-                  text_font: mdi_icons_24
-                  text_color: color_steel_blue
-                  text: "\U000F0142"   # mdi:chevron-right
