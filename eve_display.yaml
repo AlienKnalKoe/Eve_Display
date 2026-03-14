@@ -22,3 +22,4 @@ packages:
   automations:        !include packages/automations.yaml
   laundry_sensors:    !include packages/laundry_sensors.yaml
   lvgl_pages:         !include packages/lvgl_pages.yaml
+  test_images:        !include packages/test_image_page.yaml  # TEMP: image diagnostics
